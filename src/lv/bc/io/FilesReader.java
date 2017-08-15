@@ -12,6 +12,7 @@ public class FilesReader {
 	private String fileName;
 	//TODO: save list of 4 elements members
 	private List<Topic> topicList;
+	
 	private int pointer;
     private int totalGroupAnswers = 0;
 	public FilesReader(String fileName) {
@@ -29,6 +30,7 @@ public class FilesReader {
 
 	// read from necessary file and row the word
 	// and fill in textFrom and textTo
+	//1:TODO: change initialize so that it will read into List any read 4 new words from file 
 	public void initializeTopic() throws IOException{
 		Path path = Paths.get(this.fileName);
     	if (Files.notExists(path)) {
@@ -68,9 +70,13 @@ public class FilesReader {
 	  	
 	}
 	    
-    	//1:TODO: change initialize so that it will read into List any read 4 new words from file 
     	
     	//2:make random method to mix 2nd, 3rd, 4th Topic in List
+	
+	// make logic if answer success then 
+	// regenrate random and save count +1 to necessary array object,
+	// if not, then just random regeneration 
+	// if all words in list was passed, then
 	public void mixList(String answer){
 		if(topicList.get(0).equals(answer)){
 		   
@@ -83,11 +89,7 @@ public class FilesReader {
 		//TODO: write else. The result randomly mix 4 transaltions words. 
 		//But the source from have to stay the same
 	}
-    	
-    	// make logic if answer success then 
-    	// regenrate random and save count +1 to necessary array object,
-    	// if not, then just random regeneration 
-    	// if all words in list was passed, then 
+ 
     	
     	//3:save sucess study result of 4 words and update file
     	
