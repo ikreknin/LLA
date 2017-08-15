@@ -10,6 +10,7 @@ import java.util.List;
 
 public class FilesReader {
 	private String fileName;
+	//TODO: save list of 4 elements members
 	private List<Topic> topicList;
 	private int pointer;
     private int totalGroupAnswers = 0;
@@ -67,19 +68,20 @@ public class FilesReader {
 	  	
 	}
 	    
-    	//1: read 4 new words from file 
+    	//1:TODO: change initialize so that it will read into List any read 4 new words from file 
     	
     	//2:make random method to mix 2nd, 3rd, 4th Topic in List
 	public void mixList(String answer){
 		if(topicList.get(0).equals(answer)){
-		   topicList.get(0).setCount(topicList.get(0).getCount()+1); 
-		   totalGroupAnswers++;
-		   // the FIRST element in array is word for translation
+		   
+		   //TODO: check that answer is like expected
+			//???? where we save expected answer??? TODO: may be need additional parameter?
 		   // mix all topics in list so,
 		   // that previous will not be the first again and 
 		   // also the Topic with count = 3 also can not be the first again
-		   
 		}
+		//TODO: write else. The result randomly mix 4 transaltions words. 
+		//But the source from have to stay the same
 	}
     	
     	// make logic if answer success then 
