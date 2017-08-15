@@ -1,8 +1,12 @@
 package lv.bc.views;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
 /*
 * HelloWorldSwing.java requires no other files.
@@ -93,6 +97,42 @@ public class Menu {
 	        	
 	        	//Build File menu bar
 	        	menu = new JMenu("File");
+	        	
+	        	menu.addMouseListener(new MouseListener() {
+					
+					@Override
+					public void mouseReleased(MouseEvent e) {
+						// Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void mousePressed(MouseEvent e) {
+						// Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void mouseExited(MouseEvent e) {
+						JMenu item = (JMenu) e.getSource();
+					    item.setSelected(false);
+						
+					}
+					
+					@Override
+					public void mouseEntered(MouseEvent e) {
+						
+						JMenu item = (JMenu) e.getSource();
+						item.setSelected(true);
+						
+					}
+					
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						// Auto-generated method stub
+						
+					}
+				});
 	        	menuBar.add(menu);
 	        	
 	        	menuItem = new JMenuItem("First topic");
