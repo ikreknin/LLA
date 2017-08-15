@@ -62,7 +62,7 @@ public class FilesReader {
             	l++;
             	i++;
             }
-	    	    this.pointer = i;// hast to be 12 for first time olr less if in file is less then 4 words
+	    	    this.pointer = i;// hast to be 12 for first time or less if in file is less then 4 words
 	    }
 	    finally {
 	           reader.close();
