@@ -128,12 +128,12 @@ public class View {
 //    	menuItem.setMnemonic(KeyEvent.VK_B);
     	fileMenu.add(menuItemSave);
 
-    	menuItemSave = new JMenuItem("Reset");
+    	menuItemReset = new JMenuItem("Reset");
 //    	menuItem.setMnemonic(KeyEvent.VK_D);
     	fileMenu.add(menuItemReset);
     	
     	fileMenu.addSeparator();
-    	menuItemSave = new JMenuItem("Exit");
+    	menuItemExit = new JMenuItem("Exit");
 //    	menuItem.setMnemonic(KeyEvent.VK_D);
     	fileMenu.add(menuItemExit);
 
