@@ -25,19 +25,19 @@ public class Model {
 
 	}
 
-	public void doQuestion1() {
+	public void doAnswer1() {
 
 	}
 
-	public void doQuestion2() {
+	public void doAnswer2() {
 
 	}
 
-	public void doQuestion3() {
+	public void doAnswer3() {
 
 	}
 
-	public void doQuestion4() {
+	public void doAnswer4() {
 
 	}
 
