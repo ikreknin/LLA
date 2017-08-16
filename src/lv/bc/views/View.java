@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 
 public class View {
 
+	private final String applicationTitle = "Language Learning Application";
 	private JMenuBar menuBar;
 	private JFrame frame;
 	private JButton buttonQuestion; 
@@ -15,7 +16,6 @@ public class View {
 	private JButton buttonAnswer2;
 	private JButton buttonAnswer3;
 	private JButton buttonAnswer4;
-	String buttonQuestionString; // TODO
 	private JMenu fileMenu;
 	private JMenu modeMenu;
 	private JMenu optionsMenu;
@@ -33,7 +33,8 @@ public class View {
 	private JMenuItem menuItemHelp;
 
 	public View(String text) {
-		frame = new JFrame("Language Learning Application");
+		frame = new JFrame();
+		frame.setTitle(applicationTitle);
 		frame.getContentPane().setLayout(new BorderLayout());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(600, 800);
@@ -134,7 +135,8 @@ public class View {
 //    	menuItem.setMnemonic(KeyEvent.VK_D);
     	fileMenu.add(menuItemReset);
     	
-    	fileMenu.addSeparator();
+    	fileMenu.addSeparator(); // --------------------------
+    	
     	menuItemExit = new JMenuItem("Exit");
 //    	menuItem.setMnemonic(KeyEvent.VK_D);
     	fileMenu.add(menuItemExit);
@@ -154,6 +156,8 @@ public class View {
     	menuItemText.setSelected(true);
 //    	cbMenuItem.setMnemonic(KeyEvent.VK_H);
     	modeMenu.add(menuItemText);
+    	
+    	modeMenu.addSeparator(); // --------------------------
     	
     	ButtonGroup group = new ButtonGroup();
     	menuItemFN = new JRadioButtonMenuItem("Foreign to Native");
