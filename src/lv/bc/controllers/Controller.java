@@ -7,7 +7,7 @@ import lv.bc.models.*;
 import lv.bc.views.*;
 
 public class Controller {
-
+	
 	private Model model;
 	private View view;
 //Action listeners for buttons
@@ -21,6 +21,14 @@ public class Controller {
 	public Controller(Model model, View view) {
 		this.model = model;
 		this.view = view;
+	}
+	
+	public Model getModel() {
+		return model;
+	}
+
+	public View getView() {
+		return view;
 	}
 
 	public void contol() {
