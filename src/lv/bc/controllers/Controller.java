@@ -10,7 +10,13 @@ public class Controller {
 
 	private Model model;
 	private View view;
-	private ActionListener actionListener;
+	//Action listeners for buttons
+	private ActionListener  actionListenerQuestion,actionListenerAnswer1,
+	actionListenerAnswer2, actionListenerAnswer3, actionListenerAnswer4;
+	//Actions listeners for Menu
+	private ActionListener actionListenerOpen, actionListenerSave, actionListenerReset, actionListenerExit,
+	actionListenerSilent, actionListenerAudio, actionListenerText, actionListenerFN, actionListenerNF, 
+	actionListenerLanguage, actionListenerHelp;
 
 	public Controller(Model model, View view) {
 		this.model = model;
@@ -18,16 +24,157 @@ public class Controller {
 	}
 
 	public void contol() {
-		actionListener = new ActionListener() {
-			public void actionPerformed(ActionEvent actionEvent) {
-				linkBtnAndLabel();
+		
+//Action listeners for buttons------------------------------------------------------------------------------------------
+		
+		actionListenerQuestion = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				model.doQuestion();	
 			}
 		};
-		view.getButton().addActionListener(actionListener);
+		view.getQuestionButton().addActionListener(actionListenerQuestion);
+		
+		actionListenerAnswer1 = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				model.doAnswer1();		
+			}
+		};
+		view.getAnswerButton1().addActionListener(actionListenerAnswer1);
+		
+		actionListenerAnswer2 = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				model.doAnswer2();			
+			}
+		};	
+		view.getAnswerButton2().addActionListener(actionListenerAnswer2);
+		
+		actionListenerAnswer3 = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				model.doAnswer3();			
+			}
+		};
+		view.getAnswerButton3().addActionListener(actionListenerAnswer3);
+		
+		actionListenerAnswer4 = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				model.doAnswer4();			
+			}
+		};
+		view.getAnswerButton4().addActionListener(actionListenerAnswer4);
+		
+//Action Listeners for menu----------------------------------------------------------------------------------------
+		
+		actionListenerOpen = new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				model.doOpen();
+			}
+		};
+		view.getMenuItemOpen().addActionListener(actionListenerOpen);
+		
+		actionListenerSave = new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				model.doSave();
+			}
+		};
+		view.getMenuItemSave().addActionListener(actionListenerSave);
+		
+		actionListenerReset = new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				model.doReset();
+			}
+		};
+		view.getMenuItemReset().addActionListener(actionListenerReset);
+		
+		actionListenerExit = new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				model.doExit();
+			}
+		};
+		view.getMenuItemExit().addActionListener(actionListenerExit);
+		
+		actionListenerSilent = new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		};
+		view.getMenuItemSilent().addActionListener(actionListenerSilent);
+		
+		actionListenerAudio = new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				model.doAudio();
+			}
+		};
+		view.getMenuItemAudio().addActionListener(actionListenerAudio);
+		
+		actionListenerText = new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				model.doText();
+			}
+		};
+		view.getMenuItemText().addActionListener(actionListenerText);
+		
+		actionListenerFN = new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				model.doFN();
+			}
+		};
+		view.getMenuItemFN().addActionListener(actionListenerFN);
+		
+		actionListenerNF = new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				model.doNF();
+			}
+		};
+		view.getMenuItemNF().addActionListener(actionListenerNF);
+		
+		actionListenerLanguage = new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				model.doLanguage();
+			}
+		};
+		view.getMenuItemLanguage().addActionListener(actionListenerLanguage);
+		
+		actionListenerHelp = new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				model.doHelp();
+			}
+		};
+		view.getMenuItemHelp().addActionListener(actionListenerHelp);
+		
 	}
 
-	private void linkBtnAndLabel() {
-		model.incX();
-		view.setText(Integer.toString(model.getX()));
-	}
+	
+	
 }
+
+
+
+
+
