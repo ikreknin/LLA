@@ -155,18 +155,19 @@ public class View {
     	modeMenu.add(menuItemText);
     	
     	ButtonGroup group = new ButtonGroup();
-    	menuItemFN = new JRadioButtonMenuItem("A radio button menu item");
+    	menuItemFN = new JRadioButtonMenuItem("Foreign to Native");
     	menuItemFN.setSelected(true);
     	group.add(menuItemFN);
     	modeMenu.add(menuItemFN);
     	
-    	menuItemNF = new JRadioButtonMenuItem("Another one");
+    	menuItemNF = new JRadioButtonMenuItem("Native to Foreign");
 //    	menuItemNF.setMnemonic(KeyEvent.VK_O);
     	group.add(menuItemNF);
     	modeMenu.add(menuItemNF);
     	
     	optionsMenu = new JMenu("Options");
     	menuItemLanguage = new JMenuItem("Language");
+    	optionsMenu.add(menuItemLanguage);
     	menuBar.add(optionsMenu);
     	
     	helpMenu = new JMenu("Help");
@@ -198,8 +199,24 @@ public class View {
 		return buttonAnswer4;
 	}	
 
-	public void setTextAnswer1(String text) {
+	public void setTextButton(String text) {
 		buttonQuestion.setText(text);
+	}
+	
+	public void setTextAnswer1(String text) {
+		buttonAnswer1.setText(text);
+	}
+	
+	public void setTextAnswer2(String text) {
+		buttonAnswer2.setText(text);
+	}
+	
+	public void setTextAnswer3(String text) {
+		buttonAnswer3.setText(text);
+	}
+	
+	public void setTextAnswer4(String text) {
+		buttonAnswer4.setText(text);
 	}
 
 	public JMenuItem getMenuItemOpen() {
