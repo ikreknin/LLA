@@ -109,7 +109,7 @@ public class Controller {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
+				model.doSilent();
 			}
 		};
 		view.getMenuItemSilent().addActionListener(actionListenerSilent);
