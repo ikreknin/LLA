@@ -181,8 +181,8 @@ public class View {
     	modeMenu.add(menuItemNF);
     	
     	optionsMenu = new JMenu("Language");
-    	menuItemLatvian = new JMenuItem("lv-lv");
-    	menuItemEnglish = new JMenuItem("en-gb");
+    	menuItemLatvian = new JMenuItem("lv-LV");
+    	menuItemEnglish = new JMenuItem("en-US");
     	optionsMenu.add(menuItemLatvian);
     	optionsMenu.add(menuItemEnglish);
     	menuBar.add(optionsMenu);
