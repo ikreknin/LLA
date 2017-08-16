@@ -1,5 +1,7 @@
 package lv.bc.models;
 
+import javax.swing.JFrame;
+
 public class Model {
 
 	private int x;
@@ -44,7 +46,8 @@ public class Model {
 	// Main "File" Menu Items ------------------------------------------------------------------------------------------------------
 
 	// Sub-Menu "Open" method
-				public void doOpen() {
+	public void doOpen(JFrame parentFrame) {
+		new FileChooser().chooseFile(parentFrame);;
 
 	}
 

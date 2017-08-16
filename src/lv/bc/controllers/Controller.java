@@ -73,7 +73,7 @@ public class Controller {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				model.doOpen();
+				model.doOpen(view.getFrame());
 			}
 		};
 		view.getMenuItemOpen().addActionListener(actionListenerOpen);
