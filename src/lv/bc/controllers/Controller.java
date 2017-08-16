@@ -10,10 +10,10 @@ public class Controller {
 
 	private Model model;
 	private View view;
-	//Action listeners for buttons
+//Action listeners for buttons
 	private ActionListener  actionListenerQuestion,actionListenerAnswer1,
 	actionListenerAnswer2, actionListenerAnswer3, actionListenerAnswer4;
-	//Actions listeners for Menu
+//Actions listeners for Menu
 	private ActionListener actionListenerOpen, actionListenerSave, actionListenerReset, actionListenerExit,
 	actionListenerSilent, actionListenerAudio, actionListenerText, actionListenerFN, actionListenerNF, 
 	actionListenerLanguage, actionListenerHelp;
@@ -170,8 +170,6 @@ public class Controller {
 		
 	}
 
-	
-	
 }
 
 
