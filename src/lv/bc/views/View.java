@@ -29,7 +29,8 @@ public class View {
 	private JCheckBoxMenuItem menuItemText;
 	private JRadioButtonMenuItem menuItemFN;
 	private JRadioButtonMenuItem menuItemNF;
-	private JMenuItem menuItemLanguage;
+	private JMenuItem menuItemLatvian;
+	private JMenuItem menuItemEnglish;
 	private JMenuItem menuItemHelp;
 	private String buttonQuestionString = "";
 	private String buttonAnswer1String = "";
@@ -179,9 +180,11 @@ public class View {
     	group.add(menuItemNF);
     	modeMenu.add(menuItemNF);
     	
-    	optionsMenu = new JMenu("Options");
-    	menuItemLanguage = new JMenuItem("Language");
-    	optionsMenu.add(menuItemLanguage);
+    	optionsMenu = new JMenu("Language");
+    	menuItemLatvian = new JMenuItem("lv-lv");
+    	menuItemEnglish = new JMenuItem("en-gb");
+    	optionsMenu.add(menuItemLatvian);
+    	optionsMenu.add(menuItemEnglish);
     	menuBar.add(optionsMenu);
     	
     	helpMenu = new JMenu("Help");
@@ -270,8 +273,16 @@ public class View {
 	}
 
 	public JMenuItem getMenuItemLanguage() {
-		return menuItemLanguage;
+		return null;
 	}
+	
+	public JMenuItem getMenuItemLatvian() {
+		return menuItemLatvian;
+	}
+	
+	public JMenuItem getMenuItemEnglish() {
+		return menuItemEnglish;
+	}	
 	
 	public JMenuItem getMenuItemHelp() {
 		return menuItemHelp;
