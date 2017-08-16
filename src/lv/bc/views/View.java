@@ -3,11 +3,7 @@ package lv.bc.views;
 import javax.swing.*;
 import javax.swing.border.Border;
 
-import java.awt.BorderLayout;
-import java.awt.Container;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 
 public class View {
@@ -45,7 +41,7 @@ public class View {
 
 		Container pane = frame.getContentPane();
 		pane.setLayout(new GridBagLayout());
-		Border paneEdge = BorderFactory.createEmptyBorder(0,10,10,10);
+		Border paneEdge = BorderFactory.createEmptyBorder(0,30,40,30);
 		((JComponent) pane).setBorder(paneEdge);
 		GridBagConstraints c = new GridBagConstraints();
 		
@@ -57,11 +53,12 @@ public class View {
         c.weighty = 1.0;   //request any extra vertical space
         c.weightx = 0.5;
         c.anchor = GridBagConstraints.PAGE_START; //bottom of space
-        c.insets = new Insets(30,0,0,0);  //top padding
+        c.insets = new Insets(100,0,0,0);  //top padding
         buttonQuestion.setBorderPainted(false);
         buttonQuestion.setFocusPainted(false);
         buttonQuestion.setFocusable(false);
         buttonQuestion.setContentAreaFilled(false);
+        buttonQuestion.setFont(new Font("Arial", Font.PLAIN, 40));
 //        pane.add(comp, c);
         pane.add(buttonQuestion, c); // c = constraints
         
@@ -74,6 +71,7 @@ public class View {
         c.weighty = 0.0;   //request any extra vertical space
         c.anchor = GridBagConstraints.PAGE_START; //bottom of space
         c.insets = new Insets(0,0,0,0);  //top padding
+        buttonAnswer1.setFont(new Font("Arial", Font.PLAIN, 30));
         pane.add(buttonAnswer1, c);  
 		
         buttonAnswer2 = new JButton("Native_Word_2");
@@ -84,7 +82,8 @@ public class View {
         c.weightx = 0.0;
         c.weighty = 0.0;   //request any extra vertical space
         c.anchor = GridBagConstraints.PAGE_START; //bottom of space
-        c.insets = new Insets(10,0,0,0);  //top padding
+        c.insets = new Insets(25,0,0,0);  //top padding
+        buttonAnswer2.setFont(new Font("Arial", Font.PLAIN, 30));
         pane.add(buttonAnswer2, c); 
     
         buttonAnswer3 = new JButton("Native_Word_3");
@@ -95,7 +94,8 @@ public class View {
         c.weightx = 0.0;
         c.weighty = 0.0;   //request any extra vertical space
         c.anchor = GridBagConstraints.PAGE_START; //bottom of space
-        c.insets = new Insets(10,0,0,0);  //top padding
+        c.insets = new Insets(25,0,0,0);  //top padding
+        buttonAnswer3.setFont(new Font("Arial", Font.PLAIN, 30));
         pane.add(buttonAnswer3, c);   
         
         buttonAnswer4 = new JButton("Native_Word_4");
@@ -106,7 +106,8 @@ public class View {
         c.weightx = 0.0;
         c.weighty = 0.0;   //request any extra vertical space
         c.anchor = GridBagConstraints.PAGE_START; //bottom of space
-        c.insets = new Insets(10,0,0,0);  //top padding
+        c.insets = new Insets(25,0,0,0);  //top padding
+        buttonAnswer4.setFont(new Font("Arial", Font.PLAIN, 30));
         pane.add(buttonAnswer4, c); 
         
     	//Create the menu bar.
@@ -199,7 +200,7 @@ public class View {
 		return buttonAnswer4;
 	}	
 
-	public void setTextButton(String text) {
+	public void setTextQuestion(String text) {
 		buttonQuestion.setText(text);
 	}
 	
