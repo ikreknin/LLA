@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 
 public class View {
 
+	private final String applicationTitle = "Language Learning Application";
 	private JMenuBar menuBar;
 	private JFrame frame;
 	private JButton buttonQuestion; 
@@ -15,7 +16,6 @@ public class View {
 	private JButton buttonAnswer2;
 	private JButton buttonAnswer3;
 	private JButton buttonAnswer4;
-	String buttonQuestionString; // TODO
 	private JMenu fileMenu;
 	private JMenu modeMenu;
 	private JMenu optionsMenu;
@@ -31,9 +31,19 @@ public class View {
 	private JRadioButtonMenuItem menuItemNF;
 	private JMenuItem menuItemLanguage;
 	private JMenuItem menuItemHelp;
+	private String buttonQuestionString = "";
+	private String buttonAnswer1String = "";
+	private String buttonAnswer2String = "";
+	private String buttonAnswer3String = "";
+	private String buttonAnswer4String = "";
 
+	public JFrame getFrame() {
+		return frame;
+	}
+	
 	public View(String text) {
-		frame = new JFrame("Language Learning Application");
+		frame = new JFrame();
+		frame.setTitle(applicationTitle);
 		frame.getContentPane().setLayout(new BorderLayout());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(600, 800);
@@ -45,7 +55,7 @@ public class View {
 		((JComponent) pane).setBorder(paneEdge);
 		GridBagConstraints c = new GridBagConstraints();
 		
-        buttonQuestion = new JButton("Foreign_Test_Word");
+        buttonQuestion = new JButton(buttonQuestionString);
         c.fill = GridBagConstraints.HORIZONTAL;
         c.ipady = 40;      //make this component tall
         c.gridx = 0;
@@ -62,7 +72,7 @@ public class View {
 //        pane.add(comp, c);
         pane.add(buttonQuestion, c); // c = constraints
         
-        buttonAnswer1 = new JButton("Native_Word_1");
+        buttonAnswer1 = new JButton(buttonAnswer1String);
         c.fill = GridBagConstraints.HORIZONTAL;
         c.ipady = 40;      //make this component tall
         c.gridx = 0;
@@ -74,7 +84,7 @@ public class View {
         buttonAnswer1.setFont(new Font("Arial", Font.PLAIN, 30));
         pane.add(buttonAnswer1, c);  
 		
-        buttonAnswer2 = new JButton("Native_Word_2");
+        buttonAnswer2 = new JButton(buttonAnswer2String);
         c.fill = GridBagConstraints.HORIZONTAL;
         c.ipady = 40;      //make this component tall
         c.gridx = 0;
@@ -86,7 +96,7 @@ public class View {
         buttonAnswer2.setFont(new Font("Arial", Font.PLAIN, 30));
         pane.add(buttonAnswer2, c); 
     
-        buttonAnswer3 = new JButton("Native_Word_3");
+        buttonAnswer3 = new JButton(buttonAnswer3String);
         c.fill = GridBagConstraints.HORIZONTAL;
         c.ipady = 40;      //make this component tall
         c.gridx = 0;
@@ -98,7 +108,7 @@ public class View {
         buttonAnswer3.setFont(new Font("Arial", Font.PLAIN, 30));
         pane.add(buttonAnswer3, c);   
         
-        buttonAnswer4 = new JButton("Native_Word_4");
+        buttonAnswer4 = new JButton(buttonAnswer4String);
         c.fill = GridBagConstraints.HORIZONTAL;
         c.ipady = 40;      //make this component tall
         c.gridx = 0;
@@ -134,7 +144,8 @@ public class View {
 //    	menuItem.setMnemonic(KeyEvent.VK_D);
     	fileMenu.add(menuItemReset);
     	
-    	fileMenu.addSeparator();
+    	fileMenu.addSeparator(); // --------------------------
+    	
     	menuItemExit = new JMenuItem("Exit");
 //    	menuItem.setMnemonic(KeyEvent.VK_D);
     	fileMenu.add(menuItemExit);
@@ -154,6 +165,8 @@ public class View {
     	menuItemText.setSelected(true);
 //    	cbMenuItem.setMnemonic(KeyEvent.VK_H);
     	modeMenu.add(menuItemText);
+    	
+    	modeMenu.addSeparator(); // --------------------------
     	
     	ButtonGroup group = new ButtonGroup();
     	menuItemFN = new JRadioButtonMenuItem("Foreign to Native");
