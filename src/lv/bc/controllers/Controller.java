@@ -16,7 +16,7 @@ public class Controller {
 //Actions listeners for Menu
 	private ActionListener actionListenerOpen, actionListenerSave, actionListenerReset, actionListenerExit,
 	actionListenerSilent, actionListenerAudio, actionListenerText, actionListenerFN, actionListenerNF, 
-	actionListenerLanguage, actionListenerHelp;
+	actionListenerLanguage, actionListenerHelp, actionListenerLatvian, actionListenerEnglish;
 
 	public Controller(Model model, View view) {
 		this.model = model;
@@ -158,14 +158,32 @@ public class Controller {
 		};
 		view.getMenuItemNF().addActionListener(actionListenerNF);
 		
-		actionListenerLanguage = new ActionListener() {
+//		actionListenerLanguage = new ActionListener() {
+//			
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				model.doLanguage();
+//			}
+//		};
+//		view.getMenuItemLanguage().addActionListener(actionListenerLanguage);
+		
+		actionListenerLatvian = new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				model.doLanguage();
+				// TODO
 			}
 		};
-		view.getMenuItemLanguage().addActionListener(actionListenerLanguage);
+		view.getMenuItemLanguage().addActionListener(actionListenerLatvian);
+		
+		actionListenerEnglish = new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO
+			}
+		};
+		view.getMenuItemLanguage().addActionListener(actionListenerEnglish);
 		
 		actionListenerHelp = new ActionListener() {
 			
