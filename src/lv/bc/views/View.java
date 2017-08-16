@@ -8,24 +8,39 @@ import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.KeyEvent;
 
 public class View {
 
+	private JMenuBar menuBar;
 	private JFrame frame;
-	private JLabel label;
 	private JButton buttonQuestion; 
 	private JButton buttonAnswer1;
 	private JButton buttonAnswer2;
 	private JButton buttonAnswer3;
 	private JButton buttonAnswer4;
-	
+	String buttonQuestionString; // TODO
+	private JMenu fileMenu;
+	private JMenu modeMenu;
+	private JMenu optionsMenu;
+	private JMenu helpMenu;
+	private JMenuItem menuItemOpen;
+	private JMenuItem menuItemSave;
+	private JMenuItem menuItemReset;
+	private JMenuItem menuItemExit;
+	private JCheckBoxMenuItem menuItemSilent;
+	private JCheckBoxMenuItem menuItemAudio;
+	private JCheckBoxMenuItem menuItemText;
+	private JRadioButtonMenuItem menuItemFN;
+	private JRadioButtonMenuItem menuItemNF;
+	private JMenuItem menuItemLanguage;
 
 	public View(String text) {
 		frame = new JFrame("Language Learning Application");
 		frame.getContentPane().setLayout(new BorderLayout());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		// frame.setSize(600, 800);
-		frame.setSize(320, 480);
+		frame.setSize(600, 800);
+		// frame.setSize(320, 480);
 
 		Container pane = frame.getContentPane();
 		pane.setLayout(new GridBagLayout());
@@ -93,6 +108,70 @@ public class View {
         c.insets = new Insets(10,0,0,0);  //top padding
         pane.add(buttonAnswer4, c); 
         
+    	//Create the menu bar.
+    	menuBar = new JMenuBar();
+
+    	//Build the first menu.
+    	fileMenu = new JMenu("File");
+    	fileMenu.setMnemonic(KeyEvent.VK_A);
+//    	menu.getAccessibleContext().setAccessibleDescription(
+//    	        "The only menu in this program that has menu items");
+    	menuBar.add(fileMenu);
+
+    	//a group of JMenuItems
+    	menuItemOpen = new JMenuItem("Open", KeyEvent.VK_T);
+//    	menuItem.setAccelerator(KeyStroke.getKeyStroke(
+//    	        KeyEvent.VK_1, ActionEvent.ALT_MASK));
+    	fileMenu.add(menuItemOpen);
+
+    	menuItemSave = new JMenuItem("Save");
+//    	menuItem.setMnemonic(KeyEvent.VK_B);
+    	fileMenu.add(menuItemSave);
+
+    	menuItemSave = new JMenuItem("Reset");
+//    	menuItem.setMnemonic(KeyEvent.VK_D);
+    	fileMenu.add(menuItemReset);
+    	
+    	fileMenu.addSeparator();
+    	menuItemSave = new JMenuItem("Exit");
+//    	menuItem.setMnemonic(KeyEvent.VK_D);
+    	fileMenu.add(menuItemExit);
+
+    	modeMenu = new JMenu("Mode");
+    	menuBar.add(modeMenu);
+    	
+    	menuItemSilent = new JCheckBoxMenuItem("Silent");
+//    	cbMenuItem.setMnemonic(KeyEvent.VK_C);
+    	modeMenu.add(menuItemSilent);
+
+    	menuItemAudio = new JCheckBoxMenuItem("Audio");
+//    	cbMenuItem.setMnemonic(KeyEvent.VK_H);
+    	modeMenu.add(menuItemAudio);
+    	
+    	menuItemText = new JCheckBoxMenuItem("Text");
+    	menuItemText.setSelected(true);
+//    	cbMenuItem.setMnemonic(KeyEvent.VK_H);
+    	modeMenu.add(menuItemText);
+    	
+    	ButtonGroup group = new ButtonGroup();
+    	menuItemFN = new JRadioButtonMenuItem("A radio button menu item");
+    	menuItemFN.setSelected(true);
+    	group.add(menuItemFN);
+    	modeMenu.add(menuItemFN);
+    	
+    	menuItemNF = new JRadioButtonMenuItem("Another one");
+//    	menuItemNF.setMnemonic(KeyEvent.VK_O);
+    	group.add(menuItemNF);
+    	modeMenu.add(menuItemNF);
+    	
+    	optionsMenu = new JMenu("Options");
+    	menuItemLanguage = new JMenuItem("Language");
+    	menuBar.add(optionsMenu);
+    	
+    	helpMenu = new JMenu("Help");
+    	menuBar.add(helpMenu);        
+        
+    	frame.setJMenuBar(menuBar);
 		frame.setVisible(true);
 	}
 
@@ -116,8 +195,48 @@ public class View {
 		return buttonAnswer4;
 	}	
 
-	public void setText(String text) {
-		label.setText(text);
+	public void setTextAnswer1(String text) {
+		buttonQuestion.setText(text);
 	}
 
+	public JMenuItem getMenuItemOpen() {
+		return menuItemOpen;
+	}
+
+	public JMenuItem getMenuItemSave() {
+		return menuItemSave;
+	}
+
+	public JMenuItem getMenuItemReset() {
+		return menuItemReset;
+	}
+
+	public JMenuItem getMenuItemExit() {
+		return menuItemExit;
+	}
+
+	public JCheckBoxMenuItem getMenuItemSilent() {
+		return menuItemSilent;
+	}
+
+	public JCheckBoxMenuItem getMenuItemAudio() {
+		return menuItemAudio;
+	}
+
+	public JCheckBoxMenuItem getMenuItemText() {
+		return menuItemText;
+	}
+
+	public JRadioButtonMenuItem getMenuItemFN() {
+		return menuItemFN;
+	}
+
+	public JRadioButtonMenuItem getMenuItemNF() {
+		return menuItemNF;
+	}
+
+	public JMenuItem getMenuItemLanguage() {
+		return menuItemLanguage;
+	}
+	
 }
