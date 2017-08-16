@@ -166,7 +166,7 @@ public class Controller {
 				model.doHelp();
 			}
 		};
-		view.getMenuBar().addActionListener(actionListenerHelp);
+		view.getMenuItemHelp().addActionListener(actionListenerHelp);
 		
 	}
 
