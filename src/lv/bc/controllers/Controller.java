@@ -100,7 +100,7 @@ public class Controller {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				model.doExit();
+				System.exit(0);
 			}
 		};
 		view.getMenuItemExit().addActionListener(actionListenerExit);
@@ -145,7 +145,7 @@ public class Controller {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				model.doNF();
+				model.NF();
 			}
 		};
 		view.getMenuItemNF().addActionListener(actionListenerNF);
@@ -166,7 +166,7 @@ public class Controller {
 				model.doHelp();
 			}
 		};
-		view.getMenuItemHelp().addActionListener(actionListenerHelp);
+		view.getMenuBar().addActionListener(actionListenerHelp);
 		
 	}
 
