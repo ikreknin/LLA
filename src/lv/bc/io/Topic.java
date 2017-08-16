@@ -30,4 +30,10 @@ public class Topic {
 	public void setCount(int count) {
 		this.count = count;
 	}
+
+	@Override
+	public String toString() {
+		return "Topic [fromText=" + fromText + ", toText=" + toText + ", count=" + count + "]";
+	}
+	
 }
