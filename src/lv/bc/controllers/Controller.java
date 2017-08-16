@@ -7,7 +7,7 @@ import lv.bc.models.*;
 import lv.bc.views.*;
 
 public class Controller {
-
+	
 	private Model model;
 	private View view;
 //Action listeners for buttons
@@ -16,11 +16,19 @@ public class Controller {
 //Actions listeners for Menu
 	private ActionListener actionListenerOpen, actionListenerSave, actionListenerReset, actionListenerExit,
 	actionListenerSilent, actionListenerAudio, actionListenerText, actionListenerFN, actionListenerNF, 
-	actionListenerLanguage, actionListenerHelp;
+	actionListenerLanguage, actionListenerHelp, actionListenerLatvian, actionListenerEnglish;
 
 	public Controller(Model model, View view) {
 		this.model = model;
 		this.view = view;
+	}
+	
+	public Model getModel() {
+		return model;
+	}
+
+	public View getView() {
+		return view;
 	}
 
 	public void contol() {
@@ -73,7 +81,7 @@ public class Controller {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				model.doOpen();
+				model.doOpen(view.getFrame());
 			}
 		};
 		view.getMenuItemOpen().addActionListener(actionListenerOpen);
@@ -150,14 +158,32 @@ public class Controller {
 		};
 		view.getMenuItemNF().addActionListener(actionListenerNF);
 		
-		actionListenerLanguage = new ActionListener() {
+//		actionListenerLanguage = new ActionListener() {
+//			
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				model.doLanguage();
+//			}
+//		};
+//		view.getMenuItemLanguage().addActionListener(actionListenerLanguage);
+		
+		actionListenerLatvian = new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				model.doLanguage();
+				// TODO
 			}
 		};
-		view.getMenuItemLanguage().addActionListener(actionListenerLanguage);
+		view.getMenuItemLanguage().addActionListener(actionListenerLatvian);
+		
+		actionListenerEnglish = new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO
+			}
+		};
+		view.getMenuItemLanguage().addActionListener(actionListenerEnglish);
 		
 		actionListenerHelp = new ActionListener() {
 			

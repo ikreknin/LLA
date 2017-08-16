@@ -29,9 +29,19 @@ public class View {
 	private JCheckBoxMenuItem menuItemText;
 	private JRadioButtonMenuItem menuItemFN;
 	private JRadioButtonMenuItem menuItemNF;
-	private JMenuItem menuItemLanguage;
+	private JMenuItem menuItemLatvian;
+	private JMenuItem menuItemEnglish;
 	private JMenuItem menuItemHelp;
+	private String buttonQuestionString = "";
+	private String buttonAnswer1String = "";
+	private String buttonAnswer2String = "";
+	private String buttonAnswer3String = "";
+	private String buttonAnswer4String = "";
 
+	public JFrame getFrame() {
+		return frame;
+	}
+	
 	public View(String text) {
 		frame = new JFrame();
 		frame.setTitle(applicationTitle);
@@ -46,7 +56,7 @@ public class View {
 		((JComponent) pane).setBorder(paneEdge);
 		GridBagConstraints c = new GridBagConstraints();
 		
-        buttonQuestion = new JButton("Foreign_Test_Word");
+        buttonQuestion = new JButton(buttonQuestionString);
         c.fill = GridBagConstraints.HORIZONTAL;
         c.ipady = 40;      //make this component tall
         c.gridx = 0;
@@ -63,7 +73,7 @@ public class View {
 //        pane.add(comp, c);
         pane.add(buttonQuestion, c); // c = constraints
         
-        buttonAnswer1 = new JButton("Native_Word_1");
+        buttonAnswer1 = new JButton(buttonAnswer1String);
         c.fill = GridBagConstraints.HORIZONTAL;
         c.ipady = 40;      //make this component tall
         c.gridx = 0;
@@ -75,7 +85,7 @@ public class View {
         buttonAnswer1.setFont(new Font("Arial", Font.PLAIN, 30));
         pane.add(buttonAnswer1, c);  
 		
-        buttonAnswer2 = new JButton("Native_Word_2");
+        buttonAnswer2 = new JButton(buttonAnswer2String);
         c.fill = GridBagConstraints.HORIZONTAL;
         c.ipady = 40;      //make this component tall
         c.gridx = 0;
@@ -87,7 +97,7 @@ public class View {
         buttonAnswer2.setFont(new Font("Arial", Font.PLAIN, 30));
         pane.add(buttonAnswer2, c); 
     
-        buttonAnswer3 = new JButton("Native_Word_3");
+        buttonAnswer3 = new JButton(buttonAnswer3String);
         c.fill = GridBagConstraints.HORIZONTAL;
         c.ipady = 40;      //make this component tall
         c.gridx = 0;
@@ -99,7 +109,7 @@ public class View {
         buttonAnswer3.setFont(new Font("Arial", Font.PLAIN, 30));
         pane.add(buttonAnswer3, c);   
         
-        buttonAnswer4 = new JButton("Native_Word_4");
+        buttonAnswer4 = new JButton(buttonAnswer4String);
         c.fill = GridBagConstraints.HORIZONTAL;
         c.ipady = 40;      //make this component tall
         c.gridx = 0;
@@ -170,9 +180,11 @@ public class View {
     	group.add(menuItemNF);
     	modeMenu.add(menuItemNF);
     	
-    	optionsMenu = new JMenu("Options");
-    	menuItemLanguage = new JMenuItem("Language");
-    	optionsMenu.add(menuItemLanguage);
+    	optionsMenu = new JMenu("Language");
+    	menuItemLatvian = new JMenuItem("lv-LV");
+    	menuItemEnglish = new JMenuItem("en-US");
+    	optionsMenu.add(menuItemLatvian);
+    	optionsMenu.add(menuItemEnglish);
     	menuBar.add(optionsMenu);
     	
     	helpMenu = new JMenu("Help");
@@ -261,8 +273,16 @@ public class View {
 	}
 
 	public JMenuItem getMenuItemLanguage() {
-		return menuItemLanguage;
+		return null;
 	}
+	
+	public JMenuItem getMenuItemLatvian() {
+		return menuItemLatvian;
+	}
+	
+	public JMenuItem getMenuItemEnglish() {
+		return menuItemEnglish;
+	}	
 	
 	public JMenuItem getMenuItemHelp() {
 		return menuItemHelp;
