@@ -34,6 +34,7 @@ public class View {
 	private JRadioButtonMenuItem menuItemFN;
 	private JRadioButtonMenuItem menuItemNF;
 	private JMenuItem menuItemLanguage;
+	private JMenuItem menuItemHelp;
 
 	public View(String text) {
 		frame = new JFrame("Language Learning Application");
@@ -169,6 +170,8 @@ public class View {
     	menuBar.add(optionsMenu);
     	
     	helpMenu = new JMenu("Help");
+    	menuItemHelp = new JMenuItem("Help");
+    	helpMenu.add(menuItemHelp);
     	menuBar.add(helpMenu);        
         
     	frame.setJMenuBar(menuBar);
@@ -239,4 +242,7 @@ public class View {
 		return menuItemLanguage;
 	}
 	
+	public JMenuItem getMenuItemHelp() {
+		return menuItemHelp;
+	}
 }
