@@ -4,6 +4,8 @@ import javax.swing.*;
 import javax.swing.border.Border;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 public class View {
@@ -32,12 +34,14 @@ public class View {
 	private JMenuItem menuItemLatvian;
 	private JMenuItem menuItemEnglish;
 	private JMenuItem menuItemHelp;
-	private String buttonQuestionString = "";
-	private String buttonAnswer1String = "";
-	private String buttonAnswer2String = "";
-	private String buttonAnswer3String = "";
-	private String buttonAnswer4String = "";
-
+	String lang = "";
+	String topic = "";
+	String[] topics;
+	String[] topics1 = {"Animals","Family"};
+	String[] topics2 = {"Dzīvnieki","Ģimene"};
+	JComboBox topicsList;
+	public JButton okButton = new JButton("OK"); 
+	
 	public JFrame getFrame() {
 		return frame;
 	}
@@ -49,16 +53,84 @@ public class View {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(600, 800);
 		// frame.setSize(320, 480);
-
-		Container pane = frame.getContentPane();
+		
+		final JPanel mainPanel = new JPanel();
+//		GridLayout experimentLayout = new GridLayout(2,1);
+		mainPanel.setLayout(new GridBagLayout());
+//		frame.setLayout(experimentLayout);
+		GridBagConstraints cpnl = new GridBagConstraints();
+		
+		JPanel languagePanel = new JPanel();
+		JLabel lbl = new JLabel("Select one of the possible language choices");
+	    lbl.setVisible(true);
+	    languagePanel.add(lbl);
+	    String[] choices = { "LAT-ENG","ENG-LAT"};
+	    JComboBox languageList = new JComboBox(choices);
+	    languageList.setSelectedIndex(0);
+	    languageList.addActionListener(null);
+	    languageList.setVisible(true);
+	    languagePanel.add(languageList);
+	    cpnl.gridx = 0;
+        cpnl.gridy = 0;
+        cpnl.insets = new Insets(15,0,0,0);  //top padding
+        mainPanel.add(languagePanel, cpnl);
+        ActionListener actionListenerLanguage = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JComboBox cb = (JComboBox)e.getSource();
+				String selectedString = (String)cb.getSelectedItem();
+				System.out.println("Selected from dropdown: " + selectedString);
+//				updateLabel(petName);
+				lang = selectedString;
+				System.out.println(lang);
+				if (selectedString == "LAT-ENG") {
+					DefaultComboBoxModel comboBoxModel1 = new DefaultComboBoxModel( topics2 );
+					topicsList.setModel( comboBoxModel1 );
+				} else {
+					DefaultComboBoxModel comboBoxModel2 = new DefaultComboBoxModel( topics1 );
+					topicsList.setModel( comboBoxModel2 );
+				}
+			}
+		};
+        languageList.addActionListener(actionListenerLanguage);
+        
+		JPanel topicPanel = new JPanel();
+	    topics = topics2;
+	    topicsList = new JComboBox();
+	    DefaultComboBoxModel comboBoxModel = new DefaultComboBoxModel( topics );
+	    topicsList.setModel(comboBoxModel);
+	    topicsList.setSelectedIndex(0);
+	    topicsList.addActionListener(null);
+	    topicsList.setVisible(true);
+	    topicPanel.add(topicsList);
+	    cpnl.gridx = 0;
+        cpnl.gridy = 1;
+        topicPanel.add(okButton);
+        mainPanel.add(topicPanel, cpnl);
+        ActionListener actionListenerTopic = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JComboBox cb = (JComboBox)e.getSource();
+				String selectedString = (String)cb.getSelectedItem();
+				topic = selectedString;
+				System.out.println(topic);
+				System.out.println("Selected from dropdown: " + selectedString);
+//				updateLabel(petName);
+			}
+		};
+        topicsList.addActionListener(actionListenerTopic);
+		
+	    JPanel pane = new JPanel();
+	    mainPanel.add(pane);
+//		Container pane = frame.getContentPane();
 		pane.setLayout(new GridBagLayout());
 		Border paneEdge = BorderFactory.createEmptyBorder(0,30,40,30);
 		((JComponent) pane).setBorder(paneEdge);
 		GridBagConstraints c = new GridBagConstraints();
 		
-        buttonQuestion = new JButton(buttonQuestionString);
+        buttonQuestion = new JButton("Māja (Hardcoded option)");
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.ipady = 40;      //make this component tall
+        c.ipady = 50;      //make this component tall
         c.gridx = 0;
         c.gridy = 0;
         c.weighty = 1.0;   //request any extra vertical space
@@ -73,7 +145,7 @@ public class View {
 //        pane.add(comp, c);
         pane.add(buttonQuestion, c); // c = constraints
         
-        buttonAnswer1 = new JButton(buttonAnswer1String);
+        buttonAnswer1 = new JButton("House");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.ipady = 40;      //make this component tall
         c.gridx = 0;
@@ -85,7 +157,7 @@ public class View {
         buttonAnswer1.setFont(new Font("Arial", Font.PLAIN, 30));
         pane.add(buttonAnswer1, c);  
 		
-        buttonAnswer2 = new JButton(buttonAnswer2String);
+        buttonAnswer2 = new JButton("Mouse");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.ipady = 40;      //make this component tall
         c.gridx = 0;
@@ -97,7 +169,7 @@ public class View {
         buttonAnswer2.setFont(new Font("Arial", Font.PLAIN, 30));
         pane.add(buttonAnswer2, c); 
     
-        buttonAnswer3 = new JButton(buttonAnswer3String);
+        buttonAnswer3 = new JButton("Work");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.ipady = 40;      //make this component tall
         c.gridx = 0;
@@ -109,7 +181,7 @@ public class View {
         buttonAnswer3.setFont(new Font("Arial", Font.PLAIN, 30));
         pane.add(buttonAnswer3, c);   
         
-        buttonAnswer4 = new JButton(buttonAnswer4String);
+        buttonAnswer4 = new JButton("Fork");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.ipady = 40;      //make this component tall
         c.gridx = 0;
@@ -120,6 +192,10 @@ public class View {
         c.insets = new Insets(25,0,0,0);  //top padding
         buttonAnswer4.setFont(new Font("Arial", Font.PLAIN, 30));
         pane.add(buttonAnswer4, c); 
+        
+	    cpnl.gridx = 0;
+        cpnl.gridy = 2;
+        mainPanel.add(pane, cpnl);
         
     	//Create the menu bar.
     	menuBar = new JMenuBar();
@@ -192,6 +268,7 @@ public class View {
     	helpMenu.add(menuItemHelp);
     	menuBar.add(helpMenu);        
         
+    	frame.add(mainPanel);
     	frame.setJMenuBar(menuBar);
 		frame.setVisible(true);
 	}
