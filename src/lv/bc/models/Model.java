@@ -1,8 +1,24 @@
 package lv.bc.models;
 
+import java.util.List;
+
 import javax.swing.JFrame;
 
+import lv.bc.io.TopicAnswers;
+import lv.bc.io.TopicReader;
+import lv.bc.io.Word;
+
 public class Model {
+	List<Word> topicAnswers;
+	Word learnWord;
+
+	public List<Word> getTopicAnswers() {
+		return topicAnswers;
+	}
+
+	public Word getLearnWord() {
+		return learnWord;
+	}
 
 	private int x;
 
@@ -46,8 +62,13 @@ public class Model {
 	// Main "File" Menu Items ------------------------------------------------------------------------------------------------------
 
 	// Sub-Menu "Open" method
-	public void doOpen(JFrame parentFrame) {
-		new FileChooser().chooseFile(parentFrame);;
+	public void doOpen(String lang, String topic) {
+		TopicReader topicReader = new TopicReader(lang+"."+topic);
+		// topicReader.openFile;
+	
+		TopicAnswers topicAnswers = new TopicAnswers();
+		this.topicAnswers = topicAnswers.getAnswerList();
+		this.learnWord = topicAnswers.getLearnWord();
 
 	}
 

@@ -81,7 +81,7 @@ public class Controller {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				model.doOpen(view.getFrame());
+				model.doOpen("LAT-ENG", "Dzivnieki");
 			}
 		};
 		view.getMenuItemOpen().addActionListener(actionListenerOpen);
