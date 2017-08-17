@@ -14,10 +14,9 @@ public class TopicReader {
 	String fileName;
 
 	public TopicReader(String fileName) {
-		super();
-		this.fileName = fileName;
+		//this.fileName = fileName;
 		//TODO: delete this hard code later later
-		fileName  = "Animal.txt";
+		this.fileName  = "Animal.txt";
 
 	}
 
@@ -54,9 +53,9 @@ public class TopicReader {
 	    	String txtFrom = "";
 	    	String txtTo = "";
 	    	int txtCnt = 0;
-	        while((line = reader.readLine()) != null && i < 12) {
+	        while((line = reader.readLine()) != null) {
             	if(l == 3){
-            		allTopicWords.add(new Word(txtFrom, txtTo, txtCnt));
+            		allTopicWords.add(new Word(i, txtFrom, txtTo, txtCnt));
             		l = 0;
             	}	
             	if(l == 0)

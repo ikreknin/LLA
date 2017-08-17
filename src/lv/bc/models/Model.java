@@ -1,5 +1,6 @@
 package lv.bc.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -43,6 +44,12 @@ public class Model {
 
 	}
 
+	public boolean doAnswer(int answerKey) {
+		
+		return true;
+	}
+
+	//TODO: delete doAnswer1, doAnswer2, doAnswer3, doAnswer4 to use one common method doAnswer()
 	public void doAnswer1() {
 
 	}
@@ -63,12 +70,17 @@ public class Model {
 
 	// Sub-Menu "Open" method
 	public void doOpen(String lang, String topic) {
-		TopicReader topicReader = new TopicReader(lang+"."+topic);
+		//TopicReader topicReader = new TopicReader(lang+"."+topic);
 		// topicReader.openFile;
-	
-		TopicAnswers topicAnswers = new TopicAnswers();
-		this.topicAnswers = topicAnswers.getAnswerList();
+		List<Word> tmpList = new ArrayList<Word>();
+		TopicAnswers topicAnswers = new TopicAnswers(tmpList);
+		this.topicAnswers = new ArrayList<Word>();
+		this.topicAnswers.addAll(topicAnswers.getAnswerList());
+		this.learnWord = new Word();
 		this.learnWord = topicAnswers.getLearnWord();
+		//System.out.println("==========================");
+		//System.out.println("Array this.topicAnswers: " + this.topicAnswers.toString());
+		//System.out.println("Word learnWord: " + this.learnWord.toString());
 
 	}
 
