@@ -25,6 +25,9 @@ public class Settings {
 		
 		
 		if (Files.exists(path)) {
+			
+			//Implement Porperties
+			
 			 try(BufferedReader in = new BufferedReader(
 					 new FileReader(iniFile))){
 				 String line = in.readLine();
