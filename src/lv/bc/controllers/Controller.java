@@ -1,5 +1,6 @@
 package lv.bc.controllers;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -14,11 +15,30 @@ public class Controller {
 	private ActionListener  actionListenerQuestion,actionListenerAnswer1,	actionListenerAnswer2, actionListenerAnswer3, actionListenerAnswer4,actionListenerAnswer;
 //Actions listeners for Menu
 	private ActionListener actionListenerOpen, actionListenerSave, actionListenerReset, actionListenerExit,
-	actionListenerSilent, actionListenerAudio, actionListenerText, actionListenerFN, actionListenerNF, 
-	actionListenerLanguage, actionListenerHelp, actionListenerLatvian, actionListenerEnglish;
+	actionListenerSilent, actionListenerAudio, actionListenerText, actionListenerFN, actionListenerNF, actionListenerHelp, actionListenerLatvian, actionListenerEnglish;
 	
-	public int answerKey;
-	boolean clientsAnswer;
+	private int answerKey;
+	private boolean clientsAnswer;
+	
+	public Color red = new Color(255, 0, 0);
+	public Color green = new Color(0, 255, 0);
+	
+
+	public int getAnswerKey() {
+		return answerKey;
+	}
+
+	public void setAnswerKey(int answerKey) {
+		this.answerKey = answerKey;
+	}
+
+	public boolean isClientsAnswer() {
+		return clientsAnswer;
+	}
+
+	public void setClientsAnswer(boolean clientsAnswer) {
+		this.clientsAnswer = clientsAnswer;
+	}
 
 	public Controller(Model model, View view) {
 		this.model = model;
@@ -37,29 +57,6 @@ public class Controller {
 		
 //Action listeners for buttons------------------------------------------------------------------------------------------
 		
-		actionListenerAnswer = new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				boolean answer = model.doAnswer(answerKey);
-				
-				if(false) {
-					model.doOpen("LAT-ENG", "Dzivnieki");
-				}
-				else {
-					view.setTextAnswer1(model.getTopicAnswers().get(0).getToText());
-					view.setTextAnswer2(model.getTopicAnswers().get(1).getToText());
-					view.setTextAnswer3(model.getTopicAnswers().get(2).getToText());
-					view.setTextAnswer4(model.getTopicAnswers().get(3).getToText());
-				}
-				
-			}
-		};
-		view.getAnswerButton1().addActionListener(actionListenerAnswer);
-		view.getAnswerButton2().addActionListener(actionListenerAnswer);
-		view.getAnswerButton3().addActionListener(actionListenerAnswer);
-		view.getAnswerButton4().addActionListener(actionListenerAnswer);
-		
-		
 		actionListenerQuestion = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -69,10 +66,46 @@ public class Controller {
 		};
 		view.getQuestionButton().addActionListener(actionListenerQuestion);
 		
+		actionListenerAnswer = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			if(isClientsAnswer()) {
+					view.setTextQuestion(model.getLearnWord().getFromText());
+				}
+				
+				view.setTextAnswer1(model.getTopicAnswers().get(0).getToText());
+				view.setTextAnswer2(model.getTopicAnswers().get(1).getToText());
+				view.setTextAnswer3(model.getTopicAnswers().get(2).getToText());
+				view.setTextAnswer4(model.getTopicAnswers().get(3).getToText());
+				
+				view.getAnswerButton1().setBackground(null);
+				view.getAnswerButton2().setBackground(null);
+				view.getAnswerButton3().setBackground(null);
+				view.getAnswerButton4().setBackground(null);
+				
+			}
+		};
+		
+		view.nextQuestion.addActionListener(actionListenerAnswer);
+		/*view.getAnswerButton1().addActionListener(actionListenerAnswer);
+		view.getAnswerButton2().addActionListener(actionListenerAnswer);
+		view.getAnswerButton3().addActionListener(actionListenerAnswer);
+		view.getAnswerButton4().addActionListener(actionListenerAnswer);*/
+		
+		
+		
+		
 		actionListenerAnswer1 = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				answerKey = model.getTopicAnswers().get(0).getKey();
+				setClientsAnswer(model.doAnswer(answerKey));
+				
+				if(isClientsAnswer())
+					view.getAnswerButton1().setBackground(green);
+				else
+					view.getAnswerButton1().setBackground(red);
 			}
 		};
 		view.getAnswerButton1().addActionListener(actionListenerAnswer1);
@@ -80,7 +113,13 @@ public class Controller {
 		actionListenerAnswer2 = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				answerKey = model.getTopicAnswers().get(1).getKey();;		
+				answerKey = model.getTopicAnswers().get(1).getKey();
+				setClientsAnswer(model.doAnswer(answerKey));
+				
+				if(isClientsAnswer())
+					view.getAnswerButton2().setBackground(green);
+				else
+					view.getAnswerButton2().setBackground(red);
 			}
 		};	
 		view.getAnswerButton2().addActionListener(actionListenerAnswer2);
@@ -88,7 +127,13 @@ public class Controller {
 		actionListenerAnswer3 = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				answerKey = model.getTopicAnswers().get(2).getKey();;
+				answerKey = model.getTopicAnswers().get(2).getKey();
+				setClientsAnswer(model.doAnswer(answerKey));
+				
+				if(isClientsAnswer())
+					view.getAnswerButton3().setBackground(green);
+				else
+					view.getAnswerButton3().setBackground(red);
 			}
 		};
 		view.getAnswerButton3().addActionListener(actionListenerAnswer3);
@@ -96,8 +141,13 @@ public class Controller {
 		actionListenerAnswer4 = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				answerKey = model.getTopicAnswers().get(3).getKey();;	
-				model.doAnswer(answerKey);
+				answerKey = model.getTopicAnswers().get(3).getKey();
+				setClientsAnswer(model.doAnswer(answerKey));
+				
+				if(isClientsAnswer())
+					view.getAnswerButton4().setBackground(green);
+				else
+					view.getAnswerButton4().setBackground(red);
 			}
 		};
 		view.getAnswerButton4().addActionListener(actionListenerAnswer4);
@@ -111,14 +161,14 @@ public class Controller {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				model.doOpen("LAT-ENG", "Dzivnieki");
+				model.doOpen("LAT-ENG", "Dzivnieki"); //TODO here I need to give parameters from view labels!!!!!!!!
 				
-			view.setTextQuestion(model.getLearnWord().getFromText());
+				view.setTextQuestion(model.getLearnWord().getFromText());
 				
-			view.setTextAnswer1(model.getTopicAnswers().get(0).getToText());
-			view.setTextAnswer2(model.getTopicAnswers().get(1).getToText());
-			view.setTextAnswer3(model.getTopicAnswers().get(2).getToText());
-			view.setTextAnswer4(model.getTopicAnswers().get(3).getToText());
+				view.setTextAnswer1(model.getTopicAnswers().get(0).getToText());
+				view.setTextAnswer2(model.getTopicAnswers().get(1).getToText());
+				view.setTextAnswer3(model.getTopicAnswers().get(2).getToText());
+				view.setTextAnswer4(model.getTopicAnswers().get(3).getToText());
 			
 			/*view.setTextQuestion("suns");
 				view.setTextAnswer1("pupper");
@@ -200,15 +250,7 @@ public class Controller {
 			}
 		};
 		view.getMenuItemNF().addActionListener(actionListenerNF);
-		
-//		actionListenerLanguage = new ActionListener() {
-//			
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				model.doLanguage();
-//			}
-//		};
-//		view.getMenuItemLanguage().addActionListener(actionListenerLanguage);
+
 		
 		actionListenerLatvian = new ActionListener() {
 			
@@ -240,7 +282,6 @@ public class Controller {
 	}
 
 }
-
 
 
 
