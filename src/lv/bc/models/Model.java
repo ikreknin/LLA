@@ -10,21 +10,23 @@ import lv.bc.io.TopicReader;
 import lv.bc.io.Word;
 
 public class Model {
-	List<Word> topicAnswers;
-	Word learnWord;
-
+	
+	TopicAnswers topicAnswers;
+	TopicReader topicReader;
+	
 	public List<Word> getTopicAnswers() {
-		return topicAnswers;
+		return topicAnswers.getAnswerList();
 	}
 
 	public Word getLearnWord() {
-		return learnWord;
+		return topicAnswers.getLearnWord();
 	}
 
 	private int x;
 
 	public Model() {
 		x = 0;
+		this.topicAnswers = new TopicAnswers();
 	}
 
 	public Model(int x) {
@@ -45,8 +47,10 @@ public class Model {
 	}
 
 	public boolean doAnswer(int answerKey) {
-		
-		return true;
+		if(!(topicAnswers == null))
+			return topicAnswers.checkAnswer(answerKey);
+		else
+			return false;
 	}
 
 	//TODO: delete doAnswer1, doAnswer2, doAnswer3, doAnswer4 to use one common method doAnswer()
@@ -69,18 +73,15 @@ public class Model {
 	// Main "File" Menu Items ------------------------------------------------------------------------------------------------------
 
 	// Sub-Menu "Open" method
-	public void doOpen(String lang, String topic) {
-		//TopicReader topicReader = new TopicReader(lang+"."+topic);
+	public void doOpen(String lng, String topic) {
+		//TopicReader topicReader = new TopicReader(lng+"."+topic);
 		// topicReader.openFile;
 		List<Word> tmpList = new ArrayList<Word>();
-		TopicAnswers topicAnswers = new TopicAnswers(tmpList);
-		this.topicAnswers = new ArrayList<Word>();
-		this.topicAnswers.addAll(topicAnswers.getAnswerList());
-		this.learnWord = new Word();
-		this.learnWord = topicAnswers.getLearnWord();
-		//System.out.println("==========================");
-		//System.out.println("Array this.topicAnswers: " + this.topicAnswers.toString());
-		//System.out.println("Word learnWord: " + this.learnWord.toString());
+		TopicAnswers topicAnswers= new TopicAnswers(tmpList);
+
+		System.out.println("==========================");
+		System.out.println("Array this.topicAnswers: " + topicAnswers.getAnswerList().toString());
+		System.out.println("Word learnWord: " + topicAnswers.getLearnWord().toString());
 
 	}
 

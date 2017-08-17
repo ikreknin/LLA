@@ -7,7 +7,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-
+import java.text.Normalizer;
+import java.util.regex.Pattern;
 public class View {
 
 	private final String applicationTitle = "Language Learning Application";
@@ -34,8 +35,8 @@ public class View {
 	private JMenuItem menuItemLatvian;
 	private JMenuItem menuItemEnglish;
 	private JMenuItem menuItemHelp;
-	String lang = "";
-	String topic = "";
+	public String lang = "";
+	public String topic = "";
 	String[] topics;
 	String[] topics1 = {"Animals","Family"};
 	String[] topics2 = {"Dzīvnieki","Ģimene"};
@@ -81,7 +82,7 @@ public class View {
 				String selectedString = (String)cb.getSelectedItem();
 				System.out.println("Selected from dropdown: " + selectedString);
 //				updateLabel(petName);
-				lang = selectedString;
+				lang = deAccent(selectedString);
 				System.out.println(lang);
 				if (selectedString == "LAT-ENG") {
 					DefaultComboBoxModel comboBoxModel1 = new DefaultComboBoxModel( topics2 );
@@ -112,7 +113,7 @@ public class View {
 			public void actionPerformed(ActionEvent e) {
 				JComboBox cb = (JComboBox)e.getSource();
 				String selectedString = (String)cb.getSelectedItem();
-				topic = selectedString;
+				topic = deAccent(selectedString);
 				System.out.println(topic);
 				System.out.println("Selected from dropdown: " + selectedString);
 //				updateLabel(petName);
@@ -363,5 +364,11 @@ public class View {
 	
 	public JMenuItem getMenuItemHelp() {
 		return menuItemHelp;
+	}
+	
+	public String deAccent(String str) {
+	    String nfdNormalizedString = Normalizer.normalize(str, Normalizer.Form.NFD); 
+	    Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+	    return pattern.matcher(nfdNormalizedString).replaceAll("");
 	}
 }
