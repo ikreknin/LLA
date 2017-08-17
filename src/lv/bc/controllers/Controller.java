@@ -174,7 +174,7 @@ public class Controller {
 				// TODO
 			}
 		};
-		view.getMenuItemLanguage().addActionListener(actionListenerLatvian);
+		view.getMenuItemLatvian().addActionListener(actionListenerLatvian);
 		
 		actionListenerEnglish = new ActionListener() {
 			
@@ -183,7 +183,7 @@ public class Controller {
 				// TODO
 			}
 		};
-		view.getMenuItemLanguage().addActionListener(actionListenerEnglish);
+		view.getMenuItemEnglish().addActionListener(actionListenerEnglish);
 		
 		actionListenerHelp = new ActionListener() {
 			
