@@ -16,7 +16,9 @@ public class TopicAnswers {
 	// 2.3: if answer was correct, then currWord has to be changed on Word who is in topicList and have count < 3
 	// 2.4: if answer was incorrect , then just rebuild order of objects in topicList
 	// 2.5: if successed 12 correct answers, then call initializeTopics()
+	public TopicAnswers() {
 
+	}
 	public TopicAnswers(List<Word> answerList) {
 		setAnswerList();
 		setLearnWord();
@@ -83,7 +85,14 @@ public class TopicAnswers {
 	}
 	
 	public boolean checkAnswer(int answerNr){
-			return false;
+		//TODO:
+		mixAnswers();
+
+		/*if(learnWord.getKey() == answerNr){
+			//TODO 
+			return true;
+		}*/
+		return false;
 		
 	}
 
