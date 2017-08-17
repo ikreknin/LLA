@@ -86,6 +86,7 @@ public class TopicAnswers {
 	
 	public boolean checkAnswer(int answerNr){
 		//TODO:
+		System.out.println("mixAnswers");
 		mixAnswers();
 
 		/*if(learnWord.getKey() == answerNr){
