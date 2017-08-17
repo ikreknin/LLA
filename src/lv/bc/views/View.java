@@ -35,6 +35,7 @@ public class View {
 	private JMenuItem menuItemLatvian;
 	private JMenuItem menuItemEnglish;
 	private JMenuItem menuItemHelp;
+	private JMenuItem menuItemAbout;
 	public String lang = "";
 	public String topic = "";
 	String[] topics;
@@ -209,10 +210,10 @@ public class View {
     	menuBar.add(fileMenu);
 
     	//a group of JMenuItems
-    	menuItemOpen = new JMenuItem("Open", KeyEvent.VK_T);
+//    	menuItemOpen = new JMenuItem("Open", KeyEvent.VK_T);
 //    	menuItem.setAccelerator(KeyStroke.getKeyStroke(
 //    	        KeyEvent.VK_1, ActionEvent.ALT_MASK));
-    	fileMenu.add(menuItemOpen);
+//    	fileMenu.add(menuItemOpen);
 
     	menuItemSave = new JMenuItem("Save");
 //    	menuItem.setMnemonic(KeyEvent.VK_B);
@@ -265,8 +266,10 @@ public class View {
     	menuBar.add(optionsMenu);
     	
     	helpMenu = new JMenu("Help");
+    	menuItemAbout = new JMenuItem("About");
     	menuItemHelp = new JMenuItem("Help");
     	helpMenu.add(menuItemHelp);
+    	helpMenu.add(menuItemAbout);
     	menuBar.add(helpMenu);        
         
     	frame.add(mainPanel);

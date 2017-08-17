@@ -45,12 +45,33 @@ public class TopicAnswers {
 	public void setLearnWord() {
 		//this.learnWord = learnWord;
 		//TODO: Delete this hard code later
-		int k = getRandomInt(1, 4);
-		//if(this.answerList.size() > 0){
-		//	learnWord = this.answerList.get(k);
-	//	}
-		//else
-			learnWord = new Word(0, "suns", "dog", 0);
+		if(this.answerList.size() > 0){
+			System.out.println(1);
+			boolean noWord = true;
+			System.out.println(2);
+			while(noWord){
+				System.out.println(3);
+			
+				int k = getRandomInt(0, 3);
+				System.out.println(4);
+
+				learnWord = this.answerList.get(k);
+				System.out.println("5 learnWord.getCount() " +learnWord.getCount() );
+
+				if(learnWord.getCount() < 3){
+					System.out.println(6);
+
+					noWord = false;
+					System.out.println(7);
+
+				}
+				//noWord = false;
+				System.out.println(8);
+
+			}
+		}
+		else
+			learnWord = new Word(0, "", "", 0);
 	}
 
 	public static int getRandomInt(int min, int max) {
@@ -86,14 +107,16 @@ public class TopicAnswers {
 	
 	public boolean checkAnswer(int answerNr){
 		//TODO:
+		boolean answerCorrect = false;
 		System.out.println("mixAnswers");
 		mixAnswers();
-
-		/*if(learnWord.getKey() == answerNr){
-			//TODO 
-			return true;
-		}*/
-		return false;
+		if (learnWord.getKey() == answerNr){			
+			answerList.get(learnWord.getKey()).setCount(answerList.get(learnWord.getKey()).getCount()+1);
+			setLearnWord();
+			answerCorrect = true;
+		}
+		System.out.println("Answer  is " + answerCorrect);
+		return answerCorrect;
 		
 	}
 
