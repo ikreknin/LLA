@@ -47,34 +47,29 @@ public class Model {
 
 	public boolean doAnswer(int answerKey) {
 		System.out.println("answerKey: " + answerKey);	
-		System.out.println(topicAnswers.getAnswerList().size());
-
-		System.out.println("checkAnswer");
-		boolean a = topicAnswers.checkAnswer(answerKey);
-		return true;
+		boolean answerCorrect = topicAnswers.checkAnswer(answerKey);
+		System.out.println("mixed array" + topicAnswers.getAnswerList().toString());
+		System.out.println("learnWord" + topicAnswers.getLearnWord().toString());
+		return answerCorrect;
 	}
 
 	//TODO: delete doAnswer1, doAnswer2, doAnswer3, doAnswer4 to use one common method doAnswer()
 	public void doAnswer1() {
-		System.out.println("Answer1");
 		boolean b =  doAnswer(0);
 
 	}
 
 	public void doAnswer2() {
-		System.out.println("Answer2");		
 		boolean b =  doAnswer(1);
 
 	}
 
 	public void doAnswer3() {
-		System.out.println("Answer3");
 		boolean b =  doAnswer(2);
 
 	}
 
 	public void doAnswer4() {
-		System.out.println("Answer4");
 		boolean b =  doAnswer(3);
 
 	}
@@ -87,12 +82,9 @@ public class Model {
 		// topicReader.openFile;
 		List<Word> tmpList = new ArrayList<Word>();
 		topicAnswers= new TopicAnswers(tmpList);
-		/*
 		System.out.println("==========================");
 		System.out.println("Array this.topicAnswers: " + topicAnswers.getAnswerList().toString());
 		System.out.println("Word learnWord: " + topicAnswers.getLearnWord().toString());
-		*/
-
 
 	}
 
