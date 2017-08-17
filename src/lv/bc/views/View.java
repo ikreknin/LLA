@@ -136,7 +136,7 @@ public class View {
         c.gridx = 0;
         c.gridy = 0;
         c.weighty = 1.0;   //request any extra vertical space
-        c.weightx = 0.5;
+        c.weightx = 1;
         c.anchor = GridBagConstraints.PAGE_START; //bottom of space
         c.insets = new Insets(100,0,0,0);  //top padding
         buttonQuestion.setBorderPainted(false);
@@ -152,7 +152,7 @@ public class View {
         c.ipady = 40;      //make this component tall
         c.gridx = 0;
         c.gridy = 1;
-        c.weightx = 0.0;
+        c.weightx = 1.0;
         c.weighty = 0.0;   //request any extra vertical space
         c.anchor = GridBagConstraints.PAGE_START; //bottom of space
         c.insets = new Insets(0,0,0,0);  //top padding
@@ -164,7 +164,7 @@ public class View {
         c.ipady = 40;      //make this component tall
         c.gridx = 0;
         c.gridy = 2;
-        c.weightx = 0.0;
+        c.weightx = 1.0;
         c.weighty = 0.0;   //request any extra vertical space
         c.anchor = GridBagConstraints.PAGE_START; //bottom of space
         c.insets = new Insets(25,0,0,0);  //top padding
@@ -176,7 +176,7 @@ public class View {
         c.ipady = 40;      //make this component tall
         c.gridx = 0;
         c.gridy = 3;
-        c.weightx = 0.0;
+        c.weightx = 1.0;
         c.weighty = 0.0;   //request any extra vertical space
         c.anchor = GridBagConstraints.PAGE_START; //bottom of space
         c.insets = new Insets(25,0,0,0);  //top padding
@@ -188,7 +188,7 @@ public class View {
         c.ipady = 40;      //make this component tall
         c.gridx = 0;
         c.gridy = 4;
-        c.weightx = 0.0;
+        c.weightx = 1.0;
         c.weighty = 0.0;   //request any extra vertical space
         c.anchor = GridBagConstraints.PAGE_START; //bottom of space
         c.insets = new Insets(25,0,0,0);  //top padding
@@ -275,6 +275,11 @@ public class View {
     	frame.add(mainPanel);
     	frame.setJMenuBar(menuBar);
 		frame.setVisible(true);
+	}
+	
+	public void buttonColorChanger () {
+		
+		
 	}
 
 	public JButton getQuestionButton() {
