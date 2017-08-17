@@ -1,4 +1,4 @@
-package lv.bc.models;
+package lv.bc.settings;
 
 
 import java.io.FileInputStream;
