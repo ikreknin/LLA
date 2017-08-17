@@ -11,13 +11,14 @@ public class Controller {
 	private Model model;
 	private View view;
 //Action listeners for buttons
-	private ActionListener  actionListenerQuestion,actionListenerAnswer1,actionListenerAnswer,	actionListenerAnswer2, actionListenerAnswer3, actionListenerAnswer4;
+	private ActionListener  actionListenerQuestion,actionListenerAnswer1,	actionListenerAnswer2, actionListenerAnswer3, actionListenerAnswer4,actionListenerAnswer;
 //Actions listeners for Menu
 	private ActionListener actionListenerOpen, actionListenerSave, actionListenerReset, actionListenerExit,
 	actionListenerSilent, actionListenerAudio, actionListenerText, actionListenerFN, actionListenerNF, 
 	actionListenerLanguage, actionListenerHelp, actionListenerLatvian, actionListenerEnglish;
 	
 	public int answerKey;
+	boolean clientsAnswer;
 
 	public Controller(Model model, View view) {
 		this.model = model;
@@ -36,6 +37,29 @@ public class Controller {
 		
 //Action listeners for buttons------------------------------------------------------------------------------------------
 		
+		actionListenerAnswer = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				boolean answer = model.doAnswer(answerKey);
+				
+				if(false) {
+					model.doOpen("LAT-ENG", "Dzivnieki");
+				}
+				else {
+					view.setTextAnswer1(model.getTopicAnswers().get(0).getToText());
+					view.setTextAnswer2(model.getTopicAnswers().get(1).getToText());
+					view.setTextAnswer3(model.getTopicAnswers().get(2).getToText());
+					view.setTextAnswer4(model.getTopicAnswers().get(3).getToText());
+				}
+				
+			}
+		};
+		view.getAnswerButton1().addActionListener(actionListenerAnswer);
+		view.getAnswerButton2().addActionListener(actionListenerAnswer);
+		view.getAnswerButton3().addActionListener(actionListenerAnswer);
+		view.getAnswerButton4().addActionListener(actionListenerAnswer);
+		
+		
 		actionListenerQuestion = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -48,8 +72,7 @@ public class Controller {
 		actionListenerAnswer1 = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				answerKey = 1;
-				System.out.println(answerKey + " 1");
+				answerKey = model.getTopicAnswers().get(0).getKey();
 			}
 		};
 		view.getAnswerButton1().addActionListener(actionListenerAnswer1);
@@ -57,7 +80,7 @@ public class Controller {
 		actionListenerAnswer2 = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				answerKey = 2;		
+				answerKey = model.getTopicAnswers().get(1).getKey();;		
 			}
 		};	
 		view.getAnswerButton2().addActionListener(actionListenerAnswer2);
@@ -65,7 +88,7 @@ public class Controller {
 		actionListenerAnswer3 = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				answerKey = 3;		
+				answerKey = model.getTopicAnswers().get(2).getKey();;
 			}
 		};
 		view.getAnswerButton3().addActionListener(actionListenerAnswer3);
@@ -73,23 +96,12 @@ public class Controller {
 		actionListenerAnswer4 = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				answerKey = 4;	
+				answerKey = model.getTopicAnswers().get(3).getKey();;	
+				model.doAnswer(answerKey);
 			}
 		};
 		view.getAnswerButton4().addActionListener(actionListenerAnswer4);
 		
-		actionListenerAnswer = new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.out.println(answerKey);
-				model.doAnswer(answerKey);
-				
-			}
-		};
-		view.getAnswerButton1().addActionListener(actionListenerAnswer);
-		view.getAnswerButton2().addActionListener(actionListenerAnswer);
-		view.getAnswerButton3().addActionListener(actionListenerAnswer);
-		view.getAnswerButton4().addActionListener(actionListenerAnswer);
 		
 
 		
@@ -101,16 +113,18 @@ public class Controller {
 			public void actionPerformed(ActionEvent e) {
 				model.doOpen("LAT-ENG", "Dzivnieki");
 				
-				view.setTextQuestion(model.getLearnWord().getFromText());
-				//view.setTextQuestion("suns");
+			view.setTextQuestion(model.getLearnWord().getFromText());
+				
 			view.setTextAnswer1(model.getTopicAnswers().get(0).getToText());
 			view.setTextAnswer2(model.getTopicAnswers().get(1).getToText());
 			view.setTextAnswer3(model.getTopicAnswers().get(2).getToText());
 			view.setTextAnswer4(model.getTopicAnswers().get(3).getToText());
-				//view.setTextAnswer1("pupper");
-				//view.setTextAnswer2("doge");
-				//view.setTextAnswer3("cate");
-				//view.setTextAnswer4("doggo");
+			
+			/*view.setTextQuestion("suns");
+				view.setTextAnswer1("pupper");
+				view.setTextAnswer2("doge");
+				view.setTextAnswer3("cate");
+				view.setTextAnswer4("doggo"); */
 			}
 		};
 		view.okButton.addActionListener(actionListenerOpen);
