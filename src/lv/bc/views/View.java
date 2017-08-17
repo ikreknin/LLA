@@ -43,6 +43,7 @@ public class View {
 	String[] topics2 = {"Dzīvnieki","Ģimene"};
 	JComboBox topicsList;
 	public JButton okButton = new JButton("OK"); 
+	public JButton nextQuestion;
 	
 	public JFrame getFrame() {
 		return frame;
@@ -63,6 +64,8 @@ public class View {
 		GridBagConstraints cpnl = new GridBagConstraints();
 		
 		JPanel languagePanel = new JPanel();
+		nextQuestion = new JButton("Next");
+		languagePanel.add(nextQuestion);
 		JLabel lbl = new JLabel("Select one of the possible language choices");
 	    lbl.setVisible(true);
 	    languagePanel.add(lbl);
@@ -199,6 +202,15 @@ public class View {
         cpnl.gridy = 2;
         mainPanel.add(pane, cpnl);
         
+        final JPanel nextPanel = new JPanel();
+        nextPanel.setLayout(new GridBagLayout());
+//        GridBagConstraints cpn = new GridBagConstraints();
+        JButton nextQuestion = new JButton("Next");
+        nextPanel.add(nextQuestion);
+        cpnl.gridx = 0;
+		cpnl.gridy = 3;
+//        mainPanel.add(nextPanel, cpn);
+        
     	//Create the menu bar.
     	menuBar = new JMenuBar();
 
@@ -275,11 +287,6 @@ public class View {
     	frame.add(mainPanel);
     	frame.setJMenuBar(menuBar);
 		frame.setVisible(true);
-	}
-	
-	public void buttonColorChanger () {
-		
-		
 	}
 
 	public JButton getQuestionButton() {
