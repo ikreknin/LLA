@@ -1,25 +1,28 @@
 package lv.bc.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.JFrame;
 
-public class Model {
+import lv.bc.io.TopicAnswers;
+import lv.bc.io.TopicReader;
+import lv.bc.io.Word;
 
-	private int x;
+public class Model {
+	
+	TopicAnswers topicAnswers = new TopicAnswers();
+	TopicReader topicReader;
+	
+	public List<Word> getTopicAnswers() {
+		return topicAnswers.getAnswerList();
+	}
+
+	public Word getLearnWord() {
+		return topicAnswers.getLearnWord();
+	}
 
 	public Model() {
-		x = 0;
-	}
-
-	public Model(int x) {
-		this.x = x;
-	}
-
-	public void incX() {
-		x++;
-	}
-
-	public int getX() {
-		return x;
 	}
 
 	// Buttons' methods ------------------------------------------------------------------------------------------------------
@@ -27,27 +30,25 @@ public class Model {
 
 	}
 
-	public void doAnswer1() {
-
-	}
-
-	public void doAnswer2() {
-
-	}
-
-	public void doAnswer3() {
-
-	}
-
-	public void doAnswer4() {
-
+	public boolean doAnswer(int answerKey) {
+		System.out.println("answerKey: " + answerKey);	
+		boolean answerCorrect = topicAnswers.checkAnswer(answerKey);
+		System.out.println("mixed array" + topicAnswers.getAnswerList().toString());
+		System.out.println("learnWord" + topicAnswers.getLearnWord().toString());
+		return answerCorrect;
 	}
 
 	// Main "File" Menu Items ------------------------------------------------------------------------------------------------------
 
 	// Sub-Menu "Open" method
-	public void doOpen(JFrame parentFrame) {
-		new FileChooser().chooseFile(parentFrame);;
+	public void doOpen(String lng, String topic) {
+		//TopicReader topicReader = new TopicReader(lng+"."+topic);
+		// topicReader.openFile;
+		List<Word> tmpList = new ArrayList<Word>();
+		topicAnswers= new TopicAnswers(tmpList);
+		System.out.println("==========================");
+		System.out.println("Array this.topicAnswers: " + topicAnswers.getAnswerList().toString());
+		System.out.println("Word learnWord: " + topicAnswers.getLearnWord().toString());
 
 	}
 
