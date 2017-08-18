@@ -39,8 +39,8 @@ public class View {
 	public String lang = "";
 	public String topic = "";
 	String[] topics;
-	String[] topics1 = {"Animals","Family"};
-	String[] topics2 = {"Dzīvnieki","Ģimene"};
+	String[] topicsLv = {"Animals","Family"};
+	String[] topicsEng = {"Dzīvnieki","Ģimene"};
 	JComboBox topicsList;
 	public JButton okButton = new JButton("OK"); 
 	public JButton nextQuestion;
@@ -55,24 +55,21 @@ public class View {
 		frame.getContentPane().setLayout(new BorderLayout());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(600, 800);
-		// frame.setSize(320, 480);
 		
+		// JPanel that holds all the other panels
 		final JPanel mainPanel = new JPanel();
-//		GridLayout experimentLayout = new GridLayout(2,1);
 		mainPanel.setLayout(new GridBagLayout());
-//		frame.setLayout(experimentLayout);
+		Border paneEdge = BorderFactory.createEmptyBorder(0,30,40,30);
+		((JComponent) mainPanel).setBorder(paneEdge);
 		GridBagConstraints cpnl = new GridBagConstraints();
 		
+		// JPanel for choosing language
 		JPanel languagePanel = new JPanel();
-		nextQuestion = new JButton("Next");
-		languagePanel.add(nextQuestion);
 		JLabel lbl = new JLabel("Select one of the possible language choices");
-	    lbl.setVisible(true);
 	    languagePanel.add(lbl);
 	    String[] choices = { "LAT-ENG","ENG-LAT"};
 	    JComboBox languageList = new JComboBox(choices);
 	    languageList.setSelectedIndex(0);
-	    languageList.addActionListener(null);
 	    languageList.setVisible(true);
 	    languagePanel.add(languageList);
 	    cpnl.gridx = 0;
@@ -85,31 +82,30 @@ public class View {
 				JComboBox cb = (JComboBox)e.getSource();
 				String selectedString = (String)cb.getSelectedItem();
 				System.out.println("Selected from dropdown: " + selectedString);
-//				updateLabel(petName);
 				lang = deAccent(selectedString);
-				System.out.println(lang);
 				if (selectedString == "LAT-ENG") {
-					DefaultComboBoxModel comboBoxModel1 = new DefaultComboBoxModel( topics2 );
-					topicsList.setModel( comboBoxModel1 );
+					DefaultComboBoxModel comboBoxModel1 = new DefaultComboBoxModel(topicsEng);
+					topicsList.setModel(comboBoxModel1);
 				} else {
-					DefaultComboBoxModel comboBoxModel2 = new DefaultComboBoxModel( topics1 );
-					topicsList.setModel( comboBoxModel2 );
+					DefaultComboBoxModel comboBoxModel2 = new DefaultComboBoxModel(topicsLv);
+					topicsList.setModel(comboBoxModel2);
 				}
 			}
 		};
         languageList.addActionListener(actionListenerLanguage);
         
+        // JPanel for choosing topic
 		JPanel topicPanel = new JPanel();
-	    topics = topics2;
+	    topics = topicsEng;
 	    topicsList = new JComboBox();
-	    DefaultComboBoxModel comboBoxModel = new DefaultComboBoxModel( topics );
+	    DefaultComboBoxModel comboBoxModel = new DefaultComboBoxModel(topics);
 	    topicsList.setModel(comboBoxModel);
 	    topicsList.setSelectedIndex(0);
-	    topicsList.addActionListener(null);
 	    topicsList.setVisible(true);
 	    topicPanel.add(topicsList);
 	    cpnl.gridx = 0;
         cpnl.gridy = 1;
+        cpnl.insets = new Insets(15,0,0,0); 
         topicPanel.add(okButton);
         mainPanel.add(topicPanel, cpnl);
         ActionListener actionListenerTopic = new ActionListener() {
@@ -118,19 +114,16 @@ public class View {
 				JComboBox cb = (JComboBox)e.getSource();
 				String selectedString = (String)cb.getSelectedItem();
 				topic = deAccent(selectedString);
-				System.out.println(topic);
 				System.out.println("Selected from dropdown: " + selectedString);
 //				updateLabel(petName);
 			}
 		};
         topicsList.addActionListener(actionListenerTopic);
 		
+        // JPanel for Question buttons
 	    JPanel pane = new JPanel();
 	    mainPanel.add(pane);
-//		Container pane = frame.getContentPane();
 		pane.setLayout(new GridBagLayout());
-		Border paneEdge = BorderFactory.createEmptyBorder(0,30,40,30);
-		((JComponent) pane).setBorder(paneEdge);
 		GridBagConstraints c = new GridBagConstraints();
 		
         buttonQuestion = new JButton("Māja (Hardcoded option)");
@@ -138,10 +131,10 @@ public class View {
         c.ipady = 50;      //make this component tall
         c.gridx = 0;
         c.gridy = 0;
-        c.weighty = 1.0;   //request any extra vertical space
-        c.weightx = 1;
+        c.weighty = 0.0;   //request any extra vertical space
+        c.weightx = 1.0;
         c.anchor = GridBagConstraints.PAGE_START; //bottom of space
-        c.insets = new Insets(100,0,0,0);  //top padding
+        c.insets = new Insets(10,0,0,0);  //top padding
         buttonQuestion.setBorderPainted(false);
         buttonQuestion.setFocusPainted(false);
         buttonQuestion.setFocusable(false);
@@ -204,57 +197,41 @@ public class View {
         
         final JPanel nextPanel = new JPanel();
         nextPanel.setLayout(new GridBagLayout());
-//        GridBagConstraints cpn = new GridBagConstraints();
-        JButton nextQuestion = new JButton("Next");
+        GridBagConstraints cpn = new GridBagConstraints();
+        nextQuestion = new JButton("Next");
         nextPanel.add(nextQuestion);
-        cpnl.gridx = 0;
-		cpnl.gridy = 3;
-//        mainPanel.add(nextPanel, cpn);
+        cpn.gridx = 0;
+		cpn.gridy = 3;
+        mainPanel.add(nextPanel, cpn);
         
     	//Create the menu bar.
     	menuBar = new JMenuBar();
-
     	//Build the first menu.
     	fileMenu = new JMenu("File");
-    	fileMenu.setMnemonic(KeyEvent.VK_A);
-//    	menu.getAccessibleContext().setAccessibleDescription(
-//    	        "The only menu in this program that has menu items");
     	menuBar.add(fileMenu);
 
-    	//a group of JMenuItems
-//    	menuItemOpen = new JMenuItem("Open", KeyEvent.VK_T);
-//    	menuItem.setAccelerator(KeyStroke.getKeyStroke(
-//    	        KeyEvent.VK_1, ActionEvent.ALT_MASK));
-//    	fileMenu.add(menuItemOpen);
-
     	menuItemSave = new JMenuItem("Save");
-//    	menuItem.setMnemonic(KeyEvent.VK_B);
     	fileMenu.add(menuItemSave);
 
     	menuItemReset = new JMenuItem("Reset");
-//    	menuItem.setMnemonic(KeyEvent.VK_D);
     	fileMenu.add(menuItemReset);
     	
     	fileMenu.addSeparator(); // --------------------------
     	
     	menuItemExit = new JMenuItem("Exit");
-//    	menuItem.setMnemonic(KeyEvent.VK_D);
     	fileMenu.add(menuItemExit);
 
     	modeMenu = new JMenu("Mode");
     	menuBar.add(modeMenu);
     	
     	menuItemSilent = new JCheckBoxMenuItem("Silent");
-//    	cbMenuItem.setMnemonic(KeyEvent.VK_C);
     	modeMenu.add(menuItemSilent);
 
     	menuItemAudio = new JCheckBoxMenuItem("Audio");
-//    	cbMenuItem.setMnemonic(KeyEvent.VK_H);
     	modeMenu.add(menuItemAudio);
     	
     	menuItemText = new JCheckBoxMenuItem("Text");
     	menuItemText.setSelected(true);
-//    	cbMenuItem.setMnemonic(KeyEvent.VK_H);
     	modeMenu.add(menuItemText);
     	
     	modeMenu.addSeparator(); // --------------------------
@@ -266,7 +243,6 @@ public class View {
     	modeMenu.add(menuItemFN);
     	
     	menuItemNF = new JRadioButtonMenuItem("Native to Foreign");
-//    	menuItemNF.setMnemonic(KeyEvent.VK_O);
     	group.add(menuItemNF);
     	modeMenu.add(menuItemNF);
     	
