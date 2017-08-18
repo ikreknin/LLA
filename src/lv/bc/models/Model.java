@@ -22,22 +22,7 @@ public class Model {
 		return topicAnswers.getLearnWord();
 	}
 
-	private int x;
-
 	public Model() {
-		x = 0;
-	}
-
-	public Model(int x) {
-		this.x = x;
-	}
-
-	public void incX() {
-		x++;
-	}
-
-	public int getX() {
-		return x;
 	}
 
 	// Buttons' methods ------------------------------------------------------------------------------------------------------
@@ -51,27 +36,6 @@ public class Model {
 		System.out.println("mixed array" + topicAnswers.getAnswerList().toString());
 		System.out.println("learnWord" + topicAnswers.getLearnWord().toString());
 		return answerCorrect;
-	}
-
-	//TODO: delete doAnswer1, doAnswer2, doAnswer3, doAnswer4 to use one common method doAnswer()
-	public void doAnswer1() {
-		boolean b =  doAnswer(0);
-
-	}
-
-	public void doAnswer2() {
-		boolean b =  doAnswer(1);
-
-	}
-
-	public void doAnswer3() {
-		boolean b =  doAnswer(2);
-
-	}
-
-	public void doAnswer4() {
-		boolean b =  doAnswer(3);
-
 	}
 
 	// Main "File" Menu Items ------------------------------------------------------------------------------------------------------
