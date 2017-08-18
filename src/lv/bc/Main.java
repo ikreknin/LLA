@@ -11,7 +11,7 @@ public class Main {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-				Model model = new Model(0);
+				Model model = new Model();
 				View view = new View("");
 				Controller controller = new Controller(model, view);
 				controller.contol();
