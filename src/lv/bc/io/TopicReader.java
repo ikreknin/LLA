@@ -12,7 +12,7 @@ import java.util.List;
 public class TopicReader {
 	
 	List<Word> allTopicWords;
-	List<Word> leftToLearn;
+
 	String fileName;
 
 	public TopicReader(String fileName) {
@@ -37,12 +37,13 @@ public class TopicReader {
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
+	
+
 
 	//1:TODO: read from necessary file all words
 	public void openFile() throws IOException{
 		
 		this.allTopicWords = new ArrayList<Word>();
-		this.leftToLearn = new ArrayList<Word>();
 		
 		this.allTopicWords.add(new Word(0,"suns", "dog", 0));
 		this.allTopicWords.add(new Word(1,"lauva", "lion", 0));
@@ -61,8 +62,7 @@ public class TopicReader {
 		
 		this.allTopicWords.add(new Word(12,"lācis", "bear", 0));
 		
-		leftToLearn.addAll(allTopicWords);		
-		
+				
         /*Path path = Paths.get(this.fileName);
     	if (Files.notExists(path)) {
     		System.exit(1);

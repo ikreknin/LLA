@@ -8,6 +8,8 @@ import java.util.Random;
 
 public class TopicAnswers {
 	List<Word> answerList;
+	List<Word> leftToLearn;
+	List<Word> fullList;
 	Word learnWord;
 	
     //2: TODO: mixList mix the Topic object int the topicList
@@ -15,27 +17,73 @@ public class TopicAnswers {
 	// 2.2: check that 12 times correct answer was reached
 	// 2.3: if answer was correct, then currWord has to be changed on Word who is in topicList and have count < 3
 	// 2.4: if answer was incorrect , then just rebuild order of objects in topicList
-	// 2.5: if successed 12 correct answers, then call initializeTopics()
-	public TopicAnswers() {
-
+	// 2.5: if successes 12 correct answers, then call initializeTopics()
+	public TopicAnswers(){
+		answerList = new ArrayList<Word>();
+		leftToLearn = new ArrayList<Word>();
+		fullList = new ArrayList<Word>();
+		learnWord = new Word(0,"","",0);		
 	}
-	public TopicAnswers(List<Word> answerList) {
-		setAnswerList();
-		setLearnWord();
+	public TopicAnswers(List<Word>  fileArray) {
+		answerList = new ArrayList<Word>();
+		leftToLearn = new ArrayList<Word>();
+		fullList = new ArrayList<Word>();
+		learnWord = new Word(0,"","",0);
+		initializationOfArrays(fileArray);
 	}
 
 	public List<Word> getAnswerList() {
 		return answerList;
 	}
+	
+	public List<Word> getLeftToLearn() {
+		return leftToLearn;
+	}
 
-	public void setAnswerList() {
-		//this.answerList = answerList;
-		//TODO: Delete hard code after demo
-		this.answerList = new ArrayList<Word>();
-		this.answerList.add(new Word(0,"suns", "dog", 0));
-		this.answerList.add(new Word(1,"lauva", "lion", 0));
-		this.answerList.add(new Word(2,"putns", "bird", 0));
-		this.answerList.add(new Word(3, "kengurs", "kangaroo", 0));
+	public void setLeftToLearn(List<Word> leftToLearn) {
+		this.leftToLearn.addAll(leftToLearn);		
+	}
+
+	
+	public List<Word> getFullList() {
+		return fullList;
+	}
+	
+	public void setFullList(List<Word> fileArray) {
+		this.fullList.addAll(fileArray);
+	 }
+	
+	public void initializationOfArrays(List<Word>  fileArray){
+		setFullList(fileArray);
+		System.out.println("fullList.size()		:	" + fullList.size());
+		setLeftToLearn(fileArray);
+		System.out.println("leftToLearn.size()	:	" + leftToLearn.size());
+		setAnswerList(leftToLearn);
+		System.out.println("answerList.size()	:	" + answerList.size());
+		setLearnWord();
+		System.out.println("Word				:	" + learnWord.toString());
+				
+	}
+	
+	public void setAnswerList(List<Word> wordsSet) {
+		if(wordsSet.size() >= 4){
+			LinkedHashSet<Integer> randSet =new LinkedHashSet<Integer>();
+			while(randSet.size() < 4){
+				int k = getRandomInt(0, wordsSet.size()-1);
+				randSet.add(k);
+			}
+			Iterator<Integer> itr = randSet.iterator();
+			List<Word> tmpTopic = new ArrayList<Word>();
+			while(itr.hasNext()){
+				int i = itr.next();
+		        if(wordsSet.get(i)!= null)
+		        	tmpTopic.add(wordsSet.get(i));
+			}
+			System.out.println("[WAS] " + answerList.toString());
+			answerList.clear();
+			answerList.addAll(tmpTopic);
+			System.out.println("[NOW] " + answerList.toString());
+		}
 	}
 
 	public Word getLearnWord() {
@@ -56,42 +104,19 @@ public class TopicAnswers {
 	    return random.nextInt((max - min) + 1) + min;
 	}
 	
-	public void mixAnswers(){
-		Random rng = new Random(); 
-		int[] randomInt = new int[4]; 
-		
-		// Note: use LinkedHashSet to maintain insertion order
-		LinkedHashSet<Integer> randSet =new LinkedHashSet<Integer>();
-		while(randSet.size() < 4){
-			int k = getRandomInt(1, 4);
-			randSet.add(k);
-		}
-		
-		List<Word> tmpTopic = new ArrayList<Word>();
-		Iterator<Integer> itr = randSet.iterator();
-		System.out.println("[WAS] " + answerList.toString());
-		int i = 0;
-		while(itr.hasNext()){
-			int t = itr.next();
-	        if(answerList.get(t-1)!= null)
-	        	tmpTopic.add(answerList.get(t-1));
-		}    
-		
-		answerList.clear();
-		answerList.addAll(tmpTopic);
-		System.out.println("[NOW] " + answerList.toString());
-	}
-	
 	public boolean checkAnswer(int answerNr){
 		//TODO:
 		boolean answerCorrect = false;
-		System.out.println("mixAnswers");
-		mixAnswers();
+		System.out.println("CHECK learnWord:	"+ learnWord.toString());
+
 		if (learnWord.getKey() == answerNr){			
-			answerList.get(learnWord.getKey()).setCount(answerList.get(learnWord.getKey()).getCount()+1);
+			setAnswerList(leftToLearn);
 			setLearnWord();
 			answerCorrect = true;
 		}
+		else
+			setAnswerList(answerList);
+
 		System.out.println("Answer  is " + answerCorrect);
 		return answerCorrect;
 		
