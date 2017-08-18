@@ -46,7 +46,7 @@ public class Model {
 
 	// Sub-Menu "Open" method
 	public void doOpen(String lng, String topic) {
-		TopicReader topicReader = new TopicReader(lng+"."+topic);
+		TopicReader topicReader = new TopicReader("ENG-LAT", "Animals");
 		try {
 			topicReader.openFile();
 			if(topicReader.getAllTopicWords().size() > 0) {
@@ -58,12 +58,10 @@ public class Model {
 				System.out.println("Answ array: " + topicAnswers.getAnswerList().toString());
 				System.out.println("learnWord : " + topicAnswers.getLearnWord().toString());
 				System.out.println("model.getLearnWord().getFromText():			" + this.getLearnWord().getFromText());
-				
 				System.out.println("model.getTopicAnswers().get(0).getToText(): " + this.getTopicAnswers().get(0).getToText());
 				System.out.println("model.getTopicAnswers().get(1).getToText()):" + this.getTopicAnswers().get(1).getToText());
 				System.out.println("model.getTopicAnswers().get(2).getToText(): " + this.getTopicAnswers().get(2).getToText());
 				System.out.println("model.getTopicAnswers().get(3).getToText():	" + this.getTopicAnswers().get(3).getToText());
-
 			}
 		} catch (IOException e) {
 			//SHOW Error message
