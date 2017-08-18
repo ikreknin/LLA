@@ -43,32 +43,9 @@ public class TopicAnswers {
 	}
 
 	public void setLearnWord() {
-		//this.learnWord = learnWord;
-		//TODO: Delete this hard code later
 		if(this.answerList.size() > 0){
-			System.out.println(1);
-			boolean noWord = true;
-			System.out.println(2);
-			while(noWord){
-				System.out.println(3);
-			
-				int k = getRandomInt(0, 3);
-				System.out.println(4);
-
-				learnWord = this.answerList.get(k);
-				System.out.println("5 learnWord.getCount() " +learnWord.getCount() );
-
-				if(learnWord.getCount() < 3){
-					System.out.println(6);
-
-					noWord = false;
-					System.out.println(7);
-
-				}
-				//noWord = false;
-				System.out.println(8);
-
-			}
+			int k = getRandomInt(0, 3);
+			learnWord = this.answerList.get(k);
 		}
 		else
 			learnWord = new Word(0, "", "", 0);
