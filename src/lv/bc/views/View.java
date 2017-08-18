@@ -70,7 +70,7 @@ public class View {
 		JLabel lbl = new JLabel("Select one of the possible language choices");
 	    languagePanel.add(lbl);
 	    choices = new String [2];
-	    choices[0] = "LAT-ENG"; choices[2] = "ENG-LAT";
+	    choices[0] = "LAT-ENG"; choices[1] = "ENG-LAT";
 	    languageList = new JComboBox(choices);
 	    languageList.setSelectedIndex(0);
 	    languageList.setVisible(true);
