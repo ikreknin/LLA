@@ -48,10 +48,10 @@ public class TopicReader {
 		
 		this.allTopicWords = new ArrayList<Word>();
 				
-        Path path = Paths.get(filePath);
-    	if (Files.notExists(path)) {
-    		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!No such file under Path: [" + filePath + "]");
-    		this.allTopicWords.add(new Word(0,"suns", "dog", 0));
+       // Path path = Paths.get(filePath);
+    	//if (Files.notExists(path)) {
+    	//	System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!No such file under Path: [" + filePath + "]");
+    	/*	this.allTopicWords.add(new Word(0,"suns", "dog", 0));
     		this.allTopicWords.add(new Word(1,"lauva", "lion", 0));
     		this.allTopicWords.add(new Word(2,"putns", "bird", 0));
     		this.allTopicWords.add(new Word(3, "kengurs", "kangaroo", 0));
@@ -67,8 +67,8 @@ public class TopicReader {
     		this.allTopicWords.add(new Word(11, "pērtiķis", "monkey", 0));
     		
     		this.allTopicWords.add(new Word(12,"lācis", "bear", 0));    		
-    		//System.exit(1);
-    	}
+    		//System.exit(1);*/
+    //	}
     
     	final File file = new File(filePath);
     	BufferedReader reader = new BufferedReader(new FileReader(file));
@@ -98,7 +98,7 @@ public class TopicReader {
 	    finally {
 	           reader.close();
 	    }
-  	
+	
 	}
 
 	public void resetFile(){
