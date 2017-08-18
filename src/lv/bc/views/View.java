@@ -172,15 +172,6 @@ public class View {
         cpnl.gridy = 2;
         mainPanel.add(pane, cpnl);
         
-        final JPanel nextPanel = new JPanel();
-        nextPanel.setLayout(new GridBagLayout());
-        GridBagConstraints cpn = new GridBagConstraints();
-        nextQuestion = new JButton("Next");
-        nextPanel.add(nextQuestion);
-        cpn.gridx = 0;
-		cpn.gridy = 3;
-        mainPanel.add(nextPanel, cpn);
-        
     	//Create the menu bar.
     	menuBar = new JMenuBar();
     	//Build the first menu.
@@ -201,9 +192,6 @@ public class View {
     	modeMenu = new JMenu("Mode");
     	menuBar.add(modeMenu);
     	
-    	menuItemSilent = new JCheckBoxMenuItem("Silent");
-    	modeMenu.add(menuItemSilent);
-
     	menuItemAudio = new JCheckBoxMenuItem("Audio");
     	modeMenu.add(menuItemAudio);
     	
