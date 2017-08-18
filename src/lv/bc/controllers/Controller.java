@@ -3,6 +3,8 @@ package lv.bc.controllers;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import lv.bc.models.*;
 import lv.bc.views.*;
@@ -17,12 +19,19 @@ public class Controller {
 	private ActionListener actionListenerOpen, actionListenerSave, actionListenerReset, actionListenerExit,
 	actionListenerSilent, actionListenerAudio, actionListenerText, actionListenerFN, actionListenerNF, actionListenerHelp, actionListenerLatvian, actionListenerEnglish;
 	
-	private int answerKey;
-	private boolean clientsAnswer;
 	
+//For actions with answer keys
+	private int answerKey;
+	private boolean clientsAnswer, blocked = false;
 	public Color red = new Color(255, 0, 0);
 	public Color green = new Color(0, 255, 0);
 	
+	public void isAnswerButtonClickable(boolean bool) {
+		view.getAnswerButton1().setEnabled(bool);
+		view.getAnswerButton2().setEnabled(bool);
+		view.getAnswerButton3().setEnabled(bool);
+		view.getAnswerButton4().setEnabled(bool);
+	}
 
 	public int getAnswerKey() {
 		return answerKey;
@@ -39,6 +48,14 @@ public class Controller {
 	public void setClientsAnswer(boolean clientsAnswer) {
 		this.clientsAnswer = clientsAnswer;
 	}
+	
+	public boolean isBlocked() {
+		return blocked;
+	}
+
+	public void setBlocked(boolean Blocked) {
+		this.blocked = Blocked;
+	}
 
 	public Controller(Model model, View view) {
 		this.model = model;
@@ -54,6 +71,24 @@ public class Controller {
 	}
 
 	public void contol() {
+		
+//On window open---------------------------------------------------------
+		
+		view.getFrame().addWindowListener(new WindowAdapter() {
+		    
+			@Override
+		    public void windowOpened(WindowEvent we) {
+				model.doOpen("LAT-ENG", "Dzivnieki");
+				
+				view.setTextQuestion(model.getLearnWord().getFromText());
+				
+				view.setTextAnswer1(model.getTopicAnswers().get(0).getToText());
+				view.setTextAnswer2(model.getTopicAnswers().get(1).getToText());
+				view.setTextAnswer3(model.getTopicAnswers().get(2).getToText());
+				view.setTextAnswer4(model.getTopicAnswers().get(3).getToText());
+		    }
+
+		});
 		
 //Action listeners for buttons------------------------------------------------------------------------------------------
 		
@@ -84,6 +119,8 @@ public class Controller {
 				view.getAnswerButton3().setBackground(null);
 				view.getAnswerButton4().setBackground(null);
 				
+				isAnswerButtonClickable(true);
+				
 			}
 		};
 		
@@ -97,8 +134,10 @@ public class Controller {
 		
 		
 		actionListenerAnswer1 = new ActionListener() {
+			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				isAnswerButtonClickable(false);
 				answerKey = model.getTopicAnswers().get(0).getKey();
 				setClientsAnswer(model.doAnswer(answerKey));
 				
@@ -113,6 +152,7 @@ public class Controller {
 		actionListenerAnswer2 = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				isAnswerButtonClickable(false);
 				answerKey = model.getTopicAnswers().get(1).getKey();
 				setClientsAnswer(model.doAnswer(answerKey));
 				
@@ -127,6 +167,7 @@ public class Controller {
 		actionListenerAnswer3 = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				isAnswerButtonClickable(false);
 				answerKey = model.getTopicAnswers().get(2).getKey();
 				setClientsAnswer(model.doAnswer(answerKey));
 				
@@ -141,6 +182,7 @@ public class Controller {
 		actionListenerAnswer4 = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				isAnswerButtonClickable(false);
 				answerKey = model.getTopicAnswers().get(3).getKey();
 				setClientsAnswer(model.doAnswer(answerKey));
 				
