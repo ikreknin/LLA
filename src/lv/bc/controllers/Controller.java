@@ -6,6 +6,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
+
 import lv.bc.models.*;
 import lv.bc.views.*;
 
@@ -18,6 +21,10 @@ public class Controller {
 //Actions listeners for Menu
 	private ActionListener actionListenerOpen, actionListenerSave, actionListenerReset, actionListenerExit,
 	actionListenerSilent, actionListenerAudio, actionListenerText, actionListenerFN, actionListenerNF, actionListenerHelp, actionListenerLatvian, actionListenerEnglish;
+
+	////// Menu---------
+	
+	
 	
 	
 //For actions with answer keys
@@ -221,6 +228,36 @@ public class Controller {
 		};
 		view.okButton.addActionListener(actionListenerOpen);
 		
+		 ActionListener actionListenerLanguage = new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					JComboBox cb = (JComboBox)e.getSource();
+					String selectedString = (String)cb.getSelectedItem();
+					System.out.println("Selected from dropdown: " + selectedString);
+					//view.lang = deAccent(selectedString);
+					if (selectedString == "LAT-ENG") {
+						DefaultComboBoxModel comboBoxModel1 = new DefaultComboBoxModel(view.topicsEng);
+						view.topicsList.setModel(comboBoxModel1);
+					} else {
+						DefaultComboBoxModel comboBoxModel2 = new DefaultComboBoxModel(view.topicsLv);
+						view.topicsList.setModel(comboBoxModel2);
+					}
+				}
+			};
+			view.languageList.addActionListener(actionListenerLanguage);
+	        
+	        ActionListener actionListenerTopic = new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					JComboBox cb = (JComboBox)e.getSource();
+					String selectedString = (String)cb.getSelectedItem();
+					//view.topic = deAccent(selectedString);
+					System.out.println("Selected from dropdown: " + selectedString);
+//					updateLabel(petName);
+				}
+			};
+			view.topicsList.addActionListener(actionListenerTopic);
+//--------------------------------------------------------------------------------------
 		actionListenerSave = new ActionListener() {
 			
 			@Override

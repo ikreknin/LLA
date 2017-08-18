@@ -38,12 +38,14 @@ public class View {
 	private JMenuItem menuItemAbout;
 	public String lang = "";
 	public String topic = "";
-	String[] topics;
-	String[] topicsLv = {"Animals","Family"};
-	String[] topicsEng = {"Dzīvnieki","Ģimene"};
-	JComboBox topicsList;
+	public JComboBox topicsList;
+	public JComboBox languageList;
 	public JButton okButton = new JButton("OK"); 
 	public JButton nextQuestion;
+	
+	String[] topics;
+	public String[] topicsLv = {"Animals","Family"};
+	public String[] topicsEng = {"Dzīvnieki","Ģimene"};
 	
 	public JFrame getFrame() {
 		return frame;
@@ -68,7 +70,7 @@ public class View {
 		JLabel lbl = new JLabel("Select one of the possible language choices");
 	    languagePanel.add(lbl);
 	    String[] choices = { "LAT-ENG","ENG-LAT"};
-	    JComboBox languageList = new JComboBox(choices);
+	    languageList = new JComboBox(choices);
 	    languageList.setSelectedIndex(0);
 	    languageList.setVisible(true);
 	    languagePanel.add(languageList);
@@ -76,23 +78,7 @@ public class View {
         cpnl.gridy = 0;
         cpnl.insets = new Insets(15,0,0,0);  //top padding
         mainPanel.add(languagePanel, cpnl);
-        ActionListener actionListenerLanguage = new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				JComboBox cb = (JComboBox)e.getSource();
-				String selectedString = (String)cb.getSelectedItem();
-				System.out.println("Selected from dropdown: " + selectedString);
-				lang = deAccent(selectedString);
-				if (selectedString == "LAT-ENG") {
-					DefaultComboBoxModel comboBoxModel1 = new DefaultComboBoxModel(topicsEng);
-					topicsList.setModel(comboBoxModel1);
-				} else {
-					DefaultComboBoxModel comboBoxModel2 = new DefaultComboBoxModel(topicsLv);
-					topicsList.setModel(comboBoxModel2);
-				}
-			}
-		};
-        languageList.addActionListener(actionListenerLanguage);
+       
         
         // JPanel for choosing topic
 		JPanel topicPanel = new JPanel();
@@ -108,17 +94,7 @@ public class View {
         cpnl.insets = new Insets(15,0,0,0); 
         topicPanel.add(okButton);
         mainPanel.add(topicPanel, cpnl);
-        ActionListener actionListenerTopic = new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				JComboBox cb = (JComboBox)e.getSource();
-				String selectedString = (String)cb.getSelectedItem();
-				topic = deAccent(selectedString);
-				System.out.println("Selected from dropdown: " + selectedString);
-//				updateLabel(petName);
-			}
-		};
-        topicsList.addActionListener(actionListenerTopic);
+       
 		
         // JPanel for Question buttons
 	    JPanel pane = new JPanel();
