@@ -55,7 +55,7 @@ public class Model {
 				
 				System.out.println("========Array=========");
 				System.out.println("Full array: " + topicReader.getAllTopicWords().toString());
-				System.out.println("left array: " + topicAnswers.getLeftToStudy());
+				System.out.println("left array: " + topicAnswers.getLeftToStudy().values());
 				System.out.println("Answ array: " + topicAnswers.getAnswerList().toString());
 				System.out.println("learnWord : " + topicAnswers.getLearnWord().toString());
 				System.out.println("model.getLearnWord().getFromText():			" + this.getLearnWord().getFromText());
