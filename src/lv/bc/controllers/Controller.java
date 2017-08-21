@@ -104,7 +104,8 @@ public class Controller {
 				//Temporary?
 				int indexLanguageSwitch = -1;
 				int indexTopicSwitch = -1;
-				/*if(settings.getLearningDirection().equals("LAT-ENG")) {
+				/*
+				if(settings.getLearningDirection().equals("LAT-ENG")) {
 					indexLanguageSwitch = 0;
 					if (settings.getTopic().equals("Dzivnieki")) {
 						indexTopicSwitch = 0;
@@ -130,8 +131,8 @@ public class Controller {
 				}
 				else
 					indexLanguageSwitch = -1;
-				
 				*/
+				
 				
 				for(int i = 0; i < view.choices.length; i++) {
 					if(settings.getLearningDirection().equals(view.choices[i])) {
@@ -162,11 +163,13 @@ public class Controller {
 				view.getMenuItemAudio().setSelected(settings.getAudio());
 				view.getMenuItemText().setSelected(settings.getText());
 				
+				
 				view.setScore(settings.getScore());
 				
 				
 				view.languageList.setSelectedIndex(indexLanguageSwitch);
 				view.topicsList.setSelectedIndex(indexTopicSwitch);
+				//selectedTopic = view.topicsList.getSelectedItem().toString();
 				//view.choices
 				
 				
@@ -352,9 +355,8 @@ public class Controller {
 				public void actionPerformed(ActionEvent e) {
 					JComboBox<?> cb = (JComboBox<?>)e.getSource();
 					selectedTopic = (String)cb.getSelectedItem();
-					System.out.println(selectedTopic + "&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
 					selectedTopic = normalString(selectedTopic);
-					view.topic = view.deAccent(selectedTopic);
+					//view.topic = view.deAccent(selectedTopic);
 				}
 			};
 			view.topicsList.addActionListener(actionListenerTopic);
