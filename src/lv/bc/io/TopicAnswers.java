@@ -11,7 +11,7 @@ public class TopicAnswers {
 	List<Word> leftToLearn;
 	List<Word> fullList;
 	Word learnWord;
-	
+	int Score = 0;
     //2: TODO: mixList mix the Topic object int the topicList
 	// 2.1: check was answer correct
 	// 2.2: check that 12 times correct answer was reached
@@ -31,6 +31,14 @@ public class TopicAnswers {
 		learnWord = new Word(0,"","",0);
 		initializationOfArrays(fileArray);
 	}
+	
+	public List<Word> getFullList() {
+		return fullList;
+	}
+	
+	public void setFullList(List<Word> fileArray) {
+		this.fullList.addAll(fileArray);
+	 }
 
 	public List<Word> getAnswerList() {
 		return answerList;
@@ -44,14 +52,26 @@ public class TopicAnswers {
 		this.leftToLearn.addAll(leftToLearn);		
 	}
 
+	public Word getLearnWord() {
+		return learnWord;
+	}
+
+	public void setLearnWord() {
+		if(this.answerList.size() > 0){
+			int k = getRandomInt(0, 3);
+			learnWord = this.answerList.get(k);
+		}
+		else
+			learnWord = new Word(0, "", "", 0);
+	}	
 	
-	public List<Word> getFullList() {
-		return fullList;
+	public int getScore() {
+		return Score;
 	}
 	
-	public void setFullList(List<Word> fileArray) {
-		this.fullList.addAll(fileArray);
-	 }
+	public void setScore(int score) {
+		Score = score;
+	}
 	
 	public void initializationOfArrays(List<Word>  fileArray){
 		setFullList(fileArray);
@@ -84,19 +104,6 @@ public class TopicAnswers {
 			answerList.addAll(tmpTopic);
 			System.out.println("[NOW] " + answerList.toString());
 		}
-	}
-
-	public Word getLearnWord() {
-		return learnWord;
-	}
-
-	public void setLearnWord() {
-		if(this.answerList.size() > 0){
-			int k = getRandomInt(0, 3);
-			learnWord = this.answerList.get(k);
-		}
-		else
-			learnWord = new Word(0, "", "", 0);
 	}
 
 	public static int getRandomInt(int min, int max) {
