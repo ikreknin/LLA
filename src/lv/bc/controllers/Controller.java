@@ -102,13 +102,59 @@ public class Controller {
 		    public void windowOpened(WindowEvent we) {
 				
 				//Temporary?
-				int indexLanguageSwitch;
-				if(settings.getLearningDirection().equals("LAT-ENG")) 
+				int indexLanguageSwitch = -1;
+				int indexTopicSwitch = -1;
+				/*if(settings.getLearningDirection().equals("LAT-ENG")) {
+					indexLanguageSwitch = 0;
+					if (settings.getTopic().equals("Dzivnieki")) {
+						indexTopicSwitch = 0;
+					}
+					else if (settings.getTopic().equals("Maja")) {
+						indexTopicSwitch = 1;
+					}
+					else if (settings.getTopic().equals("Skaitli")) {
+						indexTopicSwitch = 2;
+					}
+				}
+				else if(settings.getLearningDirection().equals("ENG-LAT")) {
 					indexLanguageSwitch = 1;
-				else if(settings.getLearningDirection().equals("ENG-LAT"))
-					indexLanguageSwitch = 2;
+					if (settings.getTopic().equals("Animals")) {
+						indexTopicSwitch = 0;
+					}
+					else if (settings.getTopic().equals("Home")) {
+						indexTopicSwitch = 1;
+					}
+					else if (settings.getTopic().equals("Numbers")) {
+						indexTopicSwitch = 2;
+					}
+				}
 				else
 					indexLanguageSwitch = -1;
+				
+				*/
+				
+				for(int i = 0; i < view.choices.length; i++) {
+					if(settings.getLearningDirection().equals(view.choices[i])) {
+						indexLanguageSwitch = i;
+						if(i == 0) {
+							view.topics = view.topicsLv;
+							for(int x = 0; x < view.topicsLv.length ; x++) {
+								if(normalString(view.topicsLv[x]).equals(settings.getTopic())) {
+									indexTopicSwitch = x;
+								}
+							}
+						}
+						else if(i == 1) {
+							view.topics = view.topicsEng;
+							for(int x = 0; x < view.topicsEng.length ; x++) {
+								if(normalString(view.topicsLv[x]).equals(settings.getTopic())) {
+									indexTopicSwitch = x;
+								}
+							}
+						}
+					}
+				}
+
 				
 				
 				//
@@ -118,10 +164,9 @@ public class Controller {
 				
 				view.setScore(settings.getScore());
 				
-				view.topicsList.setSelectedIndex(indexLanguageSwitch);
-				System.out.println(indexLanguageSwitch + "^^^^^^^^^^^^^^^^^^^^^^^^^^^" + settings.getLearningDirection());
 				
-				
+				view.languageList.setSelectedIndex(indexLanguageSwitch);
+				view.topicsList.setSelectedIndex(indexTopicSwitch);
 				//view.choices
 				
 				
@@ -267,12 +312,12 @@ public class Controller {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
+				selectedTopic = view.topicsList.getSelectedItem().toString();
+				selectedTopic = normalString(selectedTopic);
 				
 				model.doOpen(selectedLearningDirection, selectedTopic); 
 				settings.setTopic(selectedTopic);
-				System.out.println(selectedTopic + "%%%%%%%%%%%%%%%%%%%%%%%");
 				settings.setLearningDirection(selectedLearningDirection);
-				System.out.println(selectedLearningDirection + "%%%%%%%%%%%%%%%%");
 				view.setTextQuestion(model.getLearnWord().getFromText());
 				
 				view.setTextAnswer1(model.getTopicAnswers().get(0).getToText());
@@ -292,10 +337,10 @@ public class Controller {
 					//selectedLearningDirection = normalString(selectedLearningDirection);
 					view.lang = view.deAccent(selectedLearningDirection);
 					if (selectedLearningDirection == "LAT-ENG") {
-						DefaultComboBoxModel<?> comboBoxModel1 = new DefaultComboBoxModel<Object>(view.topicsEng);
+						DefaultComboBoxModel<?> comboBoxModel1 = new DefaultComboBoxModel<Object>(view.topicsLv);
 						view.topicsList.setModel(comboBoxModel1);
 					} else {
-						DefaultComboBoxModel<?> comboBoxModel2 = new DefaultComboBoxModel<Object>(view.topicsLv);
+						DefaultComboBoxModel<?> comboBoxModel2 = new DefaultComboBoxModel<Object>(view.topicsEng);
 						view.topicsList.setModel(comboBoxModel2);
 					}
 				}
@@ -307,6 +352,7 @@ public class Controller {
 				public void actionPerformed(ActionEvent e) {
 					JComboBox<?> cb = (JComboBox<?>)e.getSource();
 					selectedTopic = (String)cb.getSelectedItem();
+					System.out.println(selectedTopic + "&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
 					selectedTopic = normalString(selectedTopic);
 					view.topic = view.deAccent(selectedTopic);
 				}
