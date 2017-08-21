@@ -104,34 +104,6 @@ public class Controller {
 				//Temporary?
 				int indexLanguageSwitch = -1;
 				int indexTopicSwitch = -1;
-				/*
-				if(settings.getLearningDirection().equals("LAT-ENG")) {
-					indexLanguageSwitch = 0;
-					if (settings.getTopic().equals("Dzivnieki")) {
-						indexTopicSwitch = 0;
-					}
-					else if (settings.getTopic().equals("Maja")) {
-						indexTopicSwitch = 1;
-					}
-					else if (settings.getTopic().equals("Skaitli")) {
-						indexTopicSwitch = 2;
-					}
-				}
-				else if(settings.getLearningDirection().equals("ENG-LAT")) {
-					indexLanguageSwitch = 1;
-					if (settings.getTopic().equals("Animals")) {
-						indexTopicSwitch = 0;
-					}
-					else if (settings.getTopic().equals("Home")) {
-						indexTopicSwitch = 1;
-					}
-					else if (settings.getTopic().equals("Numbers")) {
-						indexTopicSwitch = 2;
-					}
-				}
-				else
-					indexLanguageSwitch = -1;
-				*/
 				
 				
 				for(int i = 0; i < view.choices.length; i++) {
@@ -148,7 +120,7 @@ public class Controller {
 						else if(i == 1) {
 							view.topics = view.topicsEng;
 							for(int x = 0; x < view.topicsEng.length ; x++) {
-								if(normalString(view.topicsLv[x]).equals(settings.getTopic())) {
+								if(normalString(view.topicsEng[x]).equals(settings.getTopic())) {
 									indexTopicSwitch = x;
 								}
 							}
@@ -156,7 +128,8 @@ public class Controller {
 					}
 				}
 
-				
+				view.languageList.setSelectedIndex(indexLanguageSwitch);
+				view.topicsList.setSelectedIndex(indexTopicSwitch);
 				
 				//
 				
@@ -167,9 +140,6 @@ public class Controller {
 				view.setScore(settings.getScore());
 				
 				
-				view.languageList.setSelectedIndex(indexLanguageSwitch);
-				view.topicsList.setSelectedIndex(indexTopicSwitch);
-				//selectedTopic = view.topicsList.getSelectedItem().toString();
 				//view.choices
 				
 				
@@ -207,11 +177,10 @@ public class Controller {
 			public void actionPerformed(ActionEvent e) {
 				
 			if(isClientsAnswer()) {
-					view.setTextQuestion(model.getLearnWord().getFromText());
-					view.score ++;
-					view.setScore(view.score);
+					view.setTextQuestion(model.getLearnWord().getFromText());					
 				}
-				
+			view.setScore(model.getScore());
+			
 				view.setTextAnswer1(model.getTopicAnswers().get(0).getToText());
 				view.setTextAnswer2(model.getTopicAnswers().get(1).getToText());
 				view.setTextAnswer3(model.getTopicAnswers().get(2).getToText());
@@ -356,6 +325,7 @@ public class Controller {
 					JComboBox<?> cb = (JComboBox<?>)e.getSource();
 					selectedTopic = (String)cb.getSelectedItem();
 					selectedTopic = normalString(selectedTopic);
+					
 					//view.topic = view.deAccent(selectedTopic);
 				}
 			};
@@ -376,6 +346,7 @@ public class Controller {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				model.doReset();
+				view.setScore(model.getScore());
 			}
 		};
 		view.getMenuItemReset().addActionListener(actionListenerReset);
@@ -383,7 +354,7 @@ public class Controller {
 		actionListenerExit = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				settings.setScore(view.score);
+				settings.setScore(model.getScore());
 				settings.saveAndExit();
 				System.exit(0);
 			}
@@ -395,7 +366,7 @@ public class Controller {
 	            @Override
 	            public void windowClosing(WindowEvent e)
 	            {
-	            	settings.setScore(view.score);
+	            	settings.setScore(model.getScore());
 	            	settings.saveAndExit();
 	            }
 	        });
