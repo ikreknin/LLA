@@ -10,21 +10,30 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Properties;
 
+import lv.bc.views.View;
+
+//For getting property values you need to use getProperty(String key)
+//For setting new property values you need to use setProperty(String key, String value)
+
 public class Settings {
 	
-	//Strings for property names
-	public static String foreignLanguage = "foreignLanguage";
-	public static String lastLine = "lastLine";
+	//Properties                             //Now value should be:
+	private View view;
+	private String learningDirection;       // LAT-ENG
+	private String topic;                  // Dzivnieki
+	private boolean audio;                // true
+	private int score;                   // 0
+	private boolean text;               // true
 
-	private String iniFile = "src/lv/bc/models/Settings.ini";
-	Path path = Paths.get("src/lv/bc/models/Settings.ini");
-	protected final int SETTING_COUNT = 2;
-	Properties appProperties = new Properties();
+
+	private String iniFile = "bin/files/Settings.ini";
+	Path path = Paths.get("bin/files/Settings.ini");
 	
-	Settings()  {
-		
+	public Settings()  {
+		Properties appProperties = new Properties();
 		if (Files.exists(path)) {
 			FileInputStream in;
+			
 			try {
 				in = new FileInputStream(iniFile);
 				appProperties.load(in);
@@ -34,7 +43,6 @@ public class Settings {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			System.out.println(appProperties.getProperty(foreignLanguage));
 			
 			//What to do, if in file is not enough properties?
 			//One thing we can do- make default property file
@@ -45,17 +53,102 @@ public class Settings {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			appProperties.setProperty(foreignLanguage, "English");
-			appProperties.setProperty(lastLine, "0");
+			appProperties.setProperty("learningDirection", "LAT-ENG");
+			appProperties.setProperty("topic", "Dzivnieki");
+			appProperties.setProperty("audio", "true");
+			appProperties.setProperty("score", "0");
+			appProperties.setProperty("text", "true");
 		}
+		
+		this.learningDirection = appProperties.getProperty("learningDirection");
+		this.topic = appProperties.getProperty("topic");
+		this.audio = Boolean.valueOf(appProperties.getProperty("audio"));
+		this.score = Integer.parseInt(appProperties.getProperty("score"));
+		this.text = Boolean.valueOf(appProperties.getProperty("text"));
 	}	
 	
-	//TODO For setting new property values you need to use setProperty(String key, String value)
-	//TODO call on EXIT controller
+
+	
+	
+	public String getLearningDirection() {
+		return learningDirection;
+	}
+
+
+
+
+	public void setLearningDirection(String learningDirection) {
+		this.learningDirection = learningDirection;
+	}
+
+
+
+
+	public String getTopic() {
+		return topic;
+	}
+
+
+
+
+	public void setTopic(String topic) {
+		this.topic = topic;
+	}
+
+
+
+
+	public boolean getAudio() {
+		return audio;
+	}
+
+
+
+
+	public void setAudio(boolean audio) {
+		this.audio = audio;
+	}
+
+
+
+
+	public int getScore() {
+		return score;
+	}
+
+
+
+
+	public void setScore(int score) {
+		this.score = score;
+	}
+
+
+
+
+	public boolean getText() {
+		return text;
+	}
+
+
+
+
+	public void setText(boolean text) {
+		this.text = text;
+	}
+
+
+	//TODO call save and on EXIT controller
 	public void saveAndExit() {
+		Properties appProperties = new Properties();
+		appProperties.setProperty("learningDirection", learningDirection);
+		appProperties.setProperty("topic", topic);
+		appProperties.setProperty("audio", Boolean.toString(audio));
+		appProperties.setProperty("score", String.valueOf(score));
+		appProperties.setProperty("text", Boolean.toString(text));
 		try {
 			FileOutputStream out = new FileOutputStream(iniFile);
-			appProperties.store(out, "Looool");
+			appProperties.store(out, "These are Your settings for language learning app. /n Don't touch this!!!");
 			out.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -63,15 +156,14 @@ public class Settings {
 			e.printStackTrace();
 		}
 	}
-	
-	public static void main (String[] args) {
+/* for manual testing	
+public static void main (String[] args) {
 		Settings set = new Settings();
-		set.appProperties.setProperty(foreignLanguage, "Russian");
-		System.out.println(set.appProperties.getProperty(foreignLanguage));
-		set.saveAndExit();
-		
+		set.setAudio(true);;
+		System.out.println(set.getAudio());
+		set.saveAndExit();		
 	}
-	
+	*/
 }
 
 

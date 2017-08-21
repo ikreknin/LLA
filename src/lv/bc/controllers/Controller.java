@@ -3,43 +3,58 @@ package lv.bc.controllers;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.text.Normalizer;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import javax.swing.Timer;
 
 import lv.bc.models.*;
 import lv.bc.views.*;
+import lv.bc.settings.Settings;;
 
 public class Controller {
 	
 	private Model model;
 	private View view;
+	private Settings settings = new Settings();
+	private AudioPlayer player;
 //Action listeners for buttons
-	private ActionListener  actionListenerQuestion,actionListenerAnswer1,	actionListenerAnswer2, actionListenerAnswer3, actionListenerAnswer4,actionListenerAnswer;
+	private ActionListener  actionListenerQuestion,actionListenerAnswer1,	actionListenerAnswer2, actionListenerAnswer3, actionListenerAnswer4;
 //Actions listeners for Menu
-	private ActionListener actionListenerOpen, actionListenerSave, actionListenerReset, actionListenerExit,
-	actionListenerSilent, actionListenerAudio, actionListenerText, actionListenerFN, actionListenerNF, actionListenerHelp, actionListenerLatvian, actionListenerEnglish;
+	private ActionListener actionListenerOpen, actionListenerSave, actionListenerReset, actionListenerExit, actionListenerFN, actionListenerNF,actionListenerAbout, actionListenerHelp, actionListenerLatvian, actionListenerEnglish;
+	private ItemListener itemListenerAudio, itemListenerText;
+////// Menu
 
-	////// Menu---------
+	//TODO change dynamically what is in dropdown list
+	
+	public String selectedLearningDirection = settings.getLearningDirection();
+	public String selectedTopic = settings.getTopic(); //---> when getting parameter from view, Normalizer function removes all non-english characters.
 	
 	
-	
-	
-//For actions with answer keys
+//Parameters for actions with answer keys
 	private int answerKey;
 	private boolean clientsAnswer, blocked = false;
 	public Color red = new Color(255, 0, 0);
 	public Color green = new Color(0, 255, 0);
-	
+
+//Helper methods-----------
 	public void isAnswerButtonClickable(boolean bool) {
 		view.getAnswerButton1().setEnabled(bool);
 		view.getAnswerButton2().setEnabled(bool);
 		view.getAnswerButton3().setEnabled(bool);
 		view.getAnswerButton4().setEnabled(bool);
 	}
+	
+	public String normalString(String nonEnglish) {
+		return Normalizer.normalize(nonEnglish, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
+	}
 
+	//Getters and setters-------
 	public int getAnswerKey() {
 		return answerKey;
 	}
@@ -85,7 +100,86 @@ public class Controller {
 		    
 			@Override
 		    public void windowOpened(WindowEvent we) {
-				model.doOpen("LAT-ENG", "Dzivnieki");
+				
+				//Temporary?
+				int indexLanguageSwitch = -1;
+				int indexTopicSwitch = -1;
+				/*
+				if(settings.getLearningDirection().equals("LAT-ENG")) {
+					indexLanguageSwitch = 0;
+					if (settings.getTopic().equals("Dzivnieki")) {
+						indexTopicSwitch = 0;
+					}
+					else if (settings.getTopic().equals("Maja")) {
+						indexTopicSwitch = 1;
+					}
+					else if (settings.getTopic().equals("Skaitli")) {
+						indexTopicSwitch = 2;
+					}
+				}
+				else if(settings.getLearningDirection().equals("ENG-LAT")) {
+					indexLanguageSwitch = 1;
+					if (settings.getTopic().equals("Animals")) {
+						indexTopicSwitch = 0;
+					}
+					else if (settings.getTopic().equals("Home")) {
+						indexTopicSwitch = 1;
+					}
+					else if (settings.getTopic().equals("Numbers")) {
+						indexTopicSwitch = 2;
+					}
+				}
+				else
+					indexLanguageSwitch = -1;
+				*/
+				
+				
+				for(int i = 0; i < view.choices.length; i++) {
+					if(settings.getLearningDirection().equals(view.choices[i])) {
+						indexLanguageSwitch = i;
+						if(i == 0) {
+							view.topics = view.topicsLv;
+							for(int x = 0; x < view.topicsLv.length ; x++) {
+								if(normalString(view.topicsLv[x]).equals(settings.getTopic())) {
+									indexTopicSwitch = x;
+								}
+							}
+						}
+						else if(i == 1) {
+							view.topics = view.topicsEng;
+							for(int x = 0; x < view.topicsEng.length ; x++) {
+								if(normalString(view.topicsLv[x]).equals(settings.getTopic())) {
+									indexTopicSwitch = x;
+								}
+							}
+						}
+					}
+				}
+
+				
+				
+				//
+				
+				view.getMenuItemAudio().setSelected(settings.getAudio());
+				view.getMenuItemText().setSelected(settings.getText());
+				
+				
+				view.setScore(settings.getScore());
+				
+				
+				view.languageList.setSelectedIndex(indexLanguageSwitch);
+				view.topicsList.setSelectedIndex(indexTopicSwitch);
+				//selectedTopic = view.topicsList.getSelectedItem().toString();
+				//view.choices
+				
+				
+				//view.topicsEng
+				//view.topicsLv
+				//view.topics
+				
+				
+				
+				model.doOpen(settings.getLearningDirection(), settings.getTopic());
 				
 				view.setTextQuestion(model.getLearnWord().getFromText());
 				
@@ -97,7 +191,7 @@ public class Controller {
 
 		});
 		
-//Action listeners for buttons------------------------------------------------------------------------------------------
+//Action listeners for answer buttons------------------------------------------------------------------------------------------
 		
 		actionListenerQuestion = new ActionListener() {
 			@Override
@@ -108,12 +202,14 @@ public class Controller {
 		};
 		view.getQuestionButton().addActionListener(actionListenerQuestion);
 		
-		actionListenerAnswer = new ActionListener() {
+		Timer timer = new Timer(2000, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
 			if(isClientsAnswer()) {
 					view.setTextQuestion(model.getLearnWord().getFromText());
+					view.score ++;
+					view.setScore(view.score);
 				}
 				
 				view.setTextAnswer1(model.getTopicAnswers().get(0).getToText());
@@ -127,23 +223,15 @@ public class Controller {
 				view.getAnswerButton4().setBackground(null);
 				
 				isAnswerButtonClickable(true);
-				
 			}
-		};
-		
-		view.nextQuestion.addActionListener(actionListenerAnswer);
-		/*view.getAnswerButton1().addActionListener(actionListenerAnswer);
-		view.getAnswerButton2().addActionListener(actionListenerAnswer);
-		view.getAnswerButton3().addActionListener(actionListenerAnswer);
-		view.getAnswerButton4().addActionListener(actionListenerAnswer);*/
-		
-		
-		
-		
+		});
+		timer.setRepeats(false);
+
 		actionListenerAnswer1 = new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				timer.start();
 				isAnswerButtonClickable(false);
 				answerKey = model.getTopicAnswers().get(0).getKey();
 				setClientsAnswer(model.doAnswer(answerKey));
@@ -159,6 +247,7 @@ public class Controller {
 		actionListenerAnswer2 = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				timer.start();
 				isAnswerButtonClickable(false);
 				answerKey = model.getTopicAnswers().get(1).getKey();
 				setClientsAnswer(model.doAnswer(answerKey));
@@ -174,6 +263,7 @@ public class Controller {
 		actionListenerAnswer3 = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				timer.start();
 				isAnswerButtonClickable(false);
 				answerKey = model.getTopicAnswers().get(2).getKey();
 				setClientsAnswer(model.doAnswer(answerKey));
@@ -189,6 +279,7 @@ public class Controller {
 		actionListenerAnswer4 = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				timer.start();
 				isAnswerButtonClickable(false);
 				answerKey = model.getTopicAnswers().get(3).getKey();
 				setClientsAnswer(model.doAnswer(answerKey));
@@ -201,29 +292,42 @@ public class Controller {
 		};
 		view.getAnswerButton4().addActionListener(actionListenerAnswer4);
 		
+		view.getPlayButton().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent paramActionEvent) {
+				String fileName = normalString(model.getLearnWord().getFromText()).toLowerCase() + ".wav";
+				
+				String dir = System.getProperty("user.dir");
+				String fileFolder = dir + "/file/" + selectedLearningDirection + "/" + selectedTopic + "/";
+				
+				AudioPlayer.playFileWithPath(fileFolder, fileName);
+				
+			}
+		});
 		
-
 		
-//Action Listeners for menu----------------------------------------------------------------------------------------
+//UI menu ----------------------------------------------------------------------------------------
+		
 		
 		actionListenerOpen = new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				model.doOpen("LAT-ENG", "Dzivnieki"); //TODO here I need to give parameters from view labels!!!!!!!!
 				
+				selectedTopic = view.topicsList.getSelectedItem().toString();
+				selectedTopic = normalString(selectedTopic);
+				
+				model.doOpen(selectedLearningDirection, selectedTopic); 
+				settings.setTopic(selectedTopic);
+				settings.setLearningDirection(selectedLearningDirection);
 				view.setTextQuestion(model.getLearnWord().getFromText());
 				
 				view.setTextAnswer1(model.getTopicAnswers().get(0).getToText());
 				view.setTextAnswer2(model.getTopicAnswers().get(1).getToText());
 				view.setTextAnswer3(model.getTopicAnswers().get(2).getToText());
 				view.setTextAnswer4(model.getTopicAnswers().get(3).getToText());
-			
-			/*view.setTextQuestion("suns");
-				view.setTextAnswer1("pupper");
-				view.setTextAnswer2("doge");
-				view.setTextAnswer3("cate");
-				view.setTextAnswer4("doggo"); */
+
 			}
 		};
 		view.okButton.addActionListener(actionListenerOpen);
@@ -231,15 +335,15 @@ public class Controller {
 		 ActionListener actionListenerLanguage = new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					JComboBox cb = (JComboBox)e.getSource();
-					String selectedString = (String)cb.getSelectedItem();
-					System.out.println("Selected from dropdown: " + selectedString);
-					//view.lang = deAccent(selectedString);
-					if (selectedString == "LAT-ENG") {
-						DefaultComboBoxModel comboBoxModel1 = new DefaultComboBoxModel(view.topicsEng);
+					JComboBox<?> cb = (JComboBox<?>)e.getSource();
+					selectedLearningDirection = (String)cb.getSelectedItem();
+					//selectedLearningDirection = normalString(selectedLearningDirection);
+					view.lang = view.deAccent(selectedLearningDirection);
+					if (selectedLearningDirection == "LAT-ENG") {
+						DefaultComboBoxModel<?> comboBoxModel1 = new DefaultComboBoxModel<Object>(view.topicsLv);
 						view.topicsList.setModel(comboBoxModel1);
 					} else {
-						DefaultComboBoxModel comboBoxModel2 = new DefaultComboBoxModel(view.topicsLv);
+						DefaultComboBoxModel<?> comboBoxModel2 = new DefaultComboBoxModel<Object>(view.topicsEng);
 						view.topicsList.setModel(comboBoxModel2);
 					}
 				}
@@ -249,15 +353,15 @@ public class Controller {
 	        ActionListener actionListenerTopic = new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					JComboBox cb = (JComboBox)e.getSource();
-					String selectedString = (String)cb.getSelectedItem();
-					//view.topic = deAccent(selectedString);
-					System.out.println("Selected from dropdown: " + selectedString);
-//					updateLabel(petName);
+					JComboBox<?> cb = (JComboBox<?>)e.getSource();
+					selectedTopic = (String)cb.getSelectedItem();
+					selectedTopic = normalString(selectedTopic);
+					//view.topic = view.deAccent(selectedTopic);
 				}
 			};
 			view.topicsList.addActionListener(actionListenerTopic);
-//--------------------------------------------------------------------------------------
+			
+//Menu bar options--------------------------------------------------------------------------------------
 		actionListenerSave = new ActionListener() {
 			
 			@Override
@@ -277,40 +381,81 @@ public class Controller {
 		view.getMenuItemReset().addActionListener(actionListenerReset);
 		
 		actionListenerExit = new ActionListener() {
-			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				settings.setScore(view.score);
+				settings.saveAndExit();
 				System.exit(0);
 			}
 		};
 		view.getMenuItemExit().addActionListener(actionListenerExit);
 		
-		actionListenerSilent = new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				model.doSilent();
-			}
-		};
-		view.getMenuItemSilent().addActionListener(actionListenerSilent);
+		view.getFrame().addWindowListener(new WindowAdapter()
+	        {
+	            @Override
+	            public void windowClosing(WindowEvent e)
+	            {
+	            	settings.setScore(view.score);
+	            	settings.saveAndExit();
+	            }
+	        });
+	
 		
-		actionListenerAudio = new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				model.doAudio();
-			}
-		};
-		view.getMenuItemAudio().addActionListener(actionListenerAudio);
 		
-		actionListenerText = new ActionListener() {
-			
+		itemListenerAudio = new ItemListener() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				model.doText();
+			public void itemStateChanged(ItemEvent paramItemEvent) {
+				int audioState = paramItemEvent.getStateChange();
+				
+				if (settings.getText()) {
+					
+					if (audioState == 1) {
+						settings.setAudio(true);
+						view.getPlayButton().setEnabled(true);
+					}
+					else if(audioState == 2) {
+						settings.setAudio(false);
+						view.getPlayButton().setEnabled(false);
+					}
+					else {
+						System.out.println("There shouldnt be value like " + audioState);
+					}
+				}
+				else {
+					
+					settings.setAudio(true);
+					view.getPlayButton().setEnabled(true);
+				}	
 			}
 		};
-		view.getMenuItemText().addActionListener(actionListenerText);
+		view.getMenuItemAudio().addItemListener(itemListenerAudio);
+		
+		
+		itemListenerText = new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent paramItemEvent) {
+				int textState = paramItemEvent.getStateChange();
+				
+				if (textState == 1) {
+					view.getMenuItemAudio().setEnabled(true);
+					settings.setText(true);
+					view.getQuestionButton().setVisible(true);
+				}
+				else if(textState == 2) {
+					view.getMenuItemAudio().setEnabled(false);
+					settings.setText(false);
+					settings.setAudio(true);
+					view.getPlayButton().setEnabled(true);
+					view.getMenuItemAudio().setSelected(true);
+					view.getQuestionButton().setVisible(false);
+				}
+				else {
+					System.out.println("There shouldnt be value like " + textState);
+				}
+			}
+		};
+		view.getMenuItemText().addItemListener(itemListenerText);
+		
 		
 		actionListenerFN = new ActionListener() {
 			
@@ -348,6 +493,16 @@ public class Controller {
 			}
 		};
 		view.getMenuItemEnglish().addActionListener(actionListenerEnglish);
+		
+		actionListenerAbout = new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//model.doHelp();
+			}
+		};
+		//view.getMenuItemAbout().addActionListener(actionListenerAbout);
+		//TODO wait for setters and getters for About
 		
 		actionListenerHelp = new ActionListener() {
 			
