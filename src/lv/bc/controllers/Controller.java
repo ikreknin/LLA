@@ -25,7 +25,7 @@ public class Controller {
 //Action listeners for buttons
 	private ActionListener  actionListenerQuestion,actionListenerAnswer1,	actionListenerAnswer2, actionListenerAnswer3, actionListenerAnswer4;
 //Actions listeners for Menu
-	private ActionListener actionListenerOpen, actionListenerSave, actionListenerReset, actionListenerExit, actionListenerFN, actionListenerNF, actionListenerHelp, actionListenerLatvian, actionListenerEnglish;
+	private ActionListener actionListenerOpen, actionListenerSave, actionListenerReset, actionListenerExit, actionListenerFN, actionListenerNF,actionListenerAbout, actionListenerHelp, actionListenerLatvian, actionListenerEnglish;
 	private ItemListener itemListenerAudio, itemListenerText;
 ////// Menu
 
@@ -40,7 +40,8 @@ public class Controller {
 	private boolean clientsAnswer, blocked = false;
 	public Color red = new Color(255, 0, 0);
 	public Color green = new Color(0, 255, 0);
-	
+
+//Helper methods-----------
 	public void isAnswerButtonClickable(boolean bool) {
 		view.getAnswerButton1().setEnabled(bool);
 		view.getAnswerButton2().setEnabled(bool);
@@ -52,6 +53,7 @@ public class Controller {
 		return Normalizer.normalize(nonEnglish, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
 	}
 
+	//Getters and setters-------
 	public int getAnswerKey() {
 		return answerKey;
 	}
@@ -395,6 +397,16 @@ public class Controller {
 			}
 		};
 		view.getMenuItemEnglish().addActionListener(actionListenerEnglish);
+		
+		actionListenerAbout = new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//model.doHelp();
+			}
+		};
+		//view.getMenuItemAbout().addActionListener(actionListenerAbout);
+		//TODO wait for setters and getters for About
 		
 		actionListenerHelp = new ActionListener() {
 			
