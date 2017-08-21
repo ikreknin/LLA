@@ -62,21 +62,8 @@ public class View {
 	public View(String text) {
 		frame = new JFrame();
 		frame.setTitle(applicationTitle);
-		frame.addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosing(WindowEvent e) {
-				// TODO Auto-generated method stub
-//				lv.bc.editor.Main.main(null);
-//				super.windowClosing(e);
-				System.out.println("closing LLA window"); 
-				frame.dispose(); // get rid of the frame
-//				frame.setVisible(false);
-				lv.bc.editor.Main.main(null);
-			}
-		});
 		frame.getContentPane().setLayout(new BorderLayout());
-//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(600, 800);
 		
 		// JPanel that holds all the other panels
@@ -273,12 +260,6 @@ public class View {
     	modeMenu.addSeparator(); // --------------------------
     	
     	menuItemToEditor = new JMenuItem("Switch to Editor");
-    	menuItemToEditor.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
-			}
-		});
     	modeMenu.add(menuItemToEditor);
     	
     	// Menu for Language
@@ -310,7 +291,6 @@ public class View {
             System.err.println("Couldn't find file: " + path);
             return null;
         }
-//        button.setIcon(new ImageIcon(img));
     }
     
     /**

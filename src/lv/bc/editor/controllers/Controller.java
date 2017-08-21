@@ -1,6 +1,6 @@
 package lv.bc.editor.controllers;
 
-import lv.bc.*;
+import lv.bc.Main;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -63,7 +63,7 @@ public class Controller {
 			public void windowClosing(WindowEvent e) {
 				System.out.println("closing Editor window"); 
 				editorFrame.dispose(); // get rid of the frame
-//				editorFrame.setVisible(false);
+//				editorFrame.setVisible(true);
 				lv.bc.Main.main(null);
 			}
 		});
@@ -297,7 +297,10 @@ public class Controller {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JFrame editorFrame = getView().getFrame();
+				// temporarily disable window closing
+				editorFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE); 
 				editorFrame.dispatchEvent(new WindowEvent(editorFrame, WindowEvent.WINDOW_CLOSING));
+				editorFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				// model.doToApp();
 			}
 		};
