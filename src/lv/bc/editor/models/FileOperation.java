@@ -56,9 +56,6 @@ public class FileOperation {
 		nativeWords.removeAll(nativeWords);
 		learnt.removeAll(learnt);
 		setNumberOfLines(0);
-		// foreignWords.clear();
-		// nativeWords.clear();
-		// learnt.clear();
 
 		if (direction.equals("lven"))
 			langDirectory = lv_en;
@@ -66,41 +63,29 @@ public class FileOperation {
 			langDirectory = en_lv;
 
 		String line = null;
-		String filename = Controller.FP + "file/" + langDirectory + "/" + topic + "/" + topic + ".lst";
+		String filename = Controller.FP + "file/" + langDirectory + "/" + topic + "/" + topic.toLowerCase() + ".lst";
 		FileInputStream fileInputStream = new FileInputStream(filename);
 		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream, "UTF-8"));
 		try {
 
-			int i = 0;
 			int j = 0;
 			while ((line = bufferedReader.readLine()) != null) {
-				if (i == 0) {
-					lesson = Integer.parseInt(line.trim());
-				}
-				if (i == 1) {
-					mode = line.trim();
-				}
-				if (i > 1) {
-					numberOfLines++;
+				numberOfLines++;
 
-					if (direction.equals("lven"))
-						foreignWords.add(line.trim());
-					else
-						nativeWords.add(line.trim());
+				if (direction.equals("lven"))
+					foreignWords.add(line.trim());
+				else
+					nativeWords.add(line.trim());
 
-					line = bufferedReader.readLine();
-					if (direction.equals("lven"))
-						nativeWords.add(line.trim());
-					else
-						foreignWords.add(line.trim());
+				line = bufferedReader.readLine();
+				if (direction.equals("lven"))
+					nativeWords.add(line.trim());
+				else
+					foreignWords.add(line.trim());
 
-					line = bufferedReader.readLine();
-					learnt.add(Integer.valueOf(line.trim()));
-
-					i = i + 2;
-					j++;
-				}
-				i++;
+				line = bufferedReader.readLine();
+				learnt.add(Integer.valueOf(line.trim()));
+				j++;
 			}
 
 		} catch (IOException e) {
@@ -112,17 +97,11 @@ public class FileOperation {
 
 	public static void write(String topic) {
 		Writer writer = null;
-		if (numberOfLines == 0) {
-			lesson = 0;
-			mode = "text";
-		}
 		try {
 			writer = new BufferedWriter(new OutputStreamWriter(
-					new FileOutputStream(Controller.FP + "file/" + langDirectory + "/" + topic + "/" + topic + ".lst"),
+					new FileOutputStream(
+							Controller.FP + "file/" + langDirectory + "/" + topic + "/" + topic.toLowerCase() + ".lst"),
 					"UTF-8"));
-			writer.write(lesson + "\n");
-			writer.write(mode + "\n");
-
 			for (int i = 0; i < nativeWords.size(); i++) {
 				if (direction.equals("lven")) {
 					writer.write(foreignWords.get(i) + "\n");
