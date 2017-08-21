@@ -1,5 +1,5 @@
 package lv.bc.views;
-
+import lv.bc.editor.*;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
@@ -8,6 +8,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.text.Normalizer;
 import java.util.regex.Pattern;
 public class View {
@@ -38,6 +40,7 @@ public class View {
 	private JMenuItem menuItemEnglish;
 	private JMenuItem menuItemHelp;
 	private JMenuItem menuItemAbout;
+	private JMenuItem menuItemToEditor;
 	public JProgressBar progressBar;
 	public JLabel scoreLabel;
 	public String lang = "";
@@ -59,8 +62,21 @@ public class View {
 	public View(String text) {
 		frame = new JFrame();
 		frame.setTitle(applicationTitle);
+		frame.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				// TODO Auto-generated method stub
+//				lv.bc.editor.Main.main(null);
+//				super.windowClosing(e);
+				System.out.println("closing LLA window"); 
+				frame.dispose(); // get rid of the frame
+//				frame.setVisible(false);
+				lv.bc.editor.Main.main(null);
+			}
+		});
 		frame.getContentPane().setLayout(new BorderLayout());
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		frame.setSize(600, 800);
 		
 		// JPanel that holds all the other panels
@@ -254,6 +270,18 @@ public class View {
     	group.add(menuItemNF);
     	modeMenu.add(menuItemNF);
     	
+    	modeMenu.addSeparator(); // --------------------------
+    	
+    	menuItemToEditor = new JMenuItem("Switch to Editor");
+    	menuItemToEditor.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+			}
+		});
+    	modeMenu.add(menuItemToEditor);
+    	
+    	// Menu for Language
     	optionsMenu = new JMenu("Language");
     	menuItemLatvian = new JMenuItem("lv-LV");
     	menuItemEnglish = new JMenuItem("en-US");
@@ -354,6 +382,10 @@ public class View {
 	public JMenuItem getMenuItemExit() {
 		return menuItemExit;
 	}
+	
+	public JMenuItem getMenuItemToEditor() {
+		return menuItemToEditor;
+	}
 
 	public JCheckBoxMenuItem getMenuItemSilent() {
 		return menuItemSilent;
@@ -389,6 +421,10 @@ public class View {
 	
 	public JMenuItem getMenuItemHelp() {
 		return menuItemHelp;
+	}
+	
+	public JMenuItem getMenuItemAbout() {
+		return menuItemAbout;
 	}
 	
 	public String deAccent(String str) {

@@ -105,6 +105,10 @@ public class Model {
 		FileOperation.write(topicName);
 	}
 
+	public void doToApp() {
+		
+	}
+	
 	public void doHelp() {
 		File htmlFile = new File("help/index.html");
 		if (htmlFile.exists()) {
