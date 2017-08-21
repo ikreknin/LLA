@@ -32,8 +32,8 @@ public class Controller {
 
 	//TODO change dynamically what is in dropdown list
 	
-	public String selectedLearningDirection = "LAT-ENG";
-	public String selectedTopic = "Dzivnieki"; //---> when getting parameter from view, Normalizer function removes all non-english characters.
+	public String selectedLearningDirection = settings.getLearningDirection();
+	public String selectedTopic = settings.getTopic(); //---> when getting parameter from view, Normalizer function removes all non-english characters.
 	
 	
 //Parameters for actions with answer keys
@@ -100,10 +100,27 @@ public class Controller {
 		    
 			@Override
 		    public void windowOpened(WindowEvent we) {
+				
+				//Temporary?
+				int indexLanguageSwitch;
+				if(settings.getLearningDirection().equals("LAT-ENG")) 
+					indexLanguageSwitch = 1;
+				else if(settings.getLearningDirection().equals("ENG-LAT"))
+					indexLanguageSwitch = 2;
+				else
+					indexLanguageSwitch = -1;
+				
+				
+				//
+				
 				view.getMenuItemAudio().setSelected(settings.getAudio());
 				view.getMenuItemText().setSelected(settings.getText());
 				
 				view.setScore(settings.getScore());
+				
+				view.topicsList.setSelectedIndex(indexLanguageSwitch);
+				System.out.println(indexLanguageSwitch + "^^^^^^^^^^^^^^^^^^^^^^^^^^^" + settings.getLearningDirection());
+				
 				
 				//view.choices
 				
@@ -143,7 +160,7 @@ public class Controller {
 				
 			if(isClientsAnswer()) {
 					view.setTextQuestion(model.getLearnWord().getFromText());
-					view.score +=8;
+					view.score ++;
 					view.setScore(view.score);
 				}
 				
@@ -231,12 +248,12 @@ public class Controller {
 			
 			@Override
 			public void actionPerformed(ActionEvent paramActionEvent) {
-				String fileName = normalString(model.getLearnWord().getFromText()).toLowerCase();
+				String fileName = normalString(model.getLearnWord().getFromText()).toLowerCase() + ".wav";
 				
 				String dir = System.getProperty("user.dir");
-				String fileFolder = dir + "/file/" + selectedLearningDirection + "/" + selectedTopic;
-				//AudioPlayer.playFileWithPath(fileFolder, fileName);
-				AudioPlayer.playFileWithPath("bla", "bla");
+				String fileFolder = dir + "/file/" + selectedLearningDirection + "/" + selectedTopic + "/";
+				
+				AudioPlayer.playFileWithPath(fileFolder, fileName);
 				
 			}
 		});
@@ -250,9 +267,12 @@ public class Controller {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				System.out.println("Selected topic------------------" + selectedTopic);
-				model.doOpen(selectedLearningDirection, selectedTopic); 
 				
+				model.doOpen(selectedLearningDirection, selectedTopic); 
+				settings.setTopic(selectedTopic);
+				System.out.println(selectedTopic + "%%%%%%%%%%%%%%%%%%%%%%%");
+				settings.setLearningDirection(selectedLearningDirection);
+				System.out.println(selectedLearningDirection + "%%%%%%%%%%%%%%%%");
 				view.setTextQuestion(model.getLearnWord().getFromText());
 				
 				view.setTextAnswer1(model.getTopicAnswers().get(0).getToText());
