@@ -2,6 +2,7 @@ package lv.bc.io;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -33,12 +34,6 @@ public class TopicReader {
 		return topicName;
 	}
 
-	public void setTopicName(String fileName) {
-		this.topicName = topicName;
-	}
-	
-
-
 	//1:TODO: read from necessary file all words
 	public void openFile() throws IOException{
 		String dir = System.getProperty("user.dir");
@@ -48,9 +43,7 @@ public class TopicReader {
 		
 		this.allTopicWords = new ArrayList<Word>();
 				
-       // Path path = Paths.get(filePath);
-    	//if (Files.notExists(path)) {
-    	//	System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!No such file under Path: [" + filePath + "]");
+       
     	/*	this.allTopicWords.add(new Word(0,"suns", "dog", 0));
     		this.allTopicWords.add(new Word(1,"lauva", "lion", 0));
     		this.allTopicWords.add(new Word(2,"putns", "bird", 0));
@@ -66,49 +59,47 @@ public class TopicReader {
     		this.allTopicWords.add(new Word(10,"aita", "sheep", 0));
     		this.allTopicWords.add(new Word(11, "pērtiķis", "monkey", 0));
     		
-    		this.allTopicWords.add(new Word(12,"lācis", "bear", 0));    		
-    		//System.exit(1);*/
-    //	}
-    
-    	final File file = new File(filePath);
-    	BufferedReader reader = new BufferedReader(new FileReader(file));
- 
-    	try{
-	    	int i = 0;
-	    	int l = 0; // we have to read 3 lines to create Word object
-	    	String line = null;
-	    	String txtFrom = "";
-	    	String txtTo = "";
-	        while((line = reader.readLine()) != null) {
-	        	if (l== 0)
-		        		txtFrom = line;
-	        	else if(l == 1)
-		        		txtTo = line;
-	        	else if(l == 3){
-	        		    int key = allTopicWords.size();
-		        		Word word = new Word(key, txtFrom, txtTo, 0);
-		        		allTopicWords.add(word);
-		        		l = 0;
-		        		txtFrom = line;
-            	}	
-            	l++;
-            	i++;
-            }
-	    }
-	    finally {
-	           reader.close();
-	    }
-	
-	}
+    		this.allTopicWords.add(new Word(12,"lācis", "bear", 0));    */		
 
-	public void resetFile(){
-		//TODO: go through the file and set score for all words to 0
-		// save changes
-		// update pointer to 0 in settings?
+    	final File file = new File(filePath);
+    	BufferedReader reader;
+		try {
+			reader = new BufferedReader(new FileReader(file));
+		   	try{
+		    	int l = 0; // we have to read 3 lines to create Word object
+		    	String line = null;
+		    	String txtFrom = "";
+		    	String txtTo = "";
+		        while((line = reader.readLine()) != null) {
+		        	if (l== 0)
+			        		txtFrom = line;
+		        	else if(l == 1)
+			        		txtTo = line;
+		        	else if(l == 3){
+		        		    int key = allTopicWords.size();
+			        		Word word = new Word(key, txtFrom, txtTo, 0);
+			        		allTopicWords.add(word);
+			        		l = 0;
+			        		txtFrom = line;
+	            	}	
+	            	l++;
+	            }
+		        if(l==3){
+		        	int key = allTopicWords.size();
+	        		Word word = new Word(key, txtFrom, txtTo, 0);
+	        		allTopicWords.add(word);		        	
+		        }
+		    }
+		    finally {
+		           reader.close();
+		    }
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			System.out.println("File " + filePath + "is not found!");
+			//e.printStackTrace();
+			//System.exit(-1);
+		}
 	}
-	
-	public void saveFile(){
-		//TODO: update all scores into file, take score for proper word from allTopicWords
-	}	
 
 }
