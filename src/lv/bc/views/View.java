@@ -295,6 +295,10 @@ public class View {
     	scoreLabel.setText("Score: " + String.valueOf(score));
     }
     
+	public JButton getPlayButton() {
+		return playButton;
+	}    
+    
 	public JButton getQuestionButton() {
 		return buttonQuestion;
 	}
