@@ -85,8 +85,7 @@ public class TopicAnswers {
 		System.out.println("fullList.size()		:	" + fullList.size());
 
 		setLeftToStudy(fileArray);
-		System.out.println("newmToLearn.size()	:	" + leftToStudy.size());
-		System.out.println("newmToLearn.size()	:	" + leftToStudy);
+		System.out.println("leftToStudy	["+ leftToStudy.size() + "]:  " + leftToStudy.values());
 		
 		setAnswerList(new ArrayList<Word>(leftToStudy.values()));
 		System.out.println("answerList.size()	:	" + answerList.size());
