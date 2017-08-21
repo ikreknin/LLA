@@ -48,8 +48,8 @@ public class View {
 	public JButton nextQuestion;
 	public String[] choices;
 	public String[] topics;
-	public String[] topicsLv = {"Animals","Family"};
-	public String[] topicsEng = {"Dzīvnieki","Ģimene"};
+	public String[] topicsLv = {"Animals","Home", "Numbers"};
+	public String[] topicsEng = {"Dzīvnieki","Māja","Skaitļi"}; // "Dzivnieki, Maja, Skaitli
 	public int score = 0;
 	
 	public JFrame getFrame() {

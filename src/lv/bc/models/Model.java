@@ -42,17 +42,20 @@ public class Model {
 			return false;
 	}
 
-	// Main "File" Menu Items ------------------------------------------------------------------------------------------------------
+	// Main "File" Menu Items --------------------------""----------------------------------------------------------------------------
 
 	// Sub-Menu "Open" method
 	public void doOpen(String lng, String topic) {
-		TopicReader topicReader = new TopicReader("ENG-LAT", "Animals");
+		System.out.println("===========File Path==========");
+		System.out.println("Language: " + lng + "Topic:	" + topic);
+		//TopicReader topicReader = new TopicReader("ENG-LAT", "Animals");
+		TopicReader topicReader = new TopicReader(lng, topic);
 		try {
 			topicReader.openFile();
 			if(topicReader.getAllTopicWords().size() > 0) {
 				topicAnswers = new TopicAnswers(topicReader.getAllTopicWords());
 				
-				System.out.println("==========================");
+				System.out.println("========Array=========");
 				System.out.println("Full array: " + topicReader.getAllTopicWords().toString());
 				System.out.println("left array: " + topicAnswers.getLeftToLearn().toString());
 				System.out.println("Answ array: " + topicAnswers.getAnswerList().toString());
