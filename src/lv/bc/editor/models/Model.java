@@ -106,7 +106,7 @@ public class Model {
 	}
 
 	public void doHelp() {
-		File htmlFile = new File("help/index.html");
+		File htmlFile = new File("help/editor/index.html");
 		if (htmlFile.exists()) {
 			if (Desktop.isDesktopSupported()) {
 				try {
