@@ -12,7 +12,8 @@ import lv.bc.io.Word;
 
 public class Model {
 	
-	TopicAnswers topicAnswers = new TopicAnswers();;
+	TopicAnswers topicAnswers = new TopicAnswers();
+	MenuList menuList;
 	public List<Word> getTopicAnswers() {
 		return topicAnswers.getAnswerList();
 	}
@@ -22,9 +23,17 @@ public class Model {
 	}
 
 	public Model() {
-	
+		menuList = new MenuList();
 	}
-
+	
+	public List<String> getTopicMenu(){
+		return menuList.getTopicMenu();
+	}
+	
+	public List<String> getLanguageMenu(){
+		return menuList.getLanguageMenu();
+	}
+	
 	// Buttons' methods ------------------------------------------------------------------------------------------------------
 	public void doQuestion() {
 
@@ -39,14 +48,12 @@ public class Model {
 		else 
 			return false;
 	}
-
 	// Main "File" Menu Items --------------------------""----------------------------------------------------------------------------
 
 	// Sub-Menu "Open" method
 	public void doOpen(String lng, String topic) {
 		System.out.println("===========File Path==========");
-		System.out.println("Language: " + lng + "Topic:	" + topic);
-		//TopicReader topicReader = new TopicReader("ENG-LAT", "Animals");
+		System.out.println("Language: " + lng + " Topic:	" + topic);
 		TopicReader topicReader = new TopicReader(lng, topic);
 		try {
 			topicReader.openFile();
@@ -69,6 +76,7 @@ public class Model {
 			e.printStackTrace();
 		}
 	}
+
 	public int getScore(){
 		return topicAnswers.getRoundScore();
 	}
