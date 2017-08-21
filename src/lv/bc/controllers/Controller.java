@@ -102,24 +102,42 @@ public class Controller {
 		    public void windowOpened(WindowEvent we) {
 				
 				//Temporary?
-				int indexLanguageSwitch;
-				if(settings.getLearningDirection().equals("LAT-ENG")) 
-					indexLanguageSwitch = 1;
-				else if(settings.getLearningDirection().equals("ENG-LAT"))
-					indexLanguageSwitch = 2;
-				else
-					indexLanguageSwitch = -1;
+				int indexLanguageSwitch = -1;
+				int indexTopicSwitch = -1;
 				
+				
+				for(int i = 0; i < view.choices.length; i++) {
+					if(settings.getLearningDirection().equals(view.choices[i])) {
+						indexLanguageSwitch = i;
+						if(i == 0) {
+							view.topics = view.topicsLv;
+							for(int x = 0; x < view.topicsLv.length ; x++) {
+								if(normalString(view.topicsLv[x]).equals(settings.getTopic())) {
+									indexTopicSwitch = x;
+								}
+							}
+						}
+						else if(i == 1) {
+							view.topics = view.topicsEng;
+							for(int x = 0; x < view.topicsEng.length ; x++) {
+								if(normalString(view.topicsEng[x]).equals(settings.getTopic())) {
+									indexTopicSwitch = x;
+								}
+							}
+						}
+					}
+				}
+
+				view.languageList.setSelectedIndex(indexLanguageSwitch);
+				view.topicsList.setSelectedIndex(indexTopicSwitch);
 				
 				//
 				
 				view.getMenuItemAudio().setSelected(settings.getAudio());
 				view.getMenuItemText().setSelected(settings.getText());
 				
-				view.setScore(settings.getScore());
 				
-				view.topicsList.setSelectedIndex(indexLanguageSwitch);
-				System.out.println(indexLanguageSwitch + "^^^^^^^^^^^^^^^^^^^^^^^^^^^" + settings.getLearningDirection());
+				view.setScore(settings.getScore());
 				
 				
 				//view.choices
@@ -159,11 +177,10 @@ public class Controller {
 			public void actionPerformed(ActionEvent e) {
 				
 			if(isClientsAnswer()) {
-					view.setTextQuestion(model.getLearnWord().getFromText());
-					view.score ++;
-					view.setScore(view.score);
+					view.setTextQuestion(model.getLearnWord().getFromText());					
 				}
-				
+			view.setScore(model.getScore());
+			
 				view.setTextAnswer1(model.getTopicAnswers().get(0).getToText());
 				view.setTextAnswer2(model.getTopicAnswers().get(1).getToText());
 				view.setTextAnswer3(model.getTopicAnswers().get(2).getToText());
@@ -267,12 +284,12 @@ public class Controller {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
+				selectedTopic = view.topicsList.getSelectedItem().toString();
+				selectedTopic = normalString(selectedTopic);
 				
 				model.doOpen(selectedLearningDirection, selectedTopic); 
 				settings.setTopic(selectedTopic);
-				System.out.println(selectedTopic + "%%%%%%%%%%%%%%%%%%%%%%%");
 				settings.setLearningDirection(selectedLearningDirection);
-				System.out.println(selectedLearningDirection + "%%%%%%%%%%%%%%%%");
 				view.setTextQuestion(model.getLearnWord().getFromText());
 				
 				view.setTextAnswer1(model.getTopicAnswers().get(0).getToText());
@@ -292,10 +309,10 @@ public class Controller {
 					//selectedLearningDirection = normalString(selectedLearningDirection);
 					view.lang = view.deAccent(selectedLearningDirection);
 					if (selectedLearningDirection == "LAT-ENG") {
-						DefaultComboBoxModel<?> comboBoxModel1 = new DefaultComboBoxModel<Object>(view.topicsEng);
+						DefaultComboBoxModel<?> comboBoxModel1 = new DefaultComboBoxModel<Object>(view.topicsLv);
 						view.topicsList.setModel(comboBoxModel1);
 					} else {
-						DefaultComboBoxModel<?> comboBoxModel2 = new DefaultComboBoxModel<Object>(view.topicsLv);
+						DefaultComboBoxModel<?> comboBoxModel2 = new DefaultComboBoxModel<Object>(view.topicsEng);
 						view.topicsList.setModel(comboBoxModel2);
 					}
 				}
@@ -308,7 +325,8 @@ public class Controller {
 					JComboBox<?> cb = (JComboBox<?>)e.getSource();
 					selectedTopic = (String)cb.getSelectedItem();
 					selectedTopic = normalString(selectedTopic);
-					view.topic = view.deAccent(selectedTopic);
+					
+					//view.topic = view.deAccent(selectedTopic);
 				}
 			};
 			view.topicsList.addActionListener(actionListenerTopic);
@@ -328,6 +346,7 @@ public class Controller {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				model.doReset();
+				view.setScore(model.getScore());
 			}
 		};
 		view.getMenuItemReset().addActionListener(actionListenerReset);
@@ -335,7 +354,7 @@ public class Controller {
 		actionListenerExit = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				settings.setScore(view.score);
+				settings.setScore(model.getScore());
 				settings.saveAndExit();
 				System.exit(0);
 			}
@@ -347,7 +366,7 @@ public class Controller {
 	            @Override
 	            public void windowClosing(WindowEvent e)
 	            {
-	            	settings.setScore(view.score);
+	            	settings.setScore(model.getScore());
 	            	settings.saveAndExit();
 	            }
 	        });

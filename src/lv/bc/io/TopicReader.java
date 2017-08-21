@@ -34,10 +34,6 @@ public class TopicReader {
 		return topicName;
 	}
 
-	public void setTopicName(String fileName) {
-		this.topicName = topicName;
-	}
-
 	//1:TODO: read from necessary file all words
 	public void openFile() throws IOException{
 		String dir = System.getProperty("user.dir");
@@ -65,14 +61,11 @@ public class TopicReader {
     		
     		this.allTopicWords.add(new Word(12,"lācis", "bear", 0));    */		
 
-		System.out.println("1");
     	final File file = new File(filePath);
-		System.out.println("2");
     	BufferedReader reader;
 		try {
 			reader = new BufferedReader(new FileReader(file));
 		   	try{
-		    	int i = 0;
 		    	int l = 0; // we have to read 3 lines to create Word object
 		    	String line = null;
 		    	String txtFrom = "";
@@ -90,7 +83,6 @@ public class TopicReader {
 			        		txtFrom = line;
 	            	}	
 	            	l++;
-	            	i++;
 	            }
 		        if(l==3){
 		        	int key = allTopicWords.size();

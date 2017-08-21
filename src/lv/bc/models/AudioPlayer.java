@@ -2,6 +2,7 @@ package lv.bc.models;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
@@ -39,16 +40,13 @@ public class AudioPlayer {
 			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("There is no such a file!");
 		} catch (LineUnavailableException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     }
     
-	public static void main(String[] args) {
-		
-	}
-
+	
 }
 
