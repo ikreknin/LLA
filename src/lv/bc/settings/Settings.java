@@ -10,12 +10,15 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Properties;
 
+import lv.bc.views.View;
+
 //For getting property values you need to use getProperty(String key)
 //For setting new property values you need to use setProperty(String key, String value)
 
 public class Settings {
 	
 	//Properties                             //Now value should be:
+	private View view;
 	private String learningDirection;       // LAT-ENG
 	private String topic;                  // Dzivnieki
 	private boolean audio;                // true

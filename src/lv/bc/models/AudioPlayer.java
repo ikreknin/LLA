@@ -19,9 +19,9 @@ public class AudioPlayer {
     
     public static void playFileWithPath(String pathToFile, String fileName) {
 	   try {
-//	    	String s3 = System.getProperty("user.dir");
-//	    	audioFile = new File(s3 + "/src/viens.wav");
-		   	audioFile = new File(pathToFile + fileName);
+	    	String s3 = System.getProperty("user.dir");
+	    	audioFile = new File(s3 + "/file/LAT-ENG/Skaitli/viens.wav");
+//		   	audioFile = new File(pathToFile + fileName);
 		    stream = AudioSystem.getAudioInputStream(audioFile.getAbsoluteFile());
 			format = stream.getFormat();
 		    DataLine.Info info = new DataLine.Info(Clip.class, format);

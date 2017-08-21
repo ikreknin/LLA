@@ -22,6 +22,7 @@ public class Controller {
 	private Model model;
 	private View view;
 	private Settings settings = new Settings();
+	private AudioPlayer player;
 //Action listeners for buttons
 	private ActionListener  actionListenerQuestion,actionListenerAnswer1,	actionListenerAnswer2, actionListenerAnswer3, actionListenerAnswer4;
 //Actions listeners for Menu
@@ -102,6 +103,7 @@ public class Controller {
 				view.getMenuItemAudio().setSelected(settings.getAudio());
 				view.getMenuItemText().setSelected(settings.getText());
 				
+				view.setScore(settings.getScore());
 				
 				//view.choices
 				
@@ -141,6 +143,8 @@ public class Controller {
 				
 			if(isClientsAnswer()) {
 					view.setTextQuestion(model.getLearnWord().getFromText());
+					view.score +=8;
+					view.setScore(view.score);
 				}
 				
 				view.setTextAnswer1(model.getTopicAnswers().get(0).getToText());
@@ -223,8 +227,23 @@ public class Controller {
 		};
 		view.getAnswerButton4().addActionListener(actionListenerAnswer4);
 		
+		view.getPlayButton().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent paramActionEvent) {
+				String fileName = normalString(model.getLearnWord().getFromText()).toLowerCase();
+				
+				String dir = System.getProperty("user.dir");
+				String fileFolder = dir + "/file/" + selectedLearningDirection + "/" + selectedTopic;
+				//AudioPlayer.playFileWithPath(fileFolder, fileName);
+				AudioPlayer.playFileWithPath("bla", "bla");
+				
+			}
+		});
 		
-//Action Listeners UI menu bar----------------------------------------------------------------------------------------
+		
+//UI menu ----------------------------------------------------------------------------------------
+		
 		
 		actionListenerOpen = new ActionListener() {
 			
@@ -296,6 +315,7 @@ public class Controller {
 		actionListenerExit = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				settings.setScore(view.score);
 				settings.saveAndExit();
 				System.exit(0);
 			}
@@ -307,59 +327,67 @@ public class Controller {
 	            @Override
 	            public void windowClosing(WindowEvent e)
 	            {
+	            	settings.setScore(view.score);
 	            	settings.saveAndExit();
 	            }
 	        });
 	
 		
+		
 		itemListenerAudio = new ItemListener() {
-
 			@Override
 			public void itemStateChanged(ItemEvent paramItemEvent) {
 				int audioState = paramItemEvent.getStateChange();
 				
-				if (audioState == 1) {
-					settings.setAudio(true);
-					//TODO enable sound button
-				}
-				else if(audioState == 2) {
-					settings.setAudio(false);
-					//TODO disable sound button
+				if (settings.getText()) {
+					
+					if (audioState == 1) {
+						settings.setAudio(true);
+						view.getPlayButton().setEnabled(true);
+					}
+					else if(audioState == 2) {
+						settings.setAudio(false);
+						view.getPlayButton().setEnabled(false);
+					}
+					else {
+						System.out.println("There shouldnt be value like " + audioState);
+					}
 				}
 				else {
-					System.out.println("There shouldnt be value like " + audioState);
-				}
+					
+					settings.setAudio(true);
+					view.getPlayButton().setEnabled(true);
+				}	
 			}
-			
-			
 		};
 		view.getMenuItemAudio().addItemListener(itemListenerAudio);
 		
+		
 		itemListenerText = new ItemListener() {
-
 			@Override
 			public void itemStateChanged(ItemEvent paramItemEvent) {
 				int textState = paramItemEvent.getStateChange();
 				
 				if (textState == 1) {
+					view.getMenuItemAudio().setEnabled(true);
 					settings.setText(true);
 					view.getQuestionButton().setVisible(true);
 				}
 				else if(textState == 2) {
+					view.getMenuItemAudio().setEnabled(false);
 					settings.setText(false);
 					settings.setAudio(true);
+					view.getPlayButton().setEnabled(true);
 					view.getMenuItemAudio().setSelected(true);
-					//TODO enable sound icon
 					view.getQuestionButton().setVisible(false);
 				}
 				else {
 					System.out.println("There shouldnt be value like " + textState);
 				}
-				
 			}
-
 		};
 		view.getMenuItemText().addItemListener(itemListenerText);
+		
 		
 		actionListenerFN = new ActionListener() {
 			
