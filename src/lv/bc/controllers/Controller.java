@@ -370,14 +370,14 @@ public class Controller {
 			view.topicsList.addActionListener(actionListenerTopic);
 			
 //Menu bar options--------------------------------------------------------------------------------------
-		actionListenerSave = new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				model.doSave();
-			}
-		};
-		view.getMenuItemSave().addActionListener(actionListenerSave);
+//		actionListenerSave = new ActionListener() {
+//			
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				model.doSave();
+//			}
+//		};
+//		view.getMenuItemSave().addActionListener(actionListenerSave);
 		
 		actionListenerReset = new ActionListener() {
 			
@@ -466,23 +466,23 @@ public class Controller {
 		view.getMenuItemText().addItemListener(itemListenerText);
 		
 		
-		actionListenerFN = new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				model.doFN();
-			}
-		};
-		view.getMenuItemFN().addActionListener(actionListenerFN);
-		
-		actionListenerNF = new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				model.NF();
-			}
-		};
-		view.getMenuItemNF().addActionListener(actionListenerNF);
+//		actionListenerFN = new ActionListener() {
+//			
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				model.doFN();
+//			}
+//		};
+//		view.getMenuItemFN().addActionListener(actionListenerFN);
+//		
+//		actionListenerNF = new ActionListener() {
+//			
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				model.NF();
+//			}
+//		};
+//		view.getMenuItemNF().addActionListener(actionListenerNF);
 		
 		// on clicking menuItemToEditor dispatch WINDOW_CLOSING Event
 		actionListenerToEditor = new ActionListener() {
@@ -497,23 +497,23 @@ public class Controller {
 		};
 		view.getMenuItemToEditor().addActionListener(actionListenerToEditor);
 		
-		actionListenerLatvian = new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO
-			}
-		};
-		view.getMenuItemLatvian().addActionListener(actionListenerLatvian);
-		
-		actionListenerEnglish = new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO
-			}
-		};
-		view.getMenuItemEnglish().addActionListener(actionListenerEnglish);
+//		actionListenerLatvian = new ActionListener() {
+//			
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				// TODO
+//			}
+//		};
+//		view.getMenuItemLatvian().addActionListener(actionListenerLatvian);
+//		
+//		actionListenerEnglish = new ActionListener() {
+//			
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				// TODO
+//			}
+//		};
+//		view.getMenuItemEnglish().addActionListener(actionListenerEnglish);
 		
 		actionListenerAbout = new ActionListener() {	
 			@Override
