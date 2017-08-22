@@ -11,6 +11,7 @@ import java.text.Normalizer;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.Timer;
 
 import lv.bc.models.*;
@@ -26,7 +27,7 @@ public class Controller {
 //Action listeners for buttons
 	private ActionListener  actionListenerQuestion,actionListenerAnswer1,	actionListenerAnswer2, actionListenerAnswer3, actionListenerAnswer4;
 //Actions listeners for Menu
-	private ActionListener actionListenerOpen, actionListenerSave, actionListenerReset, actionListenerExit, actionListenerFN, actionListenerNF,actionListenerAbout, actionListenerHelp, actionListenerLatvian, actionListenerEnglish;
+	private ActionListener actionListenerOpen, actionListenerSave, actionListenerReset, actionListenerExit, actionListenerFN, actionListenerNF,actionListenerToEditor, actionListenerAbout, actionListenerHelp, actionListenerLatvian, actionListenerEnglish;
 	private ItemListener itemListenerAudio, itemListenerText;
 ////// Menu
 
@@ -159,6 +160,19 @@ public class Controller {
 				view.setTextAnswer4(model.getTopicAnswers().get(3).getToText());
 		    }
 
+			
+		});
+		
+		// actionListenerToEditor triggers Window Close, here we override the close method to not only close the window, but to call the Editor
+		view.getFrame().addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				JFrame newFrame = (JFrame) e.getComponent();
+				System.out.println(newFrame.getTitle());
+				System.out.println("closing LLA window"); 
+				view.getFrame().dispose(); // get rid of the frame
+				lv.bc.editor.Main.main(null);
+			}
 		});
 		
 //Action listeners for answer buttons------------------------------------------------------------------------------------------
@@ -445,7 +459,19 @@ public class Controller {
 			}
 		};
 		view.getMenuItemNF().addActionListener(actionListenerNF);
-
+		
+		// on clicking menuItemToEditor dispatch WINDOW_CLOSING Event
+		actionListenerToEditor = new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// temporarily disable closing
+				view.getFrame().setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE); 
+				view.getFrame().dispatchEvent(new WindowEvent(view.getFrame(), WindowEvent.WINDOW_CLOSING));
+				view.getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			}
+		};
+		view.getMenuItemToEditor().addActionListener(actionListenerToEditor);
 		
 		actionListenerLatvian = new ActionListener() {
 			

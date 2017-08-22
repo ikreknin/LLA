@@ -20,11 +20,13 @@ public class View {
 	private JFrame frame;
 	private JMenu fileMenu;
 	private JMenu optionsMenu;
+	private JMenu modeMenu;
 	private JMenu helpMenu;
 	private JMenuItem menuItemOpen;
 	private JMenuItem menuItemSave;
 	private JMenuItem menuItemExit;
 	private JRadioButtonMenuItem menuItemLanguageNative, menuItemLanguageForeign;
+	private JMenuItem menuItemToApp;
 	private JMenuItem menuItemHelp;
 	private JMenuItem menuItemAbout;
 
@@ -91,6 +93,9 @@ public class View {
 	private String langLanguageNative = "English";
 	private String langLanguageForeign = "Latvian";
 	private String langNew4 = "New 4";
+	
+	private String modeText = "Mode";
+	private String toAppText = "Switch to App";
 
 	private String langHelp = "Help";
 	private String langAbout = "About";
@@ -546,6 +551,11 @@ public class View {
 		group.add(menuItemLanguageForeign);
 		optionsMenu.add(menuItemLanguageForeign);
 
+		modeMenu = new JMenu(modeText);
+		menuItemToApp = new JMenuItem(toAppText);
+		modeMenu.add(menuItemToApp);
+		menuBar.add(modeMenu);
+		
 		helpMenu = new JMenu(langHelp);
 		helpMenu.setMnemonic(KeyEvent.VK_H);
 		menuBar.add(helpMenu);
@@ -581,6 +591,10 @@ public class View {
 		return menuItemLanguageForeign;
 	}
 
+	public JMenuItem getMenuItemToApp() {
+		return menuItemToApp;
+	}
+	
 	public JMenuItem getMenuItemHelp() {
 		return menuItemHelp;
 	}
@@ -843,6 +857,14 @@ public class View {
 
 	public void setTextmenuItemExit(String text) {
 		menuItemExit.setText(text);
+	}
+	
+	public void setTextModeMenu(String text) {
+		modeMenu.setText(text);
+	}
+	
+	public void setTextMenuItemToApp(String text) {
+		menuItemToApp.setText(text);
 	}
 
 	public void setTextMenuItemHelp(String text) {

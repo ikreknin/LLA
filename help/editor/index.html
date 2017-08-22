@@ -1,1 +1,124 @@
-UNDER CONSTRUCTION
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Language Learning Application Editor</title>
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/navbar.css" rel="stylesheet">
+    <link href="../css/styles.css" rel="stylesheet">
+  </head>
+
+  <body ng-app>
+
+    <div class="container">
+      <nav class="navbar navbar-light bg-faded rounded navbar-toggleable-md {{active}}" ng-click="$event.preventDefault()">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#containerNavbar" aria-controls="containerNavbar" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="#">LLA Editor</a>
+
+        <div class="collapse navbar-collapse" id="containerNavbar">
+          <ul class="navbar-nav mr-auto">
+							<li class="nav-item"><a class="nav-link part1" ng-click="active='part1'" href="#">Creating glossary</a></li>
+							<li class="nav-item"><a class="nav-link part2" ng-click="active='part2'" href="#">Editing  glossary</a></li>
+							<li class="nav-item"><a class="nav-link part3" ng-click="active='part3'" href="#">About</a></li>
+          </ul>
+        </div>
+      </nav>
+
+		<div class="row">
+			<div class="col-md-12">
+				<p>&nbsp;</p>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-12">
+
+				<div ng-hide="active"><p><img src="../img/editor.png" width="492" height="279" border="0"></p></div>
+
+				<div ng-show="active === 'part1'"><div class="title"><h3>Creating  glossary</h3></div>
+<ol type="1">
+    <li> Enter a topic name in the Topic input field and click the Save button.</li>
+    <li> Select the added topic in the menu selector and click the New 4 button. 
+4 new words will be added to the words database as &quot;L&quot; and &quot;E&quot; 
+showing on the screen where to add Latvian and English words.</li>
+    <li> Replace L and E with new words in aprropriate languages.</li>
+    <li> Click the Record button to record &nbsp;the pronunciation of the words. Click the Play 
+button to check the pronunciation quality. You can record the words any number of times.</li>
+    <li> Click the Save buttons to save the added data.</li>
+    <li> Click 'New 4' to create additional 4 words.</li>
+</ol>
+</div>
+
+				<div ng-show="active === 'part2'"><div class="title"><h3>Editing  glossary</h3></div>
+<ol type="1">
+    <li>Select a topic in the menu selector and click OK.</li>
+    <li>Find a necessary word(s) by using the Next and Back buttons.</li>
+    <li>Change the words and click the Save button to save the changes. The Next and Back butoons also 
+save the made changes.</li>
+</ol>
+</div>
+
+				<div ng-show="active === 'part3'"><div class="title"><h3>About</h3></div>
+The program is developed as an open-source program and can be downloaded from <a href="https://github.com/ikreknin/LLA-Editor">GitHub.com</a>.
+</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-12">
+				<p>&nbsp;</p><p>&nbsp;</p>
+			</div>
+		</div>
+
+
+		<div class="row">
+			<div class="col-md-4">
+				<div class="title"><h2>LLA</h2></div>
+				<p>This program is an integral part of the LLA program intended for the learning of the Latvian language.</p>
+				<p>
+					<a class="btn btn-primary"
+						href="https://github.com/ikreknin/LLA" role="button">Download LLA
+						&raquo;</a>
+				</p>
+			</div>
+			<div class="col-md-4">
+				<div class="title"><h2>LLA Editor</h2></div>
+				<p>LLA Editor is a free open-source program.</p>
+				<p>
+					<a class="btn btn-primary" href="https://github.com/ikreknin/LLA"
+						role="button">Download LLA Editor &raquo;</a>
+				</p>
+			</div>
+			<div class="col-md-4">
+				<div class="title"><h2>Java</h2></div>
+				<p>The program is developed in Java by Oracle and can be used with such operating systems as Windows, OS X, and Linux.</p>
+				<p>
+					<a class="btn btn-primary" href="https://www.java.com/en/" role="button">View
+						details &raquo;</a>
+				</p>
+			</div>
+		</div>
+
+
+		<div class="row">
+			<div class="col-md-12">
+				<p>&nbsp;</p>
+			</div>
+		</div>
+
+		<footer>
+			<hr>
+			<p>&copy; LLA Project 2017</p>
+		</footer>
+	</div>
+	<!-- /container -->
+
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../angular-1.6.5/angular.min.js"></script>
+  </body>
+</html>
