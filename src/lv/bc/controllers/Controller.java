@@ -105,21 +105,12 @@ public class Controller {
 //On window open---------------------------------------------------------
 		
 		
-		
-		System.out.println(model.getLanguageMenu().size());
-		System.out.println(model.getTopicMenu().toString() + "*************************");
-		
-		
-
 		languageList = new String[model.getLanguageMenu().size()];
 		languageList = model.getLanguageMenu().toArray(languageList);
 		
 		DefaultComboBoxModel<?> comboBoxLanguages = new DefaultComboBoxModel<Object>(languageList);
 		view.languageList.setModel(comboBoxLanguages);
 		
-		
-		model.setMenuTopicList(selectedLearningDirection);
-		System.out.println(model.getTopicMenu() + "#############");
 		
 		
 		view.getFrame().addWindowListener(new WindowAdapter() {
@@ -132,34 +123,28 @@ public class Controller {
 				int indexLanguageSwitch = -1;
 				int indexTopicSwitch = -1;
 				
-				System.out.println(selectedLearningDirection);
-				System.out.println(selectedTopic + "****************");
-				
 				
 				for(int i = 0; i < view.choices.length; i++) {
-					if(selectedLearningDirection.equals(view.choices[i])) {
+					if(selectedLearningDirection.equals(languageList[i])) {
 						indexLanguageSwitch = i;
-						if(i == 0) {
-							view.topics = view.topicsLv;
-							for(int x = 0; x < view.topicsLv.length ; x++) {
-								System.out.println(view.topicsLv[x]);
-								if(normalString(view.topicsLv[x]).equals(selectedTopic)) {
+						model.setMenuTopicList(selectedLearningDirection);
+						topicsList = new String[model.getTopicMenu().size()];
+						topicsList = model.getTopicMenu().toArray(topicsList);
+						for(int x = 0; x < topicsList.length; x++) {
+							if(topicsList[x].equals(selectedTopic)) {
 									
-									indexTopicSwitch = x;
-								}
+								indexTopicSwitch = x;
 							}
 						}
-						else if(i == 1) {
-							view.topics = view.topicsEng;
-							for(int x = 0; x < view.topicsEng.length ; x++) {
-								if(normalString(view.topicsEng[x]).equals(settings.getTopic())) {
-									indexTopicSwitch = x;
-								}
-							}
-						}
+						
 					}
 				}
 
+				
+				System.out.println(indexTopicSwitch);
+				
+
+				
 				view.languageList.setSelectedIndex(indexLanguageSwitch);
 				view.topicsList.setSelectedIndex(indexTopicSwitch);
 				
@@ -341,21 +326,20 @@ public class Controller {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					JComboBox<?> cb = (JComboBox<?>)e.getSource();
-					//DefaultComboBoxModel<?> comboBoxLanguages = new DefaultComboBoxModel<Object>(languageList);
-					//view.languageList.setModel(comboBoxLanguages);
+					
 					
 					
 					
 					selectedLearningDirection = (String)cb.getSelectedItem();
-					//selectedLearningDirection = normalString(selectedLearningDirection);
-					//view.lang = view.deAccent(selectedLearningDirection);
+					System.out.println("selected direction " + selectedLearningDirection);
+					model.setMenuTopicList(selectedLearningDirection);
+					topicsList = new String[model.getTopicMenu().size()];
+					topicsList = model.getTopicMenu().toArray(topicsList);
+					
 					if (selectedLearningDirection.equals(languageList[0])) {
-						DefaultComboBoxModel<?> comboBoxModel1 = new DefaultComboBoxModel<Object>(view.topicsLv);
+						DefaultComboBoxModel<?> comboBoxModel1 = new DefaultComboBoxModel<Object>(topicsList);
 						view.topicsList.setModel(comboBoxModel1);
-					} else if(selectedLearningDirection.equals(languageList[1])){
-						DefaultComboBoxModel<?> comboBoxModel2 = new DefaultComboBoxModel<Object>(view.topicsEng);
-						view.topicsList.setModel(comboBoxModel2);
-					}
+					} 
 				}
 			};
 			view.languageList.addActionListener(actionListenerLanguage);
