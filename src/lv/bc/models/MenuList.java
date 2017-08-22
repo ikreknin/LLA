@@ -24,6 +24,7 @@ public class MenuList {
 	}
 
 	public void setLanguageMenu() {
+		languageMenu = new ArrayList<String>();
 		String dir = System.getProperty("user.dir");
 		String filePath = dir + "/file/";
         File[] files = new File(filePath).listFiles();
@@ -42,6 +43,7 @@ public class MenuList {
 
 
 	public void setTopicMenu(String lng) {
+		topicMenu = new ArrayList<String>();
 		String dir = System.getProperty("user.dir");
 		String filePath = dir + "/file/";
 		
