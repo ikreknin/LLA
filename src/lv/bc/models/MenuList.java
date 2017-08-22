@@ -1,7 +1,13 @@
 package lv.bc.models;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class MenuList {
@@ -38,6 +44,26 @@ public class MenuList {
 	public void setTopicMenu() {
 		String dir = System.getProperty("user.dir");
 		String filePath = dir + "/file/";
+		
+		for(String s : languageMenu){
+			String topicPath = filePath +s + "/";
+			System.out.println(topicPath);
+		
+			DirectoryStream<Path> paths;
+			try {
+				paths = Files.newDirectoryStream(Paths.get(topicPath));
+				for (Iterator<Path> iterator = paths.iterator(); iterator.hasNext();) {
+					  Path path = iterator.next();
+					  System.out.println(path.getFileName().toString()); // The filename here is correct
+					}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}	
+	}
+		/*String dir = System.getProperty("user.dir");
+		String filePath = dir + "/file/";
 		for(String s : languageMenu){
 			String topicPath = filePath +s + "/";
 			System.out.println(topicPath);
@@ -48,9 +74,8 @@ public class MenuList {
 			       topicMenu.add(file.getName());
 			   } 
 			}
-		}	
+		}	*/
 
-	}
 
 	public void initalize(){
 		languageMenu = new ArrayList<String>();
