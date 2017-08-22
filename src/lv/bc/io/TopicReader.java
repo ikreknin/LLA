@@ -8,6 +8,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -70,7 +71,7 @@ public class TopicReader {
 		try {
 			reader = new BufferedReader(
 					   new InputStreamReader(
-			                      new FileInputStream(file), "UTF8"));
+			                      new FileInputStream(file), StandardCharsets.UTF_8));
 		   	try{
 		    	int l = 0; // we have to read 3 lines to create Word object
 		    	String line = null;

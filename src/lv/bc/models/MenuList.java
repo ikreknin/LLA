@@ -56,7 +56,7 @@ public class MenuList {
 		 paths = Files.newDirectoryStream(Paths.get(topicPath));
 		 for (Iterator<Path> iterator = paths.iterator(); iterator.hasNext();) {
 			  Path path = iterator.next();
-			  System.out.println(path.getFileName().toString()); // The filename here is correct
+			  topicMenu.add(path.getFileName().toFile().getName()); // The filename here is correct
 		 }
 		} catch (IOException e) {
 				// TODO Auto-generated catch block
