@@ -23,7 +23,11 @@ public class Model {
 	}
 
 	public Model() {
-		menuList = new MenuList();
+		menuList = new MenuList("LAT-ENG");
+	}
+
+	public void setMenuTopicList(String menuLang){
+		menuList.setTopicMenu(menuLang);
 	}
 	
 	public List<String> getTopicMenu(){

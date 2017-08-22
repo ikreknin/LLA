@@ -14,9 +14,9 @@ public class MenuList {
 	List<String> languageMenu;
 	List<String> topicMenu;
 	
-	public MenuList() {
+	public MenuList(String langMenu) {
 		super();
-		initalize();
+		initalize(langMenu);
 	}
 		
 	public List<String> getLanguageMenu() {
@@ -41,47 +41,35 @@ public class MenuList {
 	}
 
 
-	public void setTopicMenu() {
+	public void setTopicMenu(String lng) {
 		String dir = System.getProperty("user.dir");
 		String filePath = dir + "/file/";
 		
-		for(String s : languageMenu){
-			String topicPath = filePath +s + "/";
-			System.out.println(topicPath);
+		if(lng == null)
+		   lng = "LAT-ENG";
 		
-			DirectoryStream<Path> paths;
-			try {
-				paths = Files.newDirectoryStream(Paths.get(topicPath));
-				for (Iterator<Path> iterator = paths.iterator(); iterator.hasNext();) {
-					  Path path = iterator.next();
-					  System.out.println(path.getFileName().toString()); // The filename here is correct
-					}
-			} catch (IOException e) {
+		String topicPath = filePath + lng + "/";
+	    System.out.println(topicPath);
+		
+		DirectoryStream<Path> paths;
+		try {
+		 paths = Files.newDirectoryStream(Paths.get(topicPath));
+		 for (Iterator<Path> iterator = paths.iterator(); iterator.hasNext();) {
+			  Path path = iterator.next();
+			  System.out.println(path.getFileName().toString()); // The filename here is correct
+		 }
+		} catch (IOException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}	
+			System.out.println("!!!!Wrong path name: " + topicPath);
+			e.printStackTrace();
+		}
 	}
-		/*String dir = System.getProperty("user.dir");
-		String filePath = dir + "/file/";
-		for(String s : languageMenu){
-			String topicPath = filePath +s + "/";
-			System.out.println(topicPath);
-			File[] files = new File(topicPath).listFiles();
-			for (File file : files) {
-		    	System.out.println("File: " + file.getName());
-			    if (file.isDirectory()) {
-			       topicMenu.add(file.getName());
-			   } 
-			}
-		}	*/
 
-
-	public void initalize(){
+	public void initalize(String langMenu){
 		languageMenu = new ArrayList<String>();
 		topicMenu = new ArrayList<String>();
 		setLanguageMenu();
-		setTopicMenu();	    
+		setTopicMenu(langMenu);	    
 	}
 
 }
