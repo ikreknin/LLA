@@ -82,7 +82,9 @@ public class View {
 	    languagePanel.add(lbl);
 	    choices = new String [2];
 	    choices[0] = "LAT-ENG"; choices[1] = "ENG-LAT";
-	    languageList = new JComboBox(choices);
+	    languageList = new JComboBox();
+	    DefaultComboBoxModel comboBoxModel2 = new DefaultComboBoxModel(choices);
+	    languageList.setModel(comboBoxModel2);
 	    languageList.setSelectedIndex(0);
 	    languageList.setVisible(true);
 	    languagePanel.add(languageList);
@@ -93,6 +95,7 @@ public class View {
        
         // JPanel for choosing topic
 		JPanel topicPanel = new JPanel();
+		topicPanel.setLayout(new FlowLayout());
 	    topics = topicsEng;
 	    topicsList = new JComboBox();
 	    DefaultComboBoxModel comboBoxModel = new DefaultComboBoxModel(topics);
