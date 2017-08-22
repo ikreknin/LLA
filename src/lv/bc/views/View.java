@@ -71,14 +71,18 @@ public class View {
 		final JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new GridBagLayout());
 //		mainPanel.setBackground(Color.DARK_GRAY);
-		Border paneEdge = BorderFactory.createEmptyBorder(0,30,40,30); // (top, left, bottom, right)
+		Border paneEdge = BorderFactory.createEmptyBorder(0,0,40,0); // (top, left, bottom, right)
 		((JComponent) mainPanel).setBorder(paneEdge);
 		GridBagConstraints cpnl = new GridBagConstraints();
 		cpnl.fill = GridBagConstraints.HORIZONTAL;
 		
 		// JPanel for choosing language
 		JPanel languagePanel = new JPanel();
-		JLabel lbl = new JLabel("Select one of the possible language choices");
+//		languagePanel.setBackground(Color.BLUE);
+		Font settingsFont20 = new Font("Arial", Font.PLAIN, 20);
+		Font settingsFont17 = new Font("Arial", Font.PLAIN, 19);
+		JLabel lbl = new JLabel("Select language pair");
+		lbl.setFont(settingsFont20);
 	    languagePanel.add(lbl);
 	    choices = new String [2];
 	    choices[0] = "LAT-ENG"; choices[1] = "ENG-LAT";
@@ -86,6 +90,8 @@ public class View {
 	    DefaultComboBoxModel comboBoxModel2 = new DefaultComboBoxModel(choices);
 	    languageList.setModel(comboBoxModel2);
 	    languageList.setSelectedIndex(0);
+	    languageList.setFont(settingsFont17);
+	    languageList.setRenderer(new FontCellRenderer());
 	    languageList.setVisible(true);
 	    languagePanel.add(languageList);
 	    cpnl.gridx = 0;
@@ -101,6 +107,7 @@ public class View {
 	    DefaultComboBoxModel comboBoxModel = new DefaultComboBoxModel(topics);
 	    topicsList.setModel(comboBoxModel);
 	    topicsList.setSelectedIndex(0);
+	    topicsList.setFont(settingsFont17);
 	    topicsList.setVisible(true);
 	    topicPanel.add(topicsList);
 	    cpnl.gridx = 0;
@@ -219,7 +226,7 @@ public class View {
         
 	    cpnl.gridx = 0;
         cpnl.gridy = 4;
-        cpnl.insets = new Insets(0, 60, 0, 60);
+        cpnl.insets = new Insets(0, 20, 0, 20);
         mainPanel.add(buttonPanel, cpnl);
         
     	//Create the menu bar.
@@ -228,8 +235,8 @@ public class View {
     	fileMenu = new JMenu("File");
     	menuBar.add(fileMenu);
 
-    	menuItemSave = new JMenuItem("Save");
-    	fileMenu.add(menuItemSave);
+//    	menuItemSave = new JMenuItem("Save");
+//    	fileMenu.add(menuItemSave);
 
     	menuItemReset = new JMenuItem("Reset");
     	fileMenu.add(menuItemReset);
@@ -249,17 +256,17 @@ public class View {
     	menuItemText.setSelected(true);
     	modeMenu.add(menuItemText);
     	
-    	modeMenu.addSeparator(); // --------------------------
-    	
-    	ButtonGroup group = new ButtonGroup();
-    	menuItemFN = new JRadioButtonMenuItem("Foreign to Native");
-    	menuItemFN.setSelected(true);
-    	group.add(menuItemFN);
-    	modeMenu.add(menuItemFN);
-    	
-    	menuItemNF = new JRadioButtonMenuItem("Native to Foreign");
-    	group.add(menuItemNF);
-    	modeMenu.add(menuItemNF);
+//    	modeMenu.addSeparator(); // --------------------------
+//    	
+//    	ButtonGroup group = new ButtonGroup();
+//    	menuItemFN = new JRadioButtonMenuItem("Foreign to Native");
+//    	menuItemFN.setSelected(true);
+//    	group.add(menuItemFN);
+//    	modeMenu.add(menuItemFN);
+//    	
+//    	menuItemNF = new JRadioButtonMenuItem("Native to Foreign");
+//    	group.add(menuItemNF);
+//    	modeMenu.add(menuItemNF);
     	
     	modeMenu.addSeparator(); // --------------------------
     	
@@ -267,12 +274,12 @@ public class View {
     	modeMenu.add(menuItemToEditor);
     	
     	// Menu for Language
-    	optionsMenu = new JMenu("Language");
-    	menuItemLatvian = new JMenuItem("lv-LV");
-    	menuItemEnglish = new JMenuItem("en-US");
-    	optionsMenu.add(menuItemLatvian);
-    	optionsMenu.add(menuItemEnglish);
-    	menuBar.add(optionsMenu);
+//    	optionsMenu = new JMenu("Language");
+//    	menuItemLatvian = new JMenuItem("lv-LV");
+//    	menuItemEnglish = new JMenuItem("en-US");
+//    	optionsMenu.add(menuItemLatvian);
+//    	optionsMenu.add(menuItemEnglish);
+//    	menuBar.add(optionsMenu);
     	
     	helpMenu = new JMenu("Help");
     	menuItemAbout = new JMenuItem("About");
@@ -304,7 +311,8 @@ public class View {
      */
     public void setScore(int score) {
     	progressBar.setValue(score);
-    	scoreLabel.setText("Score: " + String.valueOf(score));
+    	scoreLabel.setFont(new Font("Arial", Font.BOLD, 15));
+    	scoreLabel.setText("Score: " + String.valueOf(score) + "%");
     }
     
 	public JButton getPlayButton() {
