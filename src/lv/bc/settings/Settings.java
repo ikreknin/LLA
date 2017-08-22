@@ -28,14 +28,20 @@ public class Settings {
 
 	private String iniFile = "../Settings.ini";
 	Path path = Paths.get(iniFile);
+	//String dir = System.getProperty("user.dir");
 	
 	public Settings()  {
 		Properties appProperties = new Properties();
+		String dir = System.getProperty("user.dir");
+		String filePath = dir + "/src/lv/bc/settings/Settings.ini";
+		System.out.println("File path:	[" + filePath + "]");
+		path = Paths.get(filePath);
+		
 		if (Files.exists(path)) {
 			FileInputStream in;
-			
+			System.out.println("File " + filePath);
 			try {
-				in = new FileInputStream(iniFile);
+				in = new FileInputStream(filePath);
 				appProperties.load(in);
 				in.close();
 			} catch (FileNotFoundException e) {
@@ -63,34 +69,21 @@ public class Settings {
 		this.learningDirection = appProperties.getProperty("learningDirection");
 		this.topic = appProperties.getProperty("topic");
 		this.audio = Boolean.valueOf(appProperties.getProperty("audio"));
-		System.out.println(appProperties.getProperty("score"));
 		this.score = Integer.parseInt(appProperties.getProperty("score"));
 		this.text = Boolean.valueOf(appProperties.getProperty("text"));
 	}	
-	
-
-	
 	
 	public String getLearningDirection() {
 		return learningDirection;
 	}
 
-
-
-
 	public void setLearningDirection(String learningDirection) {
 		this.learningDirection = learningDirection;
 	}
 
-
-
-
 	public String getTopic() {
 		return topic;
 	}
-
-
-
 
 	public void setTopic(String topic) {
 		this.topic = topic;
