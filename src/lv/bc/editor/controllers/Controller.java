@@ -464,22 +464,27 @@ public class Controller {
 
 				rememberWindow();
 
+				String dir;
+				if (FileOperation.getDirection().equals("lven"))
+					dir = "/file/LAT-ENG";
+				else
+					dir = "/file/ENG-LAT";				
 				String str = "";
 				str = view.getTextTextFieldTopicName();
 				str = (str.trim());
-				String fileName = str + ".lst";
+				String fileName = str.toLowerCase() + ".lst";
 				if (str.equals("")) {
 					model.doSave(view.deAccent((String) view.getTopicsList().getSelectedItem()));
 				} else {
 					try {
-						Files.createDirectories(Paths.get(str));
+						Files.createDirectories(Paths.get("file/" + dir + "/" + str));
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
 
 					if (!fileName.equals("")) {
 						List<String> lines = Arrays.asList("0", "text");
-						Path file = Paths.get(fileName);
+						Path file = Paths.get("file/" + dir + "/" + str + fileName);
 						try {
 							Files.write(file, lines, Charset.forName("UTF-8"));
 						} catch (IOException e1) {
