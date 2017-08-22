@@ -847,13 +847,13 @@ public class View {
 		helpMenu.setText(text);
 	}
 
-	public void setTextMenuItemOpen(String text) {
-		menuItemOpen.setText(text);
-	}
-
-	public void setTextMenuItemSave(String text) {
-		menuItemSave.setText(text);
-	}
+//	public void setTextMenuItemOpen(String text) {
+//		menuItemOpen.setText(text);
+//	}
+//
+//	public void setTextMenuItemSave(String text) {
+//		menuItemSave.setText(text);
+//	}
 
 	public void setTextmenuItemExit(String text) {
 		menuItemExit.setText(text);
