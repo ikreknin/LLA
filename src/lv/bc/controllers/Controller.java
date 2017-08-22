@@ -110,7 +110,16 @@ public class Controller {
 		System.out.println(model.getTopicMenu().toString() + "*************************");
 		
 		
+
+		languageList = new String[model.getLanguageMenu().size()];
+		languageList = model.getLanguageMenu().toArray(languageList);
 		
+		DefaultComboBoxModel<?> comboBoxLanguages = new DefaultComboBoxModel<Object>(languageList);
+		view.languageList.setModel(comboBoxLanguages);
+		
+		
+		model.setMenuTopicList(selectedLearningDirection);
+		System.out.println(model.getTopicMenu() + "#############");
 		
 		
 		view.getFrame().addWindowListener(new WindowAdapter() {
@@ -118,8 +127,6 @@ public class Controller {
 			@Override
 		    public void windowOpened(WindowEvent we) {
 				
-				languageList = new String[model.getLanguageMenu().size()];
-				languageList = model.getLanguageMenu().toArray(languageList);
 				
 				//Temporary?
 				int indexLanguageSwitch = -1;
@@ -156,9 +163,6 @@ public class Controller {
 				view.languageList.setSelectedIndex(indexLanguageSwitch);
 				view.topicsList.setSelectedIndex(indexTopicSwitch);
 				
-				
-				
-				
 				//
 				
 				view.getMenuItemAudio().setSelected(settings.getAudio());
@@ -166,16 +170,6 @@ public class Controller {
 				
 				
 				view.setScore(settings.getScore());
-				
-				
-				//view.choices
-				
-				
-				//view.topicsEng
-				//view.topicsLv
-				//view.topics
-				
-				
 				
 				model.doOpen(settings.getLearningDirection(), selectedTopic);
 				
@@ -347,19 +341,19 @@ public class Controller {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					JComboBox<?> cb = (JComboBox<?>)e.getSource();
+					//DefaultComboBoxModel<?> comboBoxLanguages = new DefaultComboBoxModel<Object>(languageList);
+					//view.languageList.setModel(comboBoxLanguages);
 					
-					DefaultComboBoxModel<?> comboBoxLanguages = new DefaultComboBoxModel<Object>(languageList);
-					view.languageList.setModel(comboBoxLanguages);
 					
 					
 					selectedLearningDirection = (String)cb.getSelectedItem();
-					selectedLearningDirection = normalString(selectedLearningDirection);
-					view.lang = view.deAccent(selectedLearningDirection);
-					if (selectedLearningDirection == "LAT-ENG") {
-						DefaultComboBoxModel<?> comboBoxModel1 = new DefaultComboBoxModel<Object>(view.topicsEng);
+					//selectedLearningDirection = normalString(selectedLearningDirection);
+					//view.lang = view.deAccent(selectedLearningDirection);
+					if (selectedLearningDirection.equals(languageList[0])) {
+						DefaultComboBoxModel<?> comboBoxModel1 = new DefaultComboBoxModel<Object>(view.topicsLv);
 						view.topicsList.setModel(comboBoxModel1);
-					} else {
-						DefaultComboBoxModel<?> comboBoxModel2 = new DefaultComboBoxModel<Object>(view.topicsLv);
+					} else if(selectedLearningDirection.equals(languageList[1])){
+						DefaultComboBoxModel<?> comboBoxModel2 = new DefaultComboBoxModel<Object>(view.topicsEng);
 						view.topicsList.setModel(comboBoxModel2);
 					}
 				}
@@ -371,9 +365,6 @@ public class Controller {
 				public void actionPerformed(ActionEvent e) {
 					JComboBox<?> cb = (JComboBox<?>)e.getSource();
 					selectedTopic = (String)cb.getSelectedItem();
-					selectedTopic = normalString(selectedTopic);
-					
-					//view.topic = view.deAccent(selectedTopic);
 				}
 			};
 			view.topicsList.addActionListener(actionListenerTopic);
