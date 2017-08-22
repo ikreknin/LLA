@@ -101,33 +101,45 @@ public class View {
        
         // JPanel for choosing topic
 		JPanel topicPanel = new JPanel();
-		topicPanel.setLayout(new FlowLayout());
+//		topicPanel.setBackground(Color.BLUE);
+		topicPanel.setLayout(new GridBagLayout());
+		GridBagConstraints topicPanelConstraints = new GridBagConstraints();
 	    topics = topicsEng;
 	    topicsList = new JComboBox();
 	    DefaultComboBoxModel comboBoxModel = new DefaultComboBoxModel(topics);
 	    topicsList.setModel(comboBoxModel);
 	    topicsList.setSelectedIndex(0);
 	    topicsList.setFont(settingsFont17);
+	    topicPanelConstraints.gridx = 0;
+	    topicPanelConstraints.gridy = 0;
+	    topicPanelConstraints.fill = GridBagConstraints.HORIZONTAL;
+	    topicPanelConstraints.weightx = 0.7;
 	    topicsList.setVisible(true);
-	    topicPanel.add(topicsList);
+	    topicPanel.add(topicsList, topicPanelConstraints);
 	    cpnl.gridx = 0;
         cpnl.gridy = 1;
         cpnl.insets = new Insets(15,0,0,0); 
-        topicPanel.add(okButton);
+	    topicPanelConstraints.gridx = 1;
+	    topicPanelConstraints.gridy = 0;
+	    topicPanelConstraints.fill = GridBagConstraints.HORIZONTAL;
+	    topicPanelConstraints.weightx = 0.3;
+	    topicPanelConstraints.insets = new Insets(0,20,0,0); // (top, left, bottom, right)
+	    okButton.setFont(settingsFont17);
+        topicPanel.add(okButton, topicPanelConstraints);
         mainPanel.add(topicPanel, cpnl);
 		
         // *GridLayout JPanel for holding the progress bar
         JPanel progressPanel = new JPanel();
 //        progressPanel.setBackground(Color.PINK);
         progressPanel.setLayout(new GridLayout(1, 1));
-        progressPanel.setBorder(new EmptyBorder(10, 0, 10, 0)); // 10px top and bottom padding
+        progressPanel.setBorder(new EmptyBorder(30, 0, 10, 0)); // 10px top and bottom padding
         progressBar = ScoreBar.makeBar();
         progressBar.setValue(5);
         progressPanel.add(progressBar);
 //        progressPanel.add(new JProgressBar(0, 100));
 	    cpnl.gridx = 0;
         cpnl.gridy = 2;
-        cpnl.insets = new Insets(0, 5, 0, 5);  // add paddings to control span width        
+        cpnl.insets = new Insets(0, 1, 0, 1);  // add paddings to control span width        
         mainPanel.add(progressPanel, cpnl);
         
         // *FlowLayout JPanel for writing the score
