@@ -37,7 +37,7 @@ public class Controller {
 	//TODO change dynamically what is in dropdown list
 	
 	public String selectedLearningDirection = settings.getLearningDirection();
-	public String selectedTopic = "Dzīvnieki"; //---> when getting parameter from view, Normalizer function removes all non-english characters.
+	public String selectedTopic = settings.getTopic(); //---> when getting parameter from view, Normalizer function removes all non-english characters.
 	
 	public String[] languageList;
 	public String[] topicsList;
@@ -57,8 +57,8 @@ public class Controller {
 	}
 	
 	public String normalString(String nonEnglish) {
-		return nonEnglish;
-		//return Normalizer.normalize(nonEnglish, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
+		//return nonEnglish;
+		return Normalizer.normalize(nonEnglish, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
 	}
 	
 	
@@ -122,21 +122,24 @@ public class Controller {
 				//Temporary?
 				int indexLanguageSwitch = -1;
 				int indexTopicSwitch = -1;
-				
-				
-				for(int i = 0; i < view.choices.length; i++) {
+				System.out.println(languageList[1] + "&&&&&&&&&&&&&&");
+				System.out.println(selectedLearningDirection + "&&&&&&&&&&&&&&");
+				for(int i = 0; i < languageList.length; i++) {
 					if(selectedLearningDirection.equals(languageList[i])) {
 						indexLanguageSwitch = i;
 						model.setMenuTopicList(selectedLearningDirection);
 						topicsList = new String[model.getTopicMenu().size()];
+						System.out.println("topicList" + model.getTopicMenu());
+						System.out.println(selectedTopic + "!!!!!!!");
 						topicsList = model.getTopicMenu().toArray(topicsList);
+						
 						for(int x = 0; x < topicsList.length; x++) {
 							if(topicsList[x].equals(selectedTopic)) {
 									
 								indexTopicSwitch = x;
 							}
 						}
-						
+						i = languageList.length;
 					}
 				}
 
@@ -305,7 +308,7 @@ public class Controller {
 			public void actionPerformed(ActionEvent e) {
 				
 				selectedTopic = view.topicsList.getSelectedItem().toString();
-				selectedTopic = normalString(selectedTopic);
+				//selectedTopic = normalString(selectedTopic);
 				view.setScore(model.getScore());
 				
 				model.doOpen(selectedLearningDirection, selectedTopic); 
@@ -336,10 +339,10 @@ public class Controller {
 					topicsList = new String[model.getTopicMenu().size()];
 					topicsList = model.getTopicMenu().toArray(topicsList);
 					
-					if (selectedLearningDirection.equals(languageList[0])) {
+					
 						DefaultComboBoxModel<?> comboBoxModel1 = new DefaultComboBoxModel<Object>(topicsList);
 						view.topicsList.setModel(comboBoxModel1);
-					} 
+					
 				}
 			};
 			view.languageList.addActionListener(actionListenerLanguage);
