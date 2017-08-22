@@ -99,7 +99,7 @@ public class FileOperation {
 	}
 
 	public static void write(String topic) {
-		if (notEmptyArrayCheck() && noEmptyCellsInArrayCheck()) {
+		if (noEmptyCellsInArrayCheck()) {
 			Writer writer = null;
 			try {
 				writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
