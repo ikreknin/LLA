@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +68,7 @@ public class FileOperation {
 		String line = null;
 		String filename = Controller.FP + "file/" + langDirectory + "/" + topic + "/" + topic.toLowerCase() + ".lst";
 		FileInputStream fileInputStream = new FileInputStream(filename);
-		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream, "UTF-8"));
+		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream, StandardCharsets.UTF_8));
 		try {
 
 			int j = 0;
@@ -103,7 +104,7 @@ public class FileOperation {
 			try {
 				writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
 						Controller.FP + "file/" + langDirectory + "/" + topic + "/" + topic.toLowerCase() + ".lst"),
-						"UTF-8"));
+						StandardCharsets.UTF_8));
 				for (int i = 0; i < nativeWords.size(); i++) {
 					if (direction.equals("lven")) {
 						writer.write(foreignWords.get(i) + "\n");
@@ -180,6 +181,12 @@ public class FileOperation {
 				noEmptyCellsInArray = false;
 		}
 		return notEmptyArray;
+	}
+
+	public static void resetArray() {	
+		foreignWords.clear();
+		nativeWords.clear();
+		learnt.clear();
 	}
 
 }
