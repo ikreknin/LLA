@@ -12,12 +12,10 @@ public class MenuList {
 		super();
 		initalize();
 	}
-	
-	
+		
 	public List<String> getLanguageMenu() {
 		return languageMenu;
 	}
-
 
 	public void setLanguageMenu() {
 		String dir = System.getProperty("user.dir");
