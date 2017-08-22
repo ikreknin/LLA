@@ -26,8 +26,8 @@ public class Settings {
 	private boolean text;               // true
 
 
-	private String iniFile = "bin/files/Settings.ini";
-	Path path = Paths.get("bin/files/Settings.ini");
+	private String iniFile = "../Settings.ini";
+	Path path = Paths.get(iniFile);
 	
 	public Settings()  {
 		Properties appProperties = new Properties();
@@ -148,7 +148,7 @@ public class Settings {
 		appProperties.setProperty("text", Boolean.toString(text));
 		try {
 			FileOutputStream out = new FileOutputStream(iniFile);
-			appProperties.store(out, "These are Your settings for language learning app. /n Don't touch this!!!");
+			appProperties.store(out, "These are Your settings for language learning app. Don't touch this!!!");
 			out.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -156,14 +156,14 @@ public class Settings {
 			e.printStackTrace();
 		}
 	}
-/* for manual testing	
-public static void main (String[] args) {
+//for manual testing	
+/*public static void main (String[] args) {
 		Settings set = new Settings();
 		set.setAudio(true);;
 		System.out.println(set.getAudio());
 		set.saveAndExit();		
-	}
-	*/
+	}*/
+	
 }
 
 

@@ -52,7 +52,8 @@ public class View {
 	public String[] choices;
 	public String[] topics;
 	public String[] topicsEng = {"Animals","Home", "Numbers"};
-	public String[] topicsLv = {"Dzīvnieki","Māja","Skaitļi"}; // "Dzivnieki, Maja, Skaitli
+	public String[] topicsLv = {"Dzivnieki"};//{"Dzīvnieki","Māja","Skaitļi"}; 
+	
 	public int score = 0;
 	
 	public JFrame getFrame() {
