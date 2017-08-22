@@ -191,27 +191,27 @@ public class Controller {
 		};
 		view.getTextFieldN32().addActionListener(actionListenerN32);
 
-		actionMenuListenerOpen = new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					model.doOpen(view.deAccent((String) view.getTopicsList().getSelectedItem()));
-					currentLesson = 0;
-					setTextInAll(currentLesson);
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-			}
-		};
-		view.getMenuItemOpen().addActionListener(actionMenuListenerOpen);
-
-		actionListenerMenuSave = new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				model.doSave(view.deAccent((String) view.getTopicsList().getSelectedItem()));
-			}
-		};
-		view.getMenuItemSave().addActionListener(actionListenerMenuSave);
+//		actionMenuListenerOpen = new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				try {
+//					model.doOpen(view.deAccent((String) view.getTopicsList().getSelectedItem()));
+//					currentLesson = 0;
+//					setTextInAll(currentLesson);
+//				} catch (IOException e1) {
+//					e1.printStackTrace();
+//				}
+//			}
+//		};
+//		view.getMenuItemOpen().addActionListener(actionMenuListenerOpen);
+//
+//		actionListenerMenuSave = new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				model.doSave(view.deAccent((String) view.getTopicsList().getSelectedItem()));
+//			}
+//		};
+//		view.getMenuItemSave().addActionListener(actionListenerMenuSave);
 
 		actionListenerExit = new ActionListener() {
 			@Override
@@ -227,8 +227,8 @@ public class Controller {
 				view.setTextFileMenu("File");
 				view.setTextOptionsMenu("Options");
 				view.setTextHelpMenu("Help");
-				view.setTextMenuItemOpen("Open");
-				view.setTextMenuItemSave("Save");
+//				view.setTextMenuItemOpen("Open");
+//				view.setTextMenuItemSave("Save");
 				view.setTextmenuItemExit("Exit");
 				view.setTextModeMenu("Mode");
 				view.setTextMenuItemToApp("Switch to App");
@@ -263,8 +263,8 @@ public class Controller {
 				view.setTextFileMenu("Fails");
 				view.setTextOptionsMenu("Opcijas");
 				view.setTextHelpMenu("Palīdzība");
-				view.setTextMenuItemOpen("Atvērt");
-				view.setTextMenuItemSave("Saglabāt");
+//				view.setTextMenuItemOpen("Atvērt");
+//				view.setTextMenuItemSave("Saglabāt");
 				view.setTextmenuItemExit("Izeja");
 				view.setTextModeMenu("Režīms");
 				view.setTextMenuItemToApp("Pārslēgt uz Testa režīmu");
