@@ -118,7 +118,7 @@ public class View {
 	    topicPanel.add(topicsList, topicPanelConstraints);
 	    cpnl.gridx = 0;
         cpnl.gridy = 1;
-        cpnl.insets = new Insets(15,0,0,0); 
+        cpnl.insets = new Insets(15,150,0,150); 
 	    topicPanelConstraints.gridx = 1;
 	    topicPanelConstraints.gridy = 0;
 	    topicPanelConstraints.fill = GridBagConstraints.HORIZONTAL;
@@ -130,6 +130,7 @@ public class View {
 		
         // *GridLayout JPanel for holding the progress bar
         JPanel progressPanel = new JPanel();
+        progressPanel.setPreferredSize(new Dimension(300,60)); // 300 overridden by setting border
 //        progressPanel.setBackground(Color.PINK);
         progressPanel.setLayout(new GridLayout(1, 1));
         progressPanel.setBorder(new EmptyBorder(30, 0, 10, 0)); // 10px top and bottom padding
@@ -137,10 +138,13 @@ public class View {
         progressBar.setValue(5);
         progressPanel.add(progressBar);
 //        progressPanel.add(new JProgressBar(0, 100));
-	    cpnl.gridx = 0;
-        cpnl.gridy = 2;
-        cpnl.insets = new Insets(0, 1, 0, 1);  // add paddings to control span width        
-        mainPanel.add(progressPanel, cpnl);
+        GridBagConstraints cpnls = new GridBagConstraints();
+        cpnls.gridx = 0;
+        cpnls.gridy = 2;
+        cpnls.weightx = 1;
+        cpnls.fill = GridBagConstraints.BOTH;
+        cpnls.insets = new Insets(0, 57, 0, 57);  // add paddings to control span width        
+        mainPanel.add(progressPanel, cpnls);
         
         // *FlowLayout JPanel for writing the score
         JPanel scorePanel = new JPanel();
@@ -149,21 +153,21 @@ public class View {
         scorePanel.add(scoreLabel);
 	    cpnl.gridx = 0;
         cpnl.gridy = 3;
-        cpnl.insets = new Insets(0, 5, 0, 5);  // add paddings to control span width 
+        cpnl.insets = new Insets(0, 57, 0, 57);  // add paddings to control span width 
         mainPanel.add(scorePanel, cpnl);
         
         // JPanel for Question buttons
 	    JPanel buttonPanel = new JPanel();
+//	    buttonPanel.setBackground(Color.CYAN);
 	    mainPanel.add(buttonPanel);
 		buttonPanel.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		
 		JPanel questionPanel = new JPanel();
 //		questionPanel.setBackground(Color.YELLOW);
-		questionPanel.setLayout(new FlowLayout());
-		
+		questionPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 0, 0));
         buttonQuestion = new JButton("Māja (Hardcoded option)");
-        c.fill = GridBagConstraints.HORIZONTAL;
+//        c.fill = GridBagConstraints.HORIZONTAL;
         c.ipady = 40;      //make this component tall
         c.gridx = 0;
         c.gridy = 0;
@@ -188,6 +192,8 @@ public class View {
 		questionPanel.add(playButton, BorderLayout.LINE_END);
         buttonPanel.add(questionPanel, c); // c = constraints
         
+        JPanel answerPanel = new JPanel();
+        answerPanel.setLayout(new GridBagLayout());
         buttonAnswer1 = new JButton("House");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.ipady = 30;      //make this component tall
@@ -196,7 +202,7 @@ public class View {
         c.weightx = 1.0;
         c.weighty = 0.0;   //request any extra vertical space
         c.anchor = GridBagConstraints.PAGE_START; //bottom of space
-        c.insets = new Insets(0,0,0,0);  //top padding
+        c.insets = new Insets(0,40,0,40);  //top padding
         buttonAnswer1.setFont(new Font("Arial", Font.PLAIN, 30));
         buttonPanel.add(buttonAnswer1, c);  
 		
@@ -208,7 +214,7 @@ public class View {
         c.weightx = 1.0;
         c.weighty = 0.0;   //request any extra vertical space
         c.anchor = GridBagConstraints.PAGE_START; //bottom of space
-        c.insets = new Insets(15,0,0,0);  //top padding
+        c.insets = new Insets(15,40,0,40);  //top padding
         buttonAnswer2.setFont(new Font("Arial", Font.PLAIN, 30));
         buttonPanel.add(buttonAnswer2, c); 
     
@@ -220,7 +226,7 @@ public class View {
         c.weightx = 1.0;
         c.weighty = 0.0;   //request any extra vertical space
         c.anchor = GridBagConstraints.PAGE_START; //bottom of space
-        c.insets = new Insets(15,0,0,0);  //top padding
+        c.insets = new Insets(15,40,0,40);  //top padding
         buttonAnswer3.setFont(new Font("Arial", Font.PLAIN, 30));
         buttonPanel.add(buttonAnswer3, c);   
         
@@ -232,13 +238,13 @@ public class View {
         c.weightx = 1.0;
         c.weighty = 0.0;   //request any extra vertical space
         c.anchor = GridBagConstraints.PAGE_START; //bottom of space
-        c.insets = new Insets(15,0,0,0);  //top padding
+        c.insets = new Insets(15,40,0,40);  //top padding
         buttonAnswer4.setFont(new Font("Arial", Font.PLAIN, 30));
         buttonPanel.add(buttonAnswer4, c); 
         
 	    cpnl.gridx = 0;
         cpnl.gridy = 4;
-        cpnl.insets = new Insets(0, 20, 0, 20);
+        cpnl.insets = new Insets(0, 100, 0, 100);
         mainPanel.add(buttonPanel, cpnl);
         
     	//Create the menu bar.
