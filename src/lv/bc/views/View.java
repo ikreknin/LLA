@@ -52,7 +52,7 @@ public class View {
 	public String[] choices;
 	public String[] topics;
 	public String[] topicsEng = {"Animals","Home", "Numbers"};
-	public String[] topicsLv = {"Dzivnieki"};//{"Dzīvnieki","Māja","Skaitļi"}; 
+	public String[] topicsLv = {"Dzīvnieki","Māja","Skaitļi"}; 
 	
 	public int score = 0;
 	
@@ -411,6 +411,7 @@ public class View {
 	public String deAccent(String str) {
 	    String nfdNormalizedString = Normalizer.normalize(str, Normalizer.Form.NFD); 
 	    Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
-	    return pattern.matcher(nfdNormalizedString).replaceAll("");
+	    //return pattern.matcher(nfdNormalizedString).replaceAll("");
+	    return str;
 	}
 }

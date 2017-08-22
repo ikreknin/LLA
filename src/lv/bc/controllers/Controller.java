@@ -37,7 +37,7 @@ public class Controller {
 	//TODO change dynamically what is in dropdown list
 	
 	public String selectedLearningDirection = settings.getLearningDirection();
-	public String selectedTopic = settings.getTopic(); //---> when getting parameter from view, Normalizer function removes all non-english characters.
+	public String selectedTopic = "Dzīvnieki"; //---> when getting parameter from view, Normalizer function removes all non-english characters.
 	
 	public String[] languageList;
 	public String[] topicsList;
@@ -57,7 +57,8 @@ public class Controller {
 	}
 	
 	public String normalString(String nonEnglish) {
-		return Normalizer.normalize(nonEnglish, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
+		return nonEnglish;
+		//return Normalizer.normalize(nonEnglish, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
 	}
 	
 	
@@ -176,7 +177,7 @@ public class Controller {
 				
 				
 				
-				model.doOpen(settings.getLearningDirection(), settings.getTopic());
+				model.doOpen(settings.getLearningDirection(), selectedTopic);
 				
 				view.setTextQuestion(model.getLearnWord().getFromText());
 				
@@ -355,10 +356,10 @@ public class Controller {
 					selectedLearningDirection = normalString(selectedLearningDirection);
 					view.lang = view.deAccent(selectedLearningDirection);
 					if (selectedLearningDirection == "LAT-ENG") {
-						DefaultComboBoxModel<?> comboBoxModel1 = new DefaultComboBoxModel<Object>(view.topicsLv);
+						DefaultComboBoxModel<?> comboBoxModel1 = new DefaultComboBoxModel<Object>(view.topicsEng);
 						view.topicsList.setModel(comboBoxModel1);
 					} else {
-						DefaultComboBoxModel<?> comboBoxModel2 = new DefaultComboBoxModel<Object>(view.topicsEng);
+						DefaultComboBoxModel<?> comboBoxModel2 = new DefaultComboBoxModel<Object>(view.topicsLv);
 						view.topicsList.setModel(comboBoxModel2);
 					}
 				}
@@ -372,7 +373,7 @@ public class Controller {
 					selectedTopic = (String)cb.getSelectedItem();
 					selectedTopic = normalString(selectedTopic);
 					
-					view.topic = view.deAccent(selectedTopic);
+					//view.topic = view.deAccent(selectedTopic);
 				}
 			};
 			view.topicsList.addActionListener(actionListenerTopic);

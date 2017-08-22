@@ -63,6 +63,7 @@ public class Settings {
 		this.learningDirection = appProperties.getProperty("learningDirection");
 		this.topic = appProperties.getProperty("topic");
 		this.audio = Boolean.valueOf(appProperties.getProperty("audio"));
+		System.out.println(appProperties.getProperty("score"));
 		this.score = Integer.parseInt(appProperties.getProperty("score"));
 		this.text = Boolean.valueOf(appProperties.getProperty("text"));
 	}	
