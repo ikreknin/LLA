@@ -1,5 +1,5 @@
 package lv.bc.views;
-
+import lv.bc.editor.*;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
@@ -8,6 +8,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.text.Normalizer;
 import java.util.regex.Pattern;
 public class View {
@@ -38,6 +40,7 @@ public class View {
 	private JMenuItem menuItemEnglish;
 	private JMenuItem menuItemHelp;
 	private JMenuItem menuItemAbout;
+	private JMenuItem menuItemToEditor;
 	public JProgressBar progressBar;
 	public JLabel scoreLabel;
 	public String lang = "";
@@ -254,6 +257,12 @@ public class View {
     	group.add(menuItemNF);
     	modeMenu.add(menuItemNF);
     	
+    	modeMenu.addSeparator(); // --------------------------
+    	
+    	menuItemToEditor = new JMenuItem("Switch to Editor");
+    	modeMenu.add(menuItemToEditor);
+    	
+    	// Menu for Language
     	optionsMenu = new JMenu("Language");
     	menuItemLatvian = new JMenuItem("lv-LV");
     	menuItemEnglish = new JMenuItem("en-US");
@@ -282,7 +291,6 @@ public class View {
             System.err.println("Couldn't find file: " + path);
             return null;
         }
-//        button.setIcon(new ImageIcon(img));
     }
     
     /**
@@ -354,6 +362,10 @@ public class View {
 	public JMenuItem getMenuItemExit() {
 		return menuItemExit;
 	}
+	
+	public JMenuItem getMenuItemToEditor() {
+		return menuItemToEditor;
+	}
 
 	public JCheckBoxMenuItem getMenuItemSilent() {
 		return menuItemSilent;
@@ -389,6 +401,10 @@ public class View {
 	
 	public JMenuItem getMenuItemHelp() {
 		return menuItemHelp;
+	}
+	
+	public JMenuItem getMenuItemAbout() {
+		return menuItemAbout;
 	}
 	
 	public String deAccent(String str) {

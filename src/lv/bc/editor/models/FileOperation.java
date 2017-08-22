@@ -29,6 +29,8 @@ public class FileOperation {
 	private static String lv_en = "LAT-ENG";
 	private static String langDirectory = lv_en;
 	private static String direction = "lven";
+	private static boolean notEmptyArray = true;
+	private static boolean noEmptyCellsInArray = true;
 
 	public static void setLangDirectory(String langDirectory) {
 		FileOperation.langDirectory = langDirectory;
@@ -96,33 +98,33 @@ public class FileOperation {
 	}
 
 	public static void write(String topic) {
-		Writer writer = null;
-		try {
-			writer = new BufferedWriter(new OutputStreamWriter(
-					new FileOutputStream(
-							Controller.FP + "file/" + langDirectory + "/" + topic + "/" + topic.toLowerCase() + ".lst"),
-					"UTF-8"));
-			for (int i = 0; i < nativeWords.size(); i++) {
-				if (direction.equals("lven")) {
-					writer.write(foreignWords.get(i) + "\n");
-					writer.write(nativeWords.get(i) + "\n");
-				} else {
-					writer.write(nativeWords.get(i) + "\n");
-					writer.write(foreignWords.get(i) + "\n");
-				}
-
-				writer.write(learnt.get(i) + "\n");
-			}
-		} catch (IOException e) {
-		} finally {
+		if (notEmptyArrayCheck() && noEmptyCellsInArrayCheck()) {
+			Writer writer = null;
 			try {
-				if (writer != null) {
-					writer.close();
+				writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
+						Controller.FP + "file/" + langDirectory + "/" + topic + "/" + topic.toLowerCase() + ".lst"),
+						"UTF-8"));
+				for (int i = 0; i < nativeWords.size(); i++) {
+					if (direction.equals("lven")) {
+						writer.write(foreignWords.get(i) + "\n");
+						writer.write(nativeWords.get(i) + "\n");
+					} else {
+						writer.write(nativeWords.get(i) + "\n");
+						writer.write(foreignWords.get(i) + "\n");
+					}
+
+					writer.write(learnt.get(i) + "\n");
 				}
 			} catch (IOException e) {
+			} finally {
+				try {
+					if (writer != null) {
+						writer.close();
+					}
+				} catch (IOException e) {
+				}
 			}
 		}
-
 	}
 
 	public static String getNativeWords(int number) {
@@ -164,7 +166,20 @@ public class FileOperation {
 			learnt.add(0);
 		}
 		numberOfLines += 4;
+	}
 
+	private static boolean notEmptyArrayCheck() {
+		if (nativeWords.size() == 0)
+			notEmptyArray = false;
+		return notEmptyArray;
+	}
+
+	private static boolean noEmptyCellsInArrayCheck() {
+		for (int i = 0; i < nativeWords.size(); i++) {
+			if (foreignWords.get(i).equals("") || nativeWords.get(i).equals(""))
+				noEmptyCellsInArray = false;
+		}
+		return notEmptyArray;
 	}
 
 }

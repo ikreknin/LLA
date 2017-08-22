@@ -1,7 +1,11 @@
 package lv.bc.editor.controllers;
 
+import lv.bc.Main;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -16,6 +20,7 @@ import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import lv.bc.editor.models.*;
@@ -32,7 +37,8 @@ public class Controller {
 			actionListenerN32, actionListenerN33;
 	// Actions listeners for Menu
 	private ActionListener actionMenuListenerOpen, actionListenerMenuSave, actionListenerExit,
-			actionListenerLanguageNative, actionListenerLanguageForeign, actionListenerHelp, actionListenerAbout;
+			actionListenerLanguageNative, actionListenerLanguageForeign, 
+			actionListenerToApp, actionListenerHelp, actionListenerAbout;
 	// Actions listeners for Buttons
 	private ActionListener actionListenerRecord0, actionListenerRecord1, actionListenerRecord2, actionListenerRecord3,
 			actionListenerAudio0, actionListenerAudio1, actionListenerAudio2, actionListenerAudio3, actionListenerNew4,
@@ -47,8 +53,22 @@ public class Controller {
 	public Controller(Model model, View view) {
 		this.model = model;
 		this.view = view;
+		addWindowListeners();
 	}
-
+	
+	public void addWindowListeners() {
+		JFrame editorFrame = getView().getFrame();
+		editorFrame.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				System.out.println("closing Editor window"); 
+				editorFrame.dispose(); // get rid of the frame
+//				editorFrame.setVisible(true);
+				lv.bc.Main.main(null);
+			}
+		});
+	}
+	
 	public Model getModel() {
 		return model;
 	}
@@ -210,6 +230,8 @@ public class Controller {
 				view.setTextMenuItemOpen("Open");
 				view.setTextMenuItemSave("Save");
 				view.setTextmenuItemExit("Exit");
+				view.setTextModeMenu("Mode");
+				view.setTextMenuItemToApp("Switch to App");
 				view.setTextMenuItemHelp("Help");
 				view.setTextMenuItemAbout("About");
 				view.setTextMenuItemLanguageNative("English");
@@ -244,6 +266,8 @@ public class Controller {
 				view.setTextMenuItemOpen("Atvērt");
 				view.setTextMenuItemSave("Saglabāt");
 				view.setTextmenuItemExit("Izeja");
+				view.setTextModeMenu("Režīms");
+				view.setTextMenuItemToApp("Pārslēgt uz Testa režīmu");
 				view.setTextMenuItemHelp("Palīdzība");
 				view.setTextMenuItemAbout("Par programmu");
 				view.setTextMenuItemLanguageNative("Angļu");
@@ -269,6 +293,19 @@ public class Controller {
 		};
 		view.getMenuItemLanguageForeign().addActionListener(actionListenerLanguageForeign);
 
+		actionListenerToApp = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFrame editorFrame = getView().getFrame();
+				// temporarily disable window closing
+				editorFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE); 
+				editorFrame.dispatchEvent(new WindowEvent(editorFrame, WindowEvent.WINDOW_CLOSING));
+				editorFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				// model.doToApp();
+			}
+		};
+		view.getMenuItemToApp().addActionListener(actionListenerToApp);
+		
 		actionListenerHelp = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
