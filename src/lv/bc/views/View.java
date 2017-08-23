@@ -328,6 +328,7 @@ public class View {
      * @param score
      */
     public void setScore(int score) {
+    	this.score = score;
     	progressBar.setValue(score);
     	scoreLabel.setFont(new Font("Arial", Font.BOLD, 15));
     	scoreLabel.setText("Score: " + String.valueOf(score) + "%");
