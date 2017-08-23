@@ -262,7 +262,7 @@ public class Controller {
 				view.setTextRecordButton2("Ierakstīt");
 				view.setTextRecordButton3("Ierakstīt");
 				view.setTextPlayButton0("Spēlēt");
-				view.setTextPlayButton1("Spēlēt");
+				view.setTextPlayButton1("Spēlēt“t");
 				view.setTextPlayButton2("Spēlēt");
 				view.setTextPlayButton3("Spēlēt");
 				view.setTextNew4Button("Jauni 4");
