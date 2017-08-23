@@ -37,8 +37,8 @@ public class Controller {
 			actionListenerN32, actionListenerN33;
 	// Actions listeners for Menu
 	private ActionListener actionMenuListenerOpen, actionListenerMenuSave, actionListenerExit,
-			actionListenerLanguageNative, actionListenerLanguageForeign, 
-			actionListenerToApp, actionListenerHelp, actionListenerAbout;
+			actionListenerLanguageNative, actionListenerLanguageForeign, actionListenerToApp, actionListenerHelp,
+			actionListenerAbout;
 	// Actions listeners for Buttons
 	private ActionListener actionListenerRecord0, actionListenerRecord1, actionListenerRecord2, actionListenerRecord3,
 			actionListenerAudio0, actionListenerAudio1, actionListenerAudio2, actionListenerAudio3, actionListenerNew4,
@@ -55,20 +55,20 @@ public class Controller {
 		this.view = view;
 		addWindowListeners();
 	}
-	
+
 	public void addWindowListeners() {
 		JFrame editorFrame = getView().getFrame();
 		editorFrame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
-				System.out.println("closing Editor window"); 
+				System.out.println("closing Editor window");
 				editorFrame.dispose(); // get rid of the frame
-//				editorFrame.setVisible(true);
+				// editorFrame.setVisible(true);
 				lv.bc.Main.main(null);
 			}
 		});
 	}
-	
+
 	public Model getModel() {
 		return model;
 	}
@@ -212,8 +212,8 @@ public class Controller {
 				view.setTextFileMenu("File");
 				view.setTextOptionsMenu("Options");
 				view.setTextHelpMenu("Help");
-//				view.setTextMenuItemOpen("Open");
-//				view.setTextMenuItemSave("Save");
+				// view.setTextMenuItemOpen("Open");
+				// view.setTextMenuItemSave("Save");
 				view.setTextmenuItemExit("Exit");
 				view.setTextModeMenu("Mode");
 				view.setTextMenuItemToApp("Switch to App");
@@ -248,8 +248,8 @@ public class Controller {
 				view.setTextFileMenu("Fails");
 				view.setTextOptionsMenu("Opcijas");
 				view.setTextHelpMenu("Palīdzība");
-//				view.setTextMenuItemOpen("Atvērt");
-//				view.setTextMenuItemSave("Saglabāt");
+				// view.setTextMenuItemOpen("Atvērt");
+				// view.setTextMenuItemSave("Saglabāt");
 				view.setTextmenuItemExit("Izeja");
 				view.setTextModeMenu("Režīms");
 				view.setTextMenuItemToApp("Pārslēgt uz Testa režīmu");
@@ -283,14 +283,14 @@ public class Controller {
 			public void actionPerformed(ActionEvent e) {
 				JFrame editorFrame = getView().getFrame();
 				// temporarily disable window closing
-				editorFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE); 
+				editorFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 				editorFrame.dispatchEvent(new WindowEvent(editorFrame, WindowEvent.WINDOW_CLOSING));
 				editorFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				// model.doToApp();
 			}
 		};
 		view.getMenuItemToApp().addActionListener(actionListenerToApp);
-		
+
 		actionListenerHelp = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -312,7 +312,13 @@ public class Controller {
 			public void actionPerformed(ActionEvent e) {
 				if (!view.getTextTextFieldN00().equals("")) {
 					int i = Integer.parseInt(view.getTextTextFieldN00()) - 1;
-					model.recordWord((String) view.getTopicsList().getSelectedItem(), view.deAccent(FileOperation.getForeignWords(i)));
+					if (FileOperation.getDirection().equals("lven")) {
+						model.recordWord((String) view.getTopicsList().getSelectedItem(),
+								view.deAccent(FileOperation.getForeignWords(i)));
+					} else {
+						model.recordWord((String) view.getTopicsList().getSelectedItem(),
+								view.deAccent(FileOperation.getNativeWords(i)));
+					}
 				}
 
 			}
@@ -324,7 +330,13 @@ public class Controller {
 			public void actionPerformed(ActionEvent e) {
 				if (!view.getTextTextFieldN10().equals("")) {
 					int i = Integer.parseInt(view.getTextTextFieldN10()) - 1;
-					model.recordWord((String) view.getTopicsList().getSelectedItem(), view.deAccent(FileOperation.getForeignWords(i)));
+					if (FileOperation.getDirection().equals("lven")) {
+						model.recordWord((String) view.getTopicsList().getSelectedItem(),
+								view.deAccent(FileOperation.getForeignWords(i)));
+					} else {
+						model.recordWord((String) view.getTopicsList().getSelectedItem(),
+								view.deAccent(FileOperation.getNativeWords(i)));
+					}
 				}
 			}
 		};
@@ -335,7 +347,13 @@ public class Controller {
 			public void actionPerformed(ActionEvent e) {
 				if (!view.getTextTextFieldN20().equals("")) {
 					int i = Integer.parseInt(view.getTextTextFieldN20()) - 1;
-					model.recordWord((String) view.getTopicsList().getSelectedItem(), view.deAccent(FileOperation.getForeignWords(i)));
+					if (FileOperation.getDirection().equals("lven")) {
+						model.recordWord((String) view.getTopicsList().getSelectedItem(),
+								view.deAccent(FileOperation.getForeignWords(i)));
+					} else {
+						model.recordWord((String) view.getTopicsList().getSelectedItem(),
+								view.deAccent(FileOperation.getNativeWords(i)));
+					}
 				}
 			}
 		};
@@ -346,7 +364,13 @@ public class Controller {
 			public void actionPerformed(ActionEvent e) {
 				if (!view.getTextTextFieldN30().equals("")) {
 					int i = Integer.parseInt(view.getTextTextFieldN30()) - 1;
-					model.recordWord((String) view.getTopicsList().getSelectedItem(), view.deAccent(FileOperation.getForeignWords(i)));
+					if (FileOperation.getDirection().equals("lven")) {
+						model.recordWord((String) view.getTopicsList().getSelectedItem(),
+								view.deAccent(FileOperation.getForeignWords(i)));
+					} else {
+						model.recordWord((String) view.getTopicsList().getSelectedItem(),
+								view.deAccent(FileOperation.getNativeWords(i)));
+					}
 				}
 			}
 		};
@@ -357,7 +381,13 @@ public class Controller {
 			public void actionPerformed(ActionEvent e) {
 				if (!view.getTextTextFieldN01().equals("")) {
 					int i = Integer.parseInt(view.getTextTextFieldN00()) - 1;
-					AudioOperation.playSound((String) view.getTopicsList().getSelectedItem(), view.deAccent(FileOperation.getForeignWords(i)));
+					if (FileOperation.getDirection().equals("lven")) {
+						AudioOperation.playSound((String) view.getTopicsList().getSelectedItem(),
+								view.deAccent(FileOperation.getForeignWords(i)));
+					} else {
+						AudioOperation.playSound((String) view.getTopicsList().getSelectedItem(),
+								view.deAccent(FileOperation.getNativeWords(i)));
+					}
 				}
 			}
 		};
@@ -368,7 +398,13 @@ public class Controller {
 			public void actionPerformed(ActionEvent e) {
 				if (!view.getTextTextFieldN01().equals("")) {
 					int i = Integer.parseInt(view.getTextTextFieldN10()) - 1;
-					AudioOperation.playSound((String) view.getTopicsList().getSelectedItem(), view.deAccent(FileOperation.getForeignWords(i)));
+					if (FileOperation.getDirection().equals("lven")) {
+						AudioOperation.playSound((String) view.getTopicsList().getSelectedItem(),
+								view.deAccent(FileOperation.getForeignWords(i)));
+					} else {
+						AudioOperation.playSound((String) view.getTopicsList().getSelectedItem(),
+								view.deAccent(FileOperation.getNativeWords(i)));
+					}
 				}
 			}
 		};
@@ -379,7 +415,13 @@ public class Controller {
 			public void actionPerformed(ActionEvent e) {
 				if (!view.getTextTextFieldN01().equals("")) {
 					int i = Integer.parseInt(view.getTextTextFieldN20()) - 1;
-					AudioOperation.playSound((String) view.getTopicsList().getSelectedItem(), view.deAccent(FileOperation.getForeignWords(i)));
+					if (FileOperation.getDirection().equals("lven")) {
+						AudioOperation.playSound((String) view.getTopicsList().getSelectedItem(),
+								view.deAccent(FileOperation.getForeignWords(i)));
+					} else {
+						AudioOperation.playSound((String) view.getTopicsList().getSelectedItem(),
+								view.deAccent(FileOperation.getNativeWords(i)));
+					}
 				}
 			}
 		};
@@ -390,7 +432,13 @@ public class Controller {
 			public void actionPerformed(ActionEvent e) {
 				if (!view.getTextTextFieldN01().equals("")) {
 					int i = Integer.parseInt(view.getTextTextFieldN30()) - 1;
-					AudioOperation.playSound((String) view.getTopicsList().getSelectedItem(), view.deAccent(FileOperation.getForeignWords(i)));
+					if (FileOperation.getDirection().equals("lven")) {
+						AudioOperation.playSound((String) view.getTopicsList().getSelectedItem(),
+								view.deAccent(FileOperation.getForeignWords(i)));
+					} else {
+						AudioOperation.playSound((String) view.getTopicsList().getSelectedItem(),
+								view.deAccent(FileOperation.getNativeWords(i)));
+					}
 				}
 			}
 		};
@@ -400,7 +448,8 @@ public class Controller {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				model.doNew4();
-//				model.doSave(view.deAccent((String) view.getTopicsList().getSelectedItem()));
+				// model.doSave(view.deAccent((String)
+				// view.getTopicsList().getSelectedItem()));
 				model.doSave((String) view.getTopicsList().getSelectedItem());
 				if (FileOperation.getNumberOfLines() == 4) {
 					currentLesson = 0;
@@ -433,7 +482,7 @@ public class Controller {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if ((++currentLesson) * 4 < FileOperation.getNumberOfLines()) {
-					 rememberWindow();
+					rememberWindow();
 					if (FileOperation.getDirection().equals("lven")) {
 						setTextInAll(currentLesson);
 					} else {
@@ -463,7 +512,8 @@ public class Controller {
 				str = (str.trim());
 				String fileName = str.toLowerCase() + ".lst";
 				if (str.equals("")) {
-//					model.doSave(view.deAccent((String) view.getTopicsList().getSelectedItem()));
+					// model.doSave(view.deAccent((String)
+					// view.getTopicsList().getSelectedItem()));
 					model.doSave((String) view.getTopicsList().getSelectedItem());
 				} else {
 					try {
@@ -505,7 +555,8 @@ public class Controller {
 		actionListenerButtonSave = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-//				model.doSave(view.deAccent((String) view.getTopicsList().getSelectedItem()));
+				// model.doSave(view.deAccent((String)
+				// view.getTopicsList().getSelectedItem()));
 				model.doSave((String) view.getTopicsList().getSelectedItem());
 			}
 		};
