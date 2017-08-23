@@ -229,7 +229,7 @@ public class Controller {
 				view.setTextPlayButton1("Play");
 				view.setTextPlayButton2("Play");
 				view.setTextPlayButton3("Play");
-				view.setTextNew4Button("Back");
+				view.setTextNew4Button("New 4");
 				view.setTextBackButton("Back");
 				view.setTextForwardButton("Next");
 				view.setTextSaveButton("Save");
