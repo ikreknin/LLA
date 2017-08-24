@@ -524,13 +524,13 @@ public class View {
 		fileMenu.setMnemonic(KeyEvent.VK_F);
 		menuBar.add(fileMenu);
 
-		menuItemOpen = new JMenuItem(langOpen, KeyEvent.VK_O);
-		fileMenu.add(menuItemOpen);
-
-		menuItemSave = new JMenuItem(langSave, KeyEvent.VK_S);
-		fileMenu.add(menuItemSave);
-
-		fileMenu.addSeparator();
+//		menuItemOpen = new JMenuItem(langOpen, KeyEvent.VK_O);
+//		fileMenu.add(menuItemOpen);
+//
+//		menuItemSave = new JMenuItem(langSave, KeyEvent.VK_S);
+//		fileMenu.add(menuItemSave);
+//
+//		fileMenu.addSeparator();
 
 		menuItemExit = new JMenuItem(langExit, KeyEvent.VK_X);
 		fileMenu.add(menuItemExit);
@@ -847,13 +847,13 @@ public class View {
 		helpMenu.setText(text);
 	}
 
-	public void setTextMenuItemOpen(String text) {
-		menuItemOpen.setText(text);
-	}
-
-	public void setTextMenuItemSave(String text) {
-		menuItemSave.setText(text);
-	}
+//	public void setTextMenuItemOpen(String text) {
+//		menuItemOpen.setText(text);
+//	}
+//
+//	public void setTextMenuItemSave(String text) {
+//		menuItemSave.setText(text);
+//	}
 
 	public void setTextmenuItemExit(String text) {
 		menuItemExit.setText(text);

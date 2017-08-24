@@ -5,6 +5,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -26,18 +29,29 @@ public class Settings {
 	private boolean text;               // true
 
 
-	private String iniFile = "bin/files/Settings.ini";
-	Path path = Paths.get("bin/files/Settings.ini");
+	String dir = System.getProperty("user.dir");
+	String filePath = dir + "/src/lv/bc/settings/Settings.ini";
+	Path path = Paths.get(filePath);
+	//String dir = System.getProperty("user.dir");
 	
 	public Settings()  {
 		Properties appProperties = new Properties();
+		
+		
+		System.out.println("File path:	[" + filePath + "]");
+		
+		
 		if (Files.exists(path)) {
 			FileInputStream in;
+			System.out.println("File " + filePath);
+			//OutputStreamWriter writer = new OutputStreamWriter(out, StandardCharsets.UTF_8);
 			
 			try {
-				in = new FileInputStream(iniFile);
-				appProperties.load(in);
+				in = new FileInputStream(filePath);
+				InputStreamReader reader = new InputStreamReader(in, StandardCharsets.UTF_8);
+				appProperties.load(reader);
 				in.close();
+				reader.close();
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -67,29 +81,17 @@ public class Settings {
 		this.text = Boolean.valueOf(appProperties.getProperty("text"));
 	}	
 	
-
-	
-	
 	public String getLearningDirection() {
 		return learningDirection;
 	}
-
-
-
 
 	public void setLearningDirection(String learningDirection) {
 		this.learningDirection = learningDirection;
 	}
 
-
-
-
 	public String getTopic() {
 		return topic;
 	}
-
-
-
 
 	public void setTopic(String topic) {
 		this.topic = topic;
@@ -147,20 +149,23 @@ public class Settings {
 		appProperties.setProperty("score", String.valueOf(score));
 		appProperties.setProperty("text", Boolean.toString(text));
 		try {
-			FileOutputStream out = new FileOutputStream(iniFile);
-			appProperties.store(out, "These are Your settings for language learning app. /n Don't touch this!!!");
+			FileOutputStream out = new FileOutputStream(filePath);
+			OutputStreamWriter writer = new OutputStreamWriter(out, StandardCharsets.UTF_8);
+			appProperties.store(writer, "These are Your settings for language learning app. Don't touch this!!!");
 			out.close();
+			writer.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-/* for manual testing	
-public static void main (String[] args) {
+//for manual testing	
+/*public static void main (String[] args) {
 		Settings set = new Settings();
-		set.setAudio(true);;
+		set.setAudio(true);
 		System.out.println(set.getAudio());
+		set.setTopic("Dzīvnieki");
 		set.saveAndExit();		
 	}
 	*/

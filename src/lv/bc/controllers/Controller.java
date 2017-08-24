@@ -7,6 +7,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 import java.text.Normalizer;
 
 import javax.swing.DefaultComboBoxModel;
@@ -16,13 +17,15 @@ import javax.swing.Timer;
 
 import lv.bc.models.*;
 import lv.bc.views.*;
-import lv.bc.settings.Settings;;
+import lv.bc.settings.Settings;
+import lv.bc.myview.*;
 
 public class Controller {
 	
 	private Model model;
 	private View view;
 	private Settings settings = new Settings();
+	private Browse help;
 	private AudioPlayer player;
 //Action listeners for buttons
 	private ActionListener  actionListenerQuestion,actionListenerAnswer1,	actionListenerAnswer2, actionListenerAnswer3, actionListenerAnswer4;
@@ -36,6 +39,8 @@ public class Controller {
 	public String selectedLearningDirection = settings.getLearningDirection();
 	public String selectedTopic = settings.getTopic(); //---> when getting parameter from view, Normalizer function removes all non-english characters.
 	
+	public String[] languageList;
+	public String[] topicsList;
 	
 //Parameters for actions with answer keys
 	private int answerKey;
@@ -52,9 +57,11 @@ public class Controller {
 	}
 	
 	public String normalString(String nonEnglish) {
+		//return nonEnglish;
 		return Normalizer.normalize(nonEnglish, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
 	}
-
+	
+	
 	//Getters and setters-------
 	public int getAnswerKey() {
 		return answerKey;
@@ -97,38 +104,50 @@ public class Controller {
 		
 //On window open---------------------------------------------------------
 		
+		
+		languageList = new String[model.getLanguageMenu().size()];
+		languageList = model.getLanguageMenu().toArray(languageList);
+		
+		DefaultComboBoxModel<?> comboBoxLanguages = new DefaultComboBoxModel<Object>(languageList);
+		view.languageList.setModel(comboBoxLanguages);
+		
+		
+		
 		view.getFrame().addWindowListener(new WindowAdapter() {
 		    
 			@Override
 		    public void windowOpened(WindowEvent we) {
 				
+				
 				//Temporary?
 				int indexLanguageSwitch = -1;
 				int indexTopicSwitch = -1;
-				
-				
-				for(int i = 0; i < view.choices.length; i++) {
-					if(settings.getLearningDirection().equals(view.choices[i])) {
+				System.out.println(languageList[1] + "&&&&&&&&&&&&&&");
+				System.out.println(selectedLearningDirection + "&&&&&&&&&&&&&&");
+				for(int i = 0; i < languageList.length; i++) {
+					if(selectedLearningDirection.equals(languageList[i])) {
 						indexLanguageSwitch = i;
-						if(i == 0) {
-							view.topics = view.topicsLv;
-							for(int x = 0; x < view.topicsLv.length ; x++) {
-								if(normalString(view.topicsLv[x]).equals(settings.getTopic())) {
-									indexTopicSwitch = x;
-								}
+						model.setMenuTopicList(selectedLearningDirection);
+						topicsList = new String[model.getTopicMenu().size()];
+						System.out.println("topicList" + model.getTopicMenu());
+						System.out.println(selectedTopic + "!!!!!!!");
+						topicsList = model.getTopicMenu().toArray(topicsList);
+						
+						for(int x = 0; x < topicsList.length; x++) {
+							if(topicsList[x].equals(selectedTopic)) {
+									
+								indexTopicSwitch = x;
 							}
 						}
-						else if(i == 1) {
-							view.topics = view.topicsEng;
-							for(int x = 0; x < view.topicsEng.length ; x++) {
-								if(normalString(view.topicsEng[x]).equals(settings.getTopic())) {
-									indexTopicSwitch = x;
-								}
-							}
-						}
+						i = languageList.length;
 					}
 				}
 
+				
+				System.out.println(indexTopicSwitch);
+				
+
+				
 				view.languageList.setSelectedIndex(indexLanguageSwitch);
 				view.topicsList.setSelectedIndex(indexTopicSwitch);
 				
@@ -140,17 +159,7 @@ public class Controller {
 				
 				view.setScore(settings.getScore());
 				
-				
-				//view.choices
-				
-				
-				//view.topicsEng
-				//view.topicsLv
-				//view.topics
-				
-				
-				
-				model.doOpen(settings.getLearningDirection(), settings.getTopic());
+				model.doOpen(settings.getLearningDirection(), selectedTopic);
 				
 				view.setTextQuestion(model.getLearnWord().getFromText());
 				
@@ -299,7 +308,8 @@ public class Controller {
 			public void actionPerformed(ActionEvent e) {
 				
 				selectedTopic = view.topicsList.getSelectedItem().toString();
-				selectedTopic = normalString(selectedTopic);
+				//selectedTopic = normalString(selectedTopic);
+				view.setScore(model.getScore());
 				
 				model.doOpen(selectedLearningDirection, selectedTopic); 
 				settings.setTopic(selectedTopic);
@@ -319,16 +329,17 @@ public class Controller {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					JComboBox<?> cb = (JComboBox<?>)e.getSource();
+					
 					selectedLearningDirection = (String)cb.getSelectedItem();
-					//selectedLearningDirection = normalString(selectedLearningDirection);
-					view.lang = view.deAccent(selectedLearningDirection);
-					if (selectedLearningDirection == "LAT-ENG") {
-						DefaultComboBoxModel<?> comboBoxModel1 = new DefaultComboBoxModel<Object>(view.topicsLv);
-						view.topicsList.setModel(comboBoxModel1);
-					} else {
-						DefaultComboBoxModel<?> comboBoxModel2 = new DefaultComboBoxModel<Object>(view.topicsEng);
-						view.topicsList.setModel(comboBoxModel2);
-					}
+					System.out.println("selected direction " + selectedLearningDirection);
+					model.setMenuTopicList(selectedLearningDirection);
+					topicsList = new String[model.getTopicMenu().size()];
+					topicsList = model.getTopicMenu().toArray(topicsList);
+					
+					
+					DefaultComboBoxModel<?> comboBoxModel1 = new DefaultComboBoxModel<Object>(topicsList);
+					view.topicsList.setModel(comboBoxModel1);
+					
 				}
 			};
 			view.languageList.addActionListener(actionListenerLanguage);
@@ -338,22 +349,11 @@ public class Controller {
 				public void actionPerformed(ActionEvent e) {
 					JComboBox<?> cb = (JComboBox<?>)e.getSource();
 					selectedTopic = (String)cb.getSelectedItem();
-					selectedTopic = normalString(selectedTopic);
-					
-					//view.topic = view.deAccent(selectedTopic);
 				}
 			};
 			view.topicsList.addActionListener(actionListenerTopic);
 			
 //Menu bar options--------------------------------------------------------------------------------------
-		actionListenerSave = new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				model.doSave();
-			}
-		};
-		view.getMenuItemSave().addActionListener(actionListenerSave);
 		
 		actionListenerReset = new ActionListener() {
 			
@@ -385,8 +385,7 @@ public class Controller {
 	            }
 	        });
 	
-		
-		
+
 		itemListenerAudio = new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent paramItemEvent) {
@@ -441,25 +440,6 @@ public class Controller {
 		};
 		view.getMenuItemText().addItemListener(itemListenerText);
 		
-		
-		actionListenerFN = new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				model.doFN();
-			}
-		};
-		view.getMenuItemFN().addActionListener(actionListenerFN);
-		
-		actionListenerNF = new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				model.NF();
-			}
-		};
-		view.getMenuItemNF().addActionListener(actionListenerNF);
-		
 		// on clicking menuItemToEditor dispatch WINDOW_CLOSING Event
 		actionListenerToEditor = new ActionListener() {
 			
@@ -473,26 +453,7 @@ public class Controller {
 		};
 		view.getMenuItemToEditor().addActionListener(actionListenerToEditor);
 		
-		actionListenerLatvian = new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO
-			}
-		};
-		view.getMenuItemLatvian().addActionListener(actionListenerLatvian);
-		
-		actionListenerEnglish = new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO
-			}
-		};
-		view.getMenuItemEnglish().addActionListener(actionListenerEnglish);
-		
-		actionListenerAbout = new ActionListener() {
-			
+		actionListenerAbout = new ActionListener() {	
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//model.doHelp();
@@ -505,7 +466,11 @@ public class Controller {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				model.doHelp();
+				try {
+					Browse.openInBrowser("help.html");
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
 			}
 		};
 		view.getMenuItemHelp().addActionListener(actionListenerHelp);

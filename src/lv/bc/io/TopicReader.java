@@ -2,9 +2,13 @@ package lv.bc.io;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -61,10 +65,13 @@ public class TopicReader {
     		
     		this.allTopicWords.add(new Word(12,"lācis", "bear", 0));    */		
 
+
     	final File file = new File(filePath);
     	BufferedReader reader;
 		try {
-			reader = new BufferedReader(new FileReader(file));
+			reader = new BufferedReader(
+					   new InputStreamReader(
+			                      new FileInputStream(file), StandardCharsets.UTF_8));
 		   	try{
 		    	int l = 0; // we have to read 3 lines to create Word object
 		    	String line = null;
@@ -100,6 +107,21 @@ public class TopicReader {
 			//e.printStackTrace();
 			//System.exit(-1);
 		}
+		catch (UnsupportedEncodingException e)
+	    {   
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+	    }
+	    catch (IOException e)
+	    {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+	    }
+	    catch (Exception e)
+	    {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+	    }
 	}
 
 }

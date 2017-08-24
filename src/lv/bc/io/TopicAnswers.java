@@ -8,15 +8,19 @@ import java.util.List;
 import java.util.Random;
 
 public class TopicAnswers {
-	List<Word> answerList;
-	List<Word> fullList;
-	HashMap leftToStudy;
-	Word learnWord;
-	double score;
+	private List<Word> answerList;
+	private List<Word> fullList;
+	private HashMap<Integer, Word>  leftToStudy;
+	private Word learnWord;
+
+	private double score;
+	
+	//then last 3 word is left to learn save theirs keys till those words will not be learnd
+	//private HashMap lastThreeWords;
 
 	public TopicAnswers(){
 		fullList = new ArrayList<Word>();
-		leftToStudy = new HashMap();
+		leftToStudy = new HashMap<Integer, Word> ();
 		answerList = new ArrayList<Word>();
 		learnWord = new Word(0,"","",0);	
 		score = 0;
@@ -37,7 +41,7 @@ public class TopicAnswers {
 		return answerList;
 	}
 	
-	public HashMap getLeftToStudy() {
+	public HashMap<Integer, Word>  getLeftToStudy() {
 		return leftToStudy;
 	}
 	public void setLeftToStudy(List<Word> leftToLearn) {
@@ -77,10 +81,11 @@ public class TopicAnswers {
 	
 	public void initializationOfArrays(List<Word>  fileArray){
 		fullList = new ArrayList<Word>();
-		leftToStudy = new HashMap();
+		leftToStudy = new HashMap<Integer, Word> ();
 		answerList = new ArrayList<Word>();
 		learnWord = new Word(0,"","",0);	
 		score = 0;
+		//lastThreeWords = new HashMap(); 
 		setFullList(fileArray);
 		System.out.println("fullList.size()		:	" + fullList.size());
 
@@ -108,14 +113,14 @@ public class TopicAnswers {
 		        if(wordsSet.get(i)!= null)
 		        	tmpTopic.add(wordsSet.get(i));
 			}
-			System.out.println("[was]: " + answerList.toString());
+			System.out.println("answerList [was]: " + answerList.toString());
 			answerList.clear();
 			answerList.addAll(tmpTopic);
-			System.out.println("[now]: " + answerList.toString());
+			System.out.println("answerList [now]: " + answerList.toString());
 		}
 	}
 
-	public static int getRandomInt(int min, int max) {
+	private static int getRandomInt(int min, int max) {
 	    Random random = new Random();
 	    return random.nextInt((max - min) + 1) + min;
 	}
@@ -133,15 +138,19 @@ public class TopicAnswers {
 			//2: calculate user score
 			calculateScore();
 			
-			//3: set new answers list
-			System.out.println("step 3: Set new answers list");
-			setAnswerList(new ArrayList<Word>(leftToStudy.values()));
-			
-			//4: set new word for study
-			System.out.println("step 4: Set new word to study [was]: " + learnWord.toString());
-			setLearnWord();
-			System.out.println("step 4: Set new word to study [now]: " + learnWord.toString());
-			
+			if(leftToStudy.size() < 4)
+				mixLastThreeWords(answerNr);
+			else{
+				//3: set new answers list
+				System.out.println("step 3: Set new answers list");
+				setAnswerList(new ArrayList<Word>(leftToStudy.values()));
+				
+				//4: set new word for study
+				System.out.println("step 4: Set new word to study [was]: " + learnWord.toString());
+				setLearnWord();
+				System.out.println("step 4: Set new word to study [now]: " + learnWord.toString());
+			}
+
 			answerCorrect = true;
 		}
 		else
@@ -151,7 +160,7 @@ public class TopicAnswers {
 		return answerCorrect;		
 	}
 
-	public void calculateScore(){
+	private void calculateScore(){
 		System.out.println("step 2: calculate score [was]: " + scoreToString());
 		double tricked = fullList.size() - leftToStudy.size();
 		setScore((tricked/fullList.size())*100);
@@ -159,14 +168,41 @@ public class TopicAnswers {
 		
 	}
 	
-	public void resetStudyList(int answerNr){
+	private void resetStudyList(int answerNr){
 		System.out.println("step 1: remove key " + answerNr + "left to staudey size [was]: " +leftToStudy.size() );
 		leftToStudy.remove(answerNr);
-		if(leftToStudy.size() <  4){
-			setScore(100);
-			setLeftToStudy(fullList);
-		}
 		System.out.println("step 1: remove key " + answerNr + "left to staudey size [now]: " +leftToStudy.size() );
+	}
+	
+	private void mixLastThreeWords(int deleteKey){
+		//TODO check Score. If score < 100 then not all words has been learned
+		System.out.println("================MIX LAST WORDS================");
+		if(leftToStudy.size() > 0){
+		  System.out.println("leftToStudy size " + leftToStudy.size() + " < 4" );
+		  HashMap<Integer, Word> tmpArray = new HashMap<Integer, Word>();
+		  tmpArray.putAll(leftToStudy);
+		  while(tmpArray.size() < 4){
+				int k = getRandomInt(0, fullList.size()-1);
+				tmpArray.put(fullList.get(k).getKey(), (Word) fullList.get(k));
+		  }
+		  //Set answers array
+		  setAnswerList(new ArrayList<Word>(tmpArray.values()));
+		  System.out.println("answerList [new]: " + getAnswerList().toString());
+		  
+		  //set learn form leftToStudy
+		  System.out.println("Word [was]: " + learnWord.toString());
+		  List<Word> newArray = new ArrayList<Word>();
+		  newArray.addAll(leftToStudy.values());
+		  
+		  System.out.println("temporary array for last words: " +  newArray.toString());
+		  int k = getRandomInt(0, newArray.size()-1);
+		  learnWord = (Word) newArray.get(k);
+		  System.out.println("Word [now]: " + learnWord.toString());
+		} 
+		else{
+			reset();
+			score = 100;
+		}
 	}
 
 	public void reset(){
@@ -175,7 +211,6 @@ public class TopicAnswers {
 		setAnswerList(new ArrayList<Word>(leftToStudy.values()));
 		setLearnWord();
 		score = 0;
-
 	}
 
 }
