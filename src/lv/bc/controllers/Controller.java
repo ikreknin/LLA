@@ -14,6 +14,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
 import lv.bc.models.*;
@@ -416,7 +417,8 @@ public class Controller {
 		actionListenerAbout = new ActionListener() {	
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//model.doHelp();
+					String msg = "<html><body><center><br /><br />Language Learnin Application 2017  <br />Contributors:<br />Igors<br />Santa<br />Nauris<br />Sohruz<br />Ketevane<br />Jelena <br /><br /><br /></center></body></html>";
+					JOptionPane.showMessageDialog(null, msg, "About", JOptionPane.INFORMATION_MESSAGE);
 			}
 		};
 		view.getMenuItemAbout().addActionListener(actionListenerAbout);
