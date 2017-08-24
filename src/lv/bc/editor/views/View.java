@@ -31,6 +31,7 @@ public class View {
 
 	private JLabel label;
 	private JLabel labelTopicName;
+	private JLabel labelCurrentTopicName;
 	private JLabel labelDirection;
 
 	public JComboBox topicsList;
@@ -102,6 +103,7 @@ public class View {
 	private String langForeign = "Latvian";
 
 	private String langTopicName = "     " + "Topic:";
+	private String langCurrentTopicName = "";
 	private String langDirection = "Direction:";
 
 	private String[] topics;
@@ -211,6 +213,19 @@ public class View {
 		c.insets = new Insets(10, 10, 10, 10);
 		textFieldTopicName.setFont(new Font("Arial", Font.PLAIN, 18));
 		panel.add(textFieldTopicName, c);
+		
+		labelCurrentTopicName = new JLabel(langCurrentTopicName);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.ipadx = 0;
+		c.ipady = 0;
+		c.gridx = 2;
+		c.gridy = 2;
+		c.weightx = 0.0;
+		c.weighty = 0.1;
+		c.anchor = GridBagConstraints.PAGE_START;
+		c.insets = new Insets(10, 10, 10, 10);
+		labelCurrentTopicName.setFont(new Font("Arial", Font.PLAIN, 18));
+		panel.add(labelCurrentTopicName, c);
 
 		GridBagConstraints cpnlb = new GridBagConstraints();
 		JPanel dirPanel = new JPanel();
@@ -969,6 +984,10 @@ public class View {
 	public void aboutPopupWindow() {
 		String msg = "<html><body><center><br /><br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Language Learnin Application Editor 2017 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <br /><br /><br /><br /></center></body></html>";
 		JOptionPane.showMessageDialog(null, msg, "About", JOptionPane.INFORMATION_MESSAGE);
+	}
+	
+	public void setTextlabelCurrentTopicName(String text) {
+		labelCurrentTopicName.setText(text);
 	}
 
 }

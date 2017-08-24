@@ -83,6 +83,8 @@ public class Controller {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
+					view.setTextlabelCurrentTopicName("> " + view.getTopicsList().getSelectedItem());
+					
 					model.doOpen((String) view.getTopicsList().getSelectedItem());
 					currentLesson = 0;
 
@@ -555,6 +557,7 @@ public class Controller {
 		actionListenerButtonNative = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				view.setTextlabelCurrentTopicName("");
 				FileOperation.setNumberOfLines(0);
 				String s0 = view.getTextNativeButton();
 				String s1 = view.getTextForeignButton();
@@ -574,6 +577,7 @@ public class Controller {
 		actionListenerButtonForeign = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				view.setTextlabelCurrentTopicName("");
 				FileOperation.setNumberOfLines(0);
 				String s0 = view.getTextNativeButton();
 				String s1 = view.getTextForeignButton();
