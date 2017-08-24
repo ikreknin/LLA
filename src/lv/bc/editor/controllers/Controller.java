@@ -552,16 +552,6 @@ public class Controller {
 		};
 		view.getSaveButton().addActionListener(actionListenerButtonSave);
 
-		actionListenerButtonSave = new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// model.doSave(view.deAccent((String)
-				// view.getTopicsList().getSelectedItem()));
-				model.doSave((String) view.getTopicsList().getSelectedItem());
-			}
-		};
-		view.getSaveButton().addActionListener(actionListenerButtonSave);
-
 		actionListenerButtonNative = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
