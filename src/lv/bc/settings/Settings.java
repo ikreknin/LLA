@@ -20,19 +20,17 @@ import lv.bc.views.View;
 
 public class Settings {
 	
-	//Properties                             //Now value should be:
-	private View view;
-	private String learningDirection;       // LAT-ENG
-	private String topic;                  // Dzivnieki
-	private boolean audio;                // true
-	private int score;                   // 0
-	private boolean text;               // true
+	//Properties                             
+	private String learningDirection;       
+	private String topic;                  
+	private boolean audio;               
+	private int score;                   
+	private boolean text;              
 
 
 	String dir = System.getProperty("user.dir");
-	String filePath = dir + "/src/lv/bc/settings/Settings.ini";
+	String filePath = dir + "/doc/ini/Settings.ini";
 	Path path = Paths.get(filePath);
-	//String dir = System.getProperty("user.dir");
 	
 	public Settings()  {
 		Properties appProperties = new Properties();
@@ -58,8 +56,6 @@ public class Settings {
 				e.printStackTrace();
 			}
 			
-			//What to do, if in file is not enough properties?
-			//One thing we can do- make default property file
 		}
 		else {
 			try {
@@ -67,8 +63,8 @@ public class Settings {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			appProperties.setProperty("learningDirection", "LAT-ENG");
-			appProperties.setProperty("topic", "Dzivnieki");
+			appProperties.setProperty("learningDirection", "ENG-LAT");
+			appProperties.setProperty("topic", "Animals");
 			appProperties.setProperty("audio", "true");
 			appProperties.setProperty("score", "0");
 			appProperties.setProperty("text", "true");
@@ -97,50 +93,31 @@ public class Settings {
 		this.topic = topic;
 	}
 
-
-
-
 	public boolean getAudio() {
 		return audio;
 	}
-
-
-
 
 	public void setAudio(boolean audio) {
 		this.audio = audio;
 	}
 
-
-
-
 	public int getScore() {
 		return score;
 	}
-
-
-
 
 	public void setScore(int score) {
 		this.score = score;
 	}
 
-
-
-
 	public boolean getText() {
 		return text;
 	}
-
-
-
 
 	public void setText(boolean text) {
 		this.text = text;
 	}
 
 
-	//TODO call save and on EXIT controller
 	public void saveAndExit() {
 		Properties appProperties = new Properties();
 		appProperties.setProperty("learningDirection", learningDirection);
@@ -160,20 +137,6 @@ public class Settings {
 			e.printStackTrace();
 		}
 	}
-//for manual testing	
-/*public static void main (String[] args) {
-		Settings set = new Settings();
-		set.setAudio(true);
-		System.out.println(set.getAudio());
-		set.setTopic("Dzīvnieki");
-		set.saveAndExit();		
-	}
-	*/
+
 }
-
-
-
-
-
-
 
