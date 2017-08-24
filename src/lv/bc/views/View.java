@@ -63,6 +63,14 @@ public class View {
 	public View(String text) {
 		frame = new JFrame();
 		frame.setTitle(applicationTitle);
+		try {
+//			java.net.URL url = ClassLoader.getSystemResource("/src/lv/bc/views/images/LLA_20x20v2.png");
+//			ImageIcon appIcon = new ImageIcon(url);
+			ImageIcon applicationIcon = createImageIcon("images/LLA_20x20v2.png");
+			frame.setIconImage(applicationIcon.getImage());
+		} catch (Exception ex) {
+			System.out.println(ex);
+		}
 		frame.getContentPane().setLayout(new BorderLayout());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(600, 800);
@@ -249,12 +257,8 @@ public class View {
         
     	//Create the menu bar.
     	menuBar = new JMenuBar();
-    	//Build the first menu.
     	fileMenu = new JMenu("File");
     	menuBar.add(fileMenu);
-
-//    	menuItemSave = new JMenuItem("Save");
-//    	fileMenu.add(menuItemSave);
 
     	menuItemReset = new JMenuItem("Reset");
     	fileMenu.add(menuItemReset);
@@ -274,30 +278,10 @@ public class View {
     	menuItemText.setSelected(true);
     	modeMenu.add(menuItemText);
     	
-//    	modeMenu.addSeparator(); // --------------------------
-//    	
-//    	ButtonGroup group = new ButtonGroup();
-//    	menuItemFN = new JRadioButtonMenuItem("Foreign to Native");
-//    	menuItemFN.setSelected(true);
-//    	group.add(menuItemFN);
-//    	modeMenu.add(menuItemFN);
-//    	
-//    	menuItemNF = new JRadioButtonMenuItem("Native to Foreign");
-//    	group.add(menuItemNF);
-//    	modeMenu.add(menuItemNF);
-    	
     	modeMenu.addSeparator(); // --------------------------
     	
     	menuItemToEditor = new JMenuItem("Switch to Editor");
     	modeMenu.add(menuItemToEditor);
-    	
-    	// Menu for Language
-//    	optionsMenu = new JMenu("Language");
-//    	menuItemLatvian = new JMenuItem("lv-LV");
-//    	menuItemEnglish = new JMenuItem("en-US");
-//    	optionsMenu.add(menuItemLatvian);
-//    	optionsMenu.add(menuItemEnglish);
-//    	menuBar.add(optionsMenu);
     	
     	helpMenu = new JMenu("Help");
     	menuItemAbout = new JMenuItem("About");
@@ -436,12 +420,5 @@ public class View {
 	
 	public JMenuItem getMenuItemAbout() {
 		return menuItemAbout;
-	}
-	
-	public String deAccent(String str) {
-	    String nfdNormalizedString = Normalizer.normalize(str, Normalizer.Form.NFD); 
-	    Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
-	    //return pattern.matcher(nfdNormalizedString).replaceAll("");
-	    return str;
 	}
 }

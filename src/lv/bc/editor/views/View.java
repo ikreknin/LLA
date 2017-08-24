@@ -2,7 +2,6 @@ package lv.bc.editor.views;
 
 import javax.swing.*;
 import javax.swing.border.Border;
-import javax.swing.JOptionPane;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -149,6 +148,13 @@ public class View {
 
 		frame = new JFrame();
 		frame.setTitle(applicationTitle);
+		try {
+			java.net.URL resource = lv.bc.views.View.class.getResource("images/LLA_20x20v2.png");
+			ImageIcon appIcon = new ImageIcon(resource);
+			frame.setIconImage(appIcon.getImage());
+		} catch (Exception ex) {
+			System.out.println(ex);
+		}
 		JPanel panel = new JPanel(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 
