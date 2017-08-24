@@ -1,5 +1,7 @@
 package lv.bc.views;
 import lv.bc.editor.*;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
@@ -10,6 +12,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.Normalizer;
 import java.util.regex.Pattern;
 public class View {
@@ -67,9 +73,14 @@ public class View {
 //			java.net.URL url = ClassLoader.getSystemResource("/src/lv/bc/views/images/LLA_20x20v2.png");
 //			ImageIcon appIcon = new ImageIcon(url);
 //			ImageIcon applicationIcon = createImageIcon("images/LLA_20x20v2.png");
-			java.net.URL imgURL = View.class.getResource("/LLA_20x20v2.png");
-			ImageIcon icon = new ImageIcon(imgURL);
-			frame.setIconImage(icon.getImage());
+			String dir = System.getProperty("user.dir");
+			String filePath = dir + "/helppng/LLA_20x20v2.png";
+			Path path = Paths.get(filePath);
+			Image img = ImageIO.read(new File(filePath));
+			
+//			java.net.URL imgURL = View.class.getResource("/LLA_20x20v2.png");
+//			ImageIcon icon = new ImageIcon(imgURL);
+			frame.setIconImage(img);
 		} catch (Exception ex) {
 			System.out.println(ex);
 		}
@@ -193,11 +204,19 @@ public class View {
 		playButton = new JButton("Button 2 (CENTER)");
 		playButton.setPreferredSize(new Dimension(75, 75));
 		try {
+			
+			String dir = System.getProperty("user.dir");
+			String filePath = dir + "/helppng/300px-centered-gradient-Speaker_Icon.svg.png";
+			Path path = Paths.get(filePath);
+			Image img = ImageIO.read(new File(filePath));
+//			frame.setIconImage(img);
+			ImageIcon icon = new ImageIcon(img);
+			
 			String filename = "300px-centered-gradient-Speaker_Icon.svg.png";
 //			java.net.URL imgURL = new bc.lv.Main.getClass().getClassLoader().getResource(filename);
 //			ImageIcon icon = new ImageIcon(imgURL);
-			java.net.URL imgURL = View.class.getResource("/300px-centered-gradient-Speaker_Icon.svg.png");
-			ImageIcon icon = new ImageIcon(imgURL);
+//			java.net.URL imgURL = View.class.getResource("/300px-centered-gradient-Speaker_Icon.svg.png");
+//			ImageIcon icon = new ImageIcon(imgURL);
 //			ImageIcon icon = createImageIcon("images/300px-centered-gradient-Speaker_Icon.svg.png");
 			playButton.setIcon(icon);
 		} catch (Exception ex) {
