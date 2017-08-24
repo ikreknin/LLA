@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.text.Normalizer;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.Timer;
@@ -30,11 +31,9 @@ public class Controller {
 //Action listeners for buttons
 	private ActionListener  actionListenerQuestion,actionListenerAnswer1,	actionListenerAnswer2, actionListenerAnswer3, actionListenerAnswer4;
 //Actions listeners for Menu
-	private ActionListener actionListenerOpen, actionListenerSave, actionListenerReset, actionListenerExit, actionListenerFN, actionListenerNF,actionListenerToEditor, actionListenerAbout, actionListenerHelp, actionListenerLatvian, actionListenerEnglish;
+	private ActionListener actionListenerOpen, actionListenerReset, actionListenerExit, actionListenerToEditor, actionListenerAbout, actionListenerHelp;
 	private ItemListener itemListenerAudio, itemListenerText;
 ////// Menu
-
-	//TODO change dynamically what is in dropdown list
 	
 	public String selectedLearningDirection = settings.getLearningDirection();
 	public String selectedTopic = settings.getTopic(); //---> when getting parameter from view, Normalizer function removes all non-english characters.
@@ -45,19 +44,33 @@ public class Controller {
 //Parameters for actions with answer keys
 	private int answerKey;
 	private boolean clientsAnswer, blocked = false;
-	public Color red = new Color(255, 0, 0);
-	public Color green = new Color(0, 255, 0);
 
 //Helper methods-----------
+	Timer timer;
+	
+	public void answerButtons (int buttonNr, JButton button) {
+		timer.start();
+		isAnswerButtonClickable(false);
+		answerKey = model.getTopicAnswers().get(buttonNr-1).getKey();
+		setClientsAnswer(model.doAnswer(answerKey));
+		
+		if(isClientsAnswer())
+			button.setBackground(Color.green);
+		else
+			button.setBackground(Color.red);
+	}
+	
 	public void isAnswerButtonClickable(boolean bool) {
+		
 		view.getAnswerButton1().setEnabled(bool);
 		view.getAnswerButton2().setEnabled(bool);
 		view.getAnswerButton3().setEnabled(bool);
 		view.getAnswerButton4().setEnabled(bool);
+		
 	}
 	
 	public String normalString(String nonEnglish) {
-		//return nonEnglish;
+
 		return Normalizer.normalize(nonEnglish, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
 	}
 	
@@ -118,12 +131,9 @@ public class Controller {
 			@Override
 		    public void windowOpened(WindowEvent we) {
 				
-				
-				//Temporary?
 				int indexLanguageSwitch = -1;
 				int indexTopicSwitch = -1;
-				System.out.println(languageList[1] + "&&&&&&&&&&&&&&");
-				System.out.println(selectedLearningDirection + "&&&&&&&&&&&&&&");
+				
 				for(int i = 0; i < languageList.length; i++) {
 					if(selectedLearningDirection.equals(languageList[i])) {
 						indexLanguageSwitch = i;
@@ -143,20 +153,13 @@ public class Controller {
 					}
 				}
 
-				
-				System.out.println(indexTopicSwitch);
-				
-
-				
 				view.languageList.setSelectedIndex(indexLanguageSwitch);
 				view.topicsList.setSelectedIndex(indexTopicSwitch);
-				
-				//
-				
+			
 				view.getMenuItemAudio().setSelected(settings.getAudio());
+				view.getPlayButton().setEnabled(settings.getAudio());
 				view.getMenuItemText().setSelected(settings.getText());
-				
-				
+			
 				view.setScore(settings.getScore());
 				
 				model.doOpen(settings.getLearningDirection(), selectedTopic);
@@ -172,7 +175,8 @@ public class Controller {
 			
 		});
 		
-		// actionListenerToEditor triggers Window Close, here we override the close method to not only close the window, but to call the Editor
+// actionListenerToEditor triggers Window Close, here we override the close method to not only
+//close the window, but to call the Editor
 		view.getFrame().addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
@@ -195,7 +199,7 @@ public class Controller {
 		};
 		view.getQuestionButton().addActionListener(actionListenerQuestion);
 		
-		Timer timer = new Timer(2000, new ActionListener() {
+		timer = new Timer(2000, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
@@ -223,15 +227,7 @@ public class Controller {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				timer.start();
-				isAnswerButtonClickable(false);
-				answerKey = model.getTopicAnswers().get(0).getKey();
-				setClientsAnswer(model.doAnswer(answerKey));
-				
-				if(isClientsAnswer())
-					view.getAnswerButton1().setBackground(green);
-				else
-					view.getAnswerButton1().setBackground(red);
+				answerButtons(1, view.getAnswerButton1());
 			}
 		};
 		view.getAnswerButton1().addActionListener(actionListenerAnswer1);
@@ -239,15 +235,7 @@ public class Controller {
 		actionListenerAnswer2 = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				timer.start();
-				isAnswerButtonClickable(false);
-				answerKey = model.getTopicAnswers().get(1).getKey();
-				setClientsAnswer(model.doAnswer(answerKey));
-				
-				if(isClientsAnswer())
-					view.getAnswerButton2().setBackground(green);
-				else
-					view.getAnswerButton2().setBackground(red);
+				answerButtons(2, view.getAnswerButton2());
 			}
 		};	
 		view.getAnswerButton2().addActionListener(actionListenerAnswer2);
@@ -255,15 +243,7 @@ public class Controller {
 		actionListenerAnswer3 = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				timer.start();
-				isAnswerButtonClickable(false);
-				answerKey = model.getTopicAnswers().get(2).getKey();
-				setClientsAnswer(model.doAnswer(answerKey));
-				
-				if(isClientsAnswer())
-					view.getAnswerButton3().setBackground(green);
-				else
-					view.getAnswerButton3().setBackground(red);
+				answerButtons(3, view.getAnswerButton3());
 			}
 		};
 		view.getAnswerButton3().addActionListener(actionListenerAnswer3);
@@ -271,15 +251,7 @@ public class Controller {
 		actionListenerAnswer4 = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				timer.start();
-				isAnswerButtonClickable(false);
-				answerKey = model.getTopicAnswers().get(3).getKey();
-				setClientsAnswer(model.doAnswer(answerKey));
-				
-				if(isClientsAnswer())
-					view.getAnswerButton4().setBackground(green);
-				else
-					view.getAnswerButton4().setBackground(red);
+				answerButtons(4, view.getAnswerButton4());
 			}
 		};
 		view.getAnswerButton4().addActionListener(actionListenerAnswer4);
@@ -308,12 +280,13 @@ public class Controller {
 			public void actionPerformed(ActionEvent e) {
 				
 				selectedTopic = view.topicsList.getSelectedItem().toString();
-				//selectedTopic = normalString(selectedTopic);
+				selectedLearningDirection = view.languageList.getSelectedItem().toString();
 				view.setScore(model.getScore());
 				
 				model.doOpen(selectedLearningDirection, selectedTopic); 
 				settings.setTopic(selectedTopic);
 				settings.setLearningDirection(selectedLearningDirection);
+				
 				view.setTextQuestion(model.getLearnWord().getFromText());
 				
 				view.setTextAnswer1(model.getTopicAnswers().get(0).getToText());
@@ -330,29 +303,17 @@ public class Controller {
 				public void actionPerformed(ActionEvent e) {
 					JComboBox<?> cb = (JComboBox<?>)e.getSource();
 					
-					selectedLearningDirection = (String)cb.getSelectedItem();
-					System.out.println("selected direction " + selectedLearningDirection);
-					model.setMenuTopicList(selectedLearningDirection);
+					model.setMenuTopicList((String)cb.getSelectedItem());
 					topicsList = new String[model.getTopicMenu().size()];
 					topicsList = model.getTopicMenu().toArray(topicsList);
-					
-					
+				
 					DefaultComboBoxModel<?> comboBoxModel1 = new DefaultComboBoxModel<Object>(topicsList);
 					view.topicsList.setModel(comboBoxModel1);
 					
 				}
 			};
 			view.languageList.addActionListener(actionListenerLanguage);
-	        
-	        ActionListener actionListenerTopic = new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					JComboBox<?> cb = (JComboBox<?>)e.getSource();
-					selectedTopic = (String)cb.getSelectedItem();
-				}
-			};
-			view.topicsList.addActionListener(actionListenerTopic);
-			
+	      
 //Menu bar options--------------------------------------------------------------------------------------
 		
 		actionListenerReset = new ActionListener() {
@@ -459,8 +420,7 @@ public class Controller {
 				//model.doHelp();
 			}
 		};
-		//view.getMenuItemAbout().addActionListener(actionListenerAbout);
-		//TODO wait for setters and getters for About
+		view.getMenuItemAbout().addActionListener(actionListenerAbout);
 		
 		actionListenerHelp = new ActionListener() {
 			
