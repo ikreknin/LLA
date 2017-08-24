@@ -1,5 +1,6 @@
 package lv.bc.editor.views;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 
@@ -10,6 +11,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
@@ -153,9 +156,15 @@ public class View {
 		frame = new JFrame();
 		frame.setTitle(applicationTitle);
 		try {
-			java.net.URL imgURL = getClass().getResource("/LLA_20x20v2.png");
-			ImageIcon icon = new ImageIcon(imgURL);
-			frame.setIconImage(icon.getImage());
+			String dir = System.getProperty("user.dir");
+			String filePath = dir + "/helppng/LLA_20x20v2.png";
+			Path path = Paths.get(filePath);
+			Image img = ImageIO.read(new File(filePath));
+			frame.setIconImage(img);
+			
+//			java.net.URL imgURL = getClass().getResource("/LLA_20x20v2.png");
+//			ImageIcon icon = new ImageIcon(imgURL);
+//			frame.setIconImage(icon.getImage());
 //			java.net.URL resource = lv.bc.views.View.class.getResource("images/LLA_20x20v2.png");
 //			ImageIcon appIcon = new ImageIcon(resource);
 //			frame.setIconImage(appIcon.getImage());
