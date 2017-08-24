@@ -26,8 +26,6 @@ public class Controller {
 	private Model model;
 	private View view;
 	private Settings settings = new Settings();
-	private Browse help;
-	private AudioPlayer player;
 //Action listeners for buttons
 	private ActionListener  actionListenerQuestion,actionListenerAnswer1,	actionListenerAnswer2, actionListenerAnswer3, actionListenerAnswer4;
 //Actions listeners for Menu
@@ -161,6 +159,7 @@ public class Controller {
 				view.getMenuItemText().setSelected(settings.getText());
 			
 				view.setScore(settings.getScore());
+				view.scoreLabel.setText("Previous score: " + settings.getScore() + "%");
 				
 				model.doOpen(settings.getLearningDirection(), selectedTopic);
 				
