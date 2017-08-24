@@ -3,6 +3,8 @@ package lv.bc.editor.views;
 import javax.swing.*;
 import javax.swing.border.Border;
 
+//import lv.bc.views.View;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -151,9 +153,12 @@ public class View {
 		frame = new JFrame();
 		frame.setTitle(applicationTitle);
 		try {
-			java.net.URL resource = lv.bc.views.View.class.getResource("images/LLA_20x20v2.png");
-			ImageIcon appIcon = new ImageIcon(resource);
-			frame.setIconImage(appIcon.getImage());
+			java.net.URL imgURL = getClass().getResource("/LLA_20x20v2.png");
+			ImageIcon icon = new ImageIcon(imgURL);
+			frame.setIconImage(icon.getImage());
+//			java.net.URL resource = lv.bc.views.View.class.getResource("images/LLA_20x20v2.png");
+//			ImageIcon appIcon = new ImageIcon(resource);
+//			frame.setIconImage(appIcon.getImage());
 		} catch (Exception ex) {
 			System.out.println(ex);
 		}

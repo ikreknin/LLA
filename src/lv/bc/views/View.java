@@ -66,8 +66,10 @@ public class View {
 		try {
 //			java.net.URL url = ClassLoader.getSystemResource("/src/lv/bc/views/images/LLA_20x20v2.png");
 //			ImageIcon appIcon = new ImageIcon(url);
-			ImageIcon applicationIcon = createImageIcon("images/LLA_20x20v2.png");
-			frame.setIconImage(applicationIcon.getImage());
+//			ImageIcon applicationIcon = createImageIcon("images/LLA_20x20v2.png");
+			java.net.URL imgURL = View.class.getResource("/LLA_20x20v2.png");
+			ImageIcon icon = new ImageIcon(imgURL);
+			frame.setIconImage(icon.getImage());
 		} catch (Exception ex) {
 			System.out.println(ex);
 		}
@@ -191,7 +193,12 @@ public class View {
 		playButton = new JButton("Button 2 (CENTER)");
 		playButton.setPreferredSize(new Dimension(75, 75));
 		try {
-			ImageIcon icon = createImageIcon("images/300px-centered-gradient-Speaker_Icon.svg.png");
+			String filename = "300px-centered-gradient-Speaker_Icon.svg.png";
+//			java.net.URL imgURL = new bc.lv.Main.getClass().getClassLoader().getResource(filename);
+//			ImageIcon icon = new ImageIcon(imgURL);
+			java.net.URL imgURL = View.class.getResource("/300px-centered-gradient-Speaker_Icon.svg.png");
+			ImageIcon icon = new ImageIcon(imgURL);
+//			ImageIcon icon = createImageIcon("images/300px-centered-gradient-Speaker_Icon.svg.png");
 			playButton.setIcon(icon);
 		} catch (Exception ex) {
 			System.out.println(ex);
