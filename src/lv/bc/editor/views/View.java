@@ -36,6 +36,7 @@ public class View {
 
 	private JLabel label;
 	private JLabel labelTopicName;
+	private JLabel labelSelectedTopicName;
 	private JLabel labelCurrentTopicName;
 	private JLabel labelDirection;
 
@@ -107,7 +108,8 @@ public class View {
 	private String langNative = "English";
 	private String langForeign = "Latvian";
 
-	private String langTopicName = "     " + "Topic:";
+	private String langTopicName = "     " + "New topic:";
+	private String langSelectedTopicName = "Selected topic:";
 	private String langCurrentTopicName = "";
 	private String langDirection = "Direction:";
 
@@ -233,7 +235,7 @@ public class View {
 		c.ipadx = 0;
 		c.ipady = 0;
 		c.gridx = 2;
-		c.gridy = 2;
+		c.gridy = 1;
 		c.weightx = 0.0;
 		c.weighty = 0.1;
 		c.anchor = GridBagConstraints.PAGE_START;
@@ -970,6 +972,10 @@ public class View {
 		labelTopicName.setText(text);
 	}
 
+//	public void setTextLabelSelectedTopicName(String text) {
+//		labelSelectedTopicName.setText(text);
+//	}
+	
 	public void setTextTextFieldTopicName(String text) {
 		textFieldTopicName.setText(text);
 	}
@@ -1003,5 +1009,7 @@ public class View {
 	public void setTextlabelCurrentTopicName(String text) {
 		labelCurrentTopicName.setText(text);
 	}
+	
+	
 
 }

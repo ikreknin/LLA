@@ -48,7 +48,8 @@ public class Controller {
 	public final static String FP = System.getProperty("user.dir") + "/";
 
 	int currentLesson = 0;
-	String langEmptyCells = "Empty cells!";
+	private String langEmptyCells = "Empty cells!";
+	private String langSelected = "Selected topic: ";
 
 	public Controller(Model model, View view) {
 		this.model = model;
@@ -83,7 +84,7 @@ public class Controller {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					view.setTextlabelCurrentTopicName("> " + view.getTopicsList().getSelectedItem());
+					view.setTextlabelCurrentTopicName(langSelected + view.getTopicsList().getSelectedItem());
 					
 					model.doOpen((String) view.getTopicsList().getSelectedItem());
 					currentLesson = 0;
@@ -93,7 +94,6 @@ public class Controller {
 					} else {
 						setTextInAllReverse(currentLesson);
 					}
-
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
@@ -237,8 +237,9 @@ public class Controller {
 				view.setTextSaveButton("Save");
 				view.setTextNativeButton("English");
 				view.setTextForeignButton("Latvian");
-				view.setTextLabelTopicName("Topic");
-
+				view.setTextLabelTopicName("New topic");
+				langSelected = "Selected topic: ";
+				view.setTextlabelCurrentTopicName(langSelected);
 				langEmptyCells = "Empty cells!";
 			}
 		};
@@ -273,8 +274,9 @@ public class Controller {
 				view.setTextSaveButton("Saglabāt");
 				view.setTextNativeButton("Angļu");
 				view.setTextForeignButton("Latviešu");
-				view.setTextLabelTopicName("Temats");
-
+				view.setTextLabelTopicName("Jauns temats");	
+				langSelected = "Izvēlētais temats: ";
+				view.setTextlabelCurrentTopicName(langSelected);
 				langEmptyCells = "Tukšas šūnas!";
 			}
 		};
